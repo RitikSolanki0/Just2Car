@@ -1,21 +1,78 @@
+// import React from 'react';
+// import { View, Text, FlatList, Image, StyleSheet } from 'react-native';
+// import { Fonts } from '../../theme/fonts';
+// import { BRANDS } from '../../dummydata/dummyData';
+
+// const BrandSection = () => (
+//   <View>
+//     <Text style={styles.sectionTitle}>Start with Car Brand</Text>
+//     <FlatList
+//       horizontal
+//       data={BRANDS}
+//       showsHorizontalScrollIndicator={false}
+//       keyExtractor={(item, index) => index.toString()}
+//       contentContainerStyle={styles.brandList}
+//       renderItem={({ item }) => (
+//         <View style={styles.brandCircle}>
+//           <Image source={item.logo} style={styles.brandLogo} />
+//         </View>
+//       )}
+//     />
+//   </View>
+// );
+
+// export default BrandSection;
+
+// const styles = StyleSheet.create({
+//   sectionTitle: { fontSize: 15, fontFamily: Fonts.bold, marginTop: 20, color: 'black' },
+//   brandList: { marginTop: 12 },
+//   brandCircle: { width: 55, height: 55, borderRadius: 30, borderWidth: 1, borderColor: '#ddd', justifyContent: 'center', alignItems: 'center', marginRight: 15 },
+//   brandLogo: { width: 35, height: 35, resizeMode: 'contain' },
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React from 'react';
-import { View, Text, FlatList, Image, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Fonts } from '../../theme/fonts';
+import { Colors } from '../../theme/colors';
 import { BRANDS } from '../../dummydata/dummyData';
 
 const BrandSection = () => (
-  <View>
+  <View style={styles.container}>
     <Text style={styles.sectionTitle}>Start with Car Brand</Text>
+    
     <FlatList
       horizontal
       data={BRANDS}
       showsHorizontalScrollIndicator={false}
-      keyExtractor={(item, index) => index.toString()}
+      keyExtractor={(item) => item.id}
       contentContainerStyle={styles.brandList}
       renderItem={({ item }) => (
-        <View style={styles.brandCircle}>
-          <Image source={item.logo} style={styles.brandLogo} />
-        </View>
+        <TouchableOpacity style={styles.brandItem} activeOpacity={0.7}>
+          {/* लोगो वाला गोला */}
+          <View style={styles.brandCircle}>
+            <Image source={item.logo} style={styles.brandLogo} />
+          </View>
+          
+          {/* ब्रांड का नाम */}
+          <Text style={styles.brandName} numberOfLines={1}>
+            {item.name}
+          </Text>
+        </TouchableOpacity>
       )}
     />
   </View>
@@ -24,8 +81,50 @@ const BrandSection = () => (
 export default BrandSection;
 
 const styles = StyleSheet.create({
-  sectionTitle: { fontSize: 15, fontFamily: Fonts.bold, marginTop: 20, color: 'black' },
-  brandList: { marginTop: 12 },
-  brandCircle: { width: 55, height: 55, borderRadius: 30, borderWidth: 1, borderColor: '#ddd', justifyContent: 'center', alignItems: 'center', marginRight: 15 },
-  brandLogo: { width: 35, height: 35, resizeMode: 'contain' },
+  container: {
+    marginTop: 10,
+  },
+  sectionTitle: { 
+    fontSize: 15, 
+    fontFamily: Fonts.bold, 
+    marginTop: 10, 
+    color: 'black',
+    paddingHorizontal: 5 
+  },
+  brandList: { 
+    marginTop: 15,
+    paddingBottom: 5,
+  },
+  brandItem: {
+    alignItems: 'center', // लोगो और नाम को सेंटर अलाइन करने के लिए
+    marginRight: 18,
+  },
+  brandCircle: { 
+    width: 60, 
+    height: 60, 
+    borderRadius: 30, 
+    borderWidth: 1, 
+    borderColor: '#E5E7EB', 
+    justifyContent: 'center', 
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    // हलकी सी शैडो
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+  },
+  brandLogo: { 
+    width: 40, 
+    height: 40, 
+    resizeMode: 'contain' 
+  },
+  brandName: {
+    marginTop: 8,
+    fontSize: 11,
+    fontFamily: Fonts.medium,
+    color: '#374151',
+    textAlign: 'center',
+  },
 });

@@ -12,8 +12,22 @@ const FilterSection = () => {
         <Text style={styles.prefText}>Preference</Text>
         <Ionicons name="options-outline" size={16} color="black" />
       </TouchableOpacity>
-      <View style={styles.filterBtn}><Text>Price</Text><Ionicons name="chevron-down" size={14} color="gray" /></View>
-      <View style={styles.filterBtn}><Text>Kms</Text><Ionicons name="chevron-down" size={14} color="gray" /></View>
+     <TouchableOpacity 
+        style={styles.filterBtn} 
+        onPress={() => navigation.navigate('FiltersScreen', { initialCategory: 'Budget' })}
+      >
+        <Text style={styles.prefText}>Price</Text>
+        <Ionicons name="chevron-down" size={14} color="gray" />
+      </TouchableOpacity>
+
+      {/* 3. Kms -> Kms Driven टैब खुलेगा */}
+      <TouchableOpacity 
+        style={styles.filterBtn} 
+        onPress={() => navigation.navigate('FiltersScreen', { initialCategory: 'Kms Driven' })}
+      >
+        <Text style={styles.prefText}>Kms</Text>
+        <Ionicons name="chevron-down" size={14} color="gray" />
+      </TouchableOpacity>
     </View>
   );
 };

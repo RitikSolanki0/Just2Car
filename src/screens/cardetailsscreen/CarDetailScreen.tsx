@@ -264,9 +264,506 @@
 
 // yaha se chhote chhote part me code 
 
-import React, { useState } from "react";
-import { ScrollView, StyleSheet, View, TouchableOpacity, Text } from "react-native";
+// import React, { useState } from "react";
+// import { ScrollView, StyleSheet, View, TouchableOpacity, Text } from "react-native";
+// import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+// import { Colors } from "../../theme/colors";
+// import { Fonts } from "../../theme/fonts";
+// import { CAR_MEDIA } from '../../dummydata/dummyData';
+
+// // Components Import
+// import DetailHeader from "../../components/cardetail/DetailHeader";
+// import ImageGallery from "../../components/cardetail/ImageGallery";
+// import CarInfoSection from "../../components/cardetail/CarInfoSection";
+// import FeatureGrid from "../../components/cardetail/ImageVideoSelectButton";
+// import SimilarCars from "../../components/cardetail/SimilarCars";
+// import FeaturesSpecs from "../../components/cardetail/FeaturesSpecs";
+// import InspectionReport from "../../components/cardetail/InspectionReport";
+// import CarOverview from "../../components/cardetail/CarOverview";
+
+// const CarDetailScreen = ({ route, navigation }: any) => {
+//   const { car } = route.params || {};
+//   // const car = route.params?.car;
+//   const insets = useSafeAreaInsets();
+  
+//   const [selectedImage, setSelectedImage] = useState(car?.image);
+//   const [showFullDesc, setShowFullDesc] = useState(false);
+//   const thumbnails = [car?.image, car?.image, car?.image];
+//   const carMedia = [
+//   { url: car?.image, type: 'image' },
+//   { url: require('../../assets/video/car_video.mp4'), type: 'video' }, // आपका लोकल वीडियो
+//   { url: car?.image, type: 'image' },
+// ];
+
+//   return (
+//     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+//       <DetailHeader onBack={() => navigation.goBack()} />
+      
+//       {/* ScrollView में paddingBottom बढ़ाया गया है ताकि कंटेंट पूरा ऊपर तक स्क्रॉल हो */}
+//       <ScrollView 
+//         showsVerticalScrollIndicator={false} 
+//         contentContainerStyle={{ paddingBottom: 160 }} 
+//       >
+//         {/* <ImageGallery 
+//           selectedImage={selectedImage} 
+//           setSelectedImage={setSelectedImage} 
+//           thumbnails={thumbnails} 
+//         /> */}
+//         {/* <ImageGallery thumbnails={carMedia} /> */}
+//         <ImageGallery media={CAR_MEDIA} car={car} />
+
+//         <CarInfoSection 
+//           car={car} 
+//           showFullDesc={showFullDesc} 
+//           setShowFullDesc={setShowFullDesc} 
+//         />
+        
+//         <FeatureGrid />
+
+//         <CarOverview car={car} />
+//         <InspectionReport />
+//         <FeaturesSpecs />
+//         <SimilarCars />
+
+//       </ScrollView>
+
+//       {/* --- Updated Footer --- */}
+//       <View style={[
+//         styles.footer, 
+//         { paddingBottom: insets.bottom + 15 } // सिस्टम बार के हिसाब से स्पेस
+//       ]}>
+//         <TouchableOpacity 
+//           style={styles.inquiryBtn} 
+//           onPress={() => navigation.navigate('ScheduleDateScreen', { car })}
+//           activeOpacity={0.8}
+//         >
+//           <Text style={styles.inquiryText}>Inquiry Now</Text>
+//         </TouchableOpacity>
+//       </View>
+//     </SafeAreaView>
+//   );
+// };
+
+// export default CarDetailScreen;
+
+// const styles = StyleSheet.create({
+//   container: { flex: 1, backgroundColor: Colors.white },
+  
+//   footer: {
+//     position: "absolute",
+//     bottom: 0,
+//     width: "100%",
+//     // // --- यहाँ बदलाव किया गया है ---
+//     paddingHorizontal: 40, // बटन की चौड़ाई कम करने के लिए padding बढ़ाई
+//     // backgroundColor: 'white',
+//     // paddingTop: 15, // ऊपर वाले कंटेंट से गैप के लिए
+    
+//     // // हल्का सा शैडो ताकि पता चले कि यह अलग हिस्सा है
+//     shadowColor: "#000",
+//     shadowOffset: { width: 0, height: -3 },
+//     shadowOpacity: 0.1,
+//     shadowRadius: 5,
+//     elevation: 10,
+//   },
+  
+//   inquiryBtn: {
+//     backgroundColor: Colors.primary,
+//     paddingVertical: 16,
+//     borderRadius: 12,
+//     alignItems: "center",
+//   },
+  
+//   inquiryText: { 
+//     color: Colors.white, 
+//     fontFamily: Fonts.bold, 
+//     fontSize: 18 
+//   },
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useMemo } from "react";
+// import { ScrollView, StyleSheet, View, TouchableOpacity, Text, Dimensions } from "react-native";
+// import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+// import { Colors } from "../../theme/colors";
+// import { Fonts } from "../../theme/fonts";
+// import { CAR_MEDIA } from '../../dummydata/dummyData';
+
+// // Components Import
+// import DetailHeader from "../../components/cardetail/DetailHeader";
+// import ImageGallery from "../../components/cardetail/ImageGallery";
+// import CarInfoSection from "../../components/cardetail/CarInfoSection";
+// import ImageVideoSelectButton from "../../components/cardetail/ImageVideoSelectButton";
+// import SimilarCars from "../../components/cardetail/SimilarCars";
+// import FeaturesSpecs from "../../components/cardetail/FeaturesSpecs";
+// import InspectionReport from "../../components/cardetail/InspectionReport";
+// import CarOverview from "../../components/cardetail/CarOverview";
+
+// const { width } = Dimensions.get("window");
+
+// const CarDetailScreen = ({ route, navigation }: any) => {
+//   const { car } = route.params || {};
+//   const insets = useSafeAreaInsets();
+  
+//   const [showFullDesc, setShowFullDesc] = useState(false);
+
+//   // --- Filter State for Media ---
+//   const [showImages, setShowImages] = useState(true);
+//   const [showVideos, setShowVideos] = useState(true);
+
+//   // --- Filter Logic ---
+//   const filteredMedia = useMemo(() => {
+//     return CAR_MEDIA.filter(item => {
+//       if (showImages && item.type === 'image') return true;
+//       if (showVideos && item.type === 'video') return true;
+//       return false;
+//     });
+//   }, [showImages, showVideos]);
+
+//   return (
+//     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+//       {/* 1. Header */}
+//       <DetailHeader onBack={() => navigation.goBack()} />
+      
+//       <ScrollView 
+//         showsVerticalScrollIndicator={false} 
+//         contentContainerStyle={{ paddingBottom: 160 }} 
+//       >
+//         {/* 2. Gallery Section (Conditional) */}
+//         {filteredMedia.length > 0 ? (
+//             <ImageGallery media={filteredMedia} car={car} />
+//         ) : (
+//             <View style={styles.emptyGallery}>
+//                 <Text style={styles.emptyText}>Select Image or Video to view gallery</Text>
+//             </View>
+//         )}
+
+//         {/* 3. Info Section */}
+//         <CarInfoSection 
+//           car={car} 
+//           showFullDesc={showFullDesc} 
+//           setShowFullDesc={setShowFullDesc} 
+//         />
+        
+//         {/* 4. Filter Buttons */}
+//         <ImageVideoSelectButton 
+//             showImages={showImages}
+//             setShowImages={setShowImages}
+//             showVideos={showVideos}
+//             setShowVideos={setShowVideos}
+//         />
+
+//         {/* 5. Detailed Car Data */}
+//         <CarOverview car={car} />
+//         <InspectionReport />
+//         <FeaturesSpecs />
+//         <SimilarCars />
+
+//       </ScrollView>
+
+//       {/* 6. Sticky Footer */}
+//       <View style={[
+//         styles.footer, 
+//         { paddingBottom: insets.bottom + 15 }
+//       ]}>
+//         <TouchableOpacity 
+//           style={styles.inquiryBtn} 
+//           onPress={() => navigation.navigate('ScheduleDateScreen', { car })}
+//           activeOpacity={0.8}
+//         >
+//           <Text style={styles.inquiryText}>Inquiry Now</Text>
+//         </TouchableOpacity>
+//       </View>
+//     </SafeAreaView>
+//   );
+// };
+
+// export default CarDetailScreen;
+
+// const styles = StyleSheet.create({
+//   container: { flex: 1, backgroundColor: Colors.white },
+  
+//   emptyGallery: {
+//     height: 250,
+//     width: width - 40,
+//     backgroundColor: '#F3F4F6',
+//     borderRadius: 20,
+//     alignSelf: 'center',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     marginTop: 10,
+//   },
+  
+//   emptyText: {
+//     fontFamily: Fonts.medium,
+//     color: 'gray',
+//     textAlign: 'center',
+//   },
+
+//   footer: {
+//     position: "absolute",
+//     bottom: 0,
+//     width: "100%",
+//     paddingHorizontal: 40, 
+//     backgroundColor: 'white', // फूटर का बैकग्राउंड वाइट किया ताकि कंटेंट न दिखे
+//     paddingTop: 15,
+    
+//     // प्रीमियम शैडो ताकि यह अलग दिखे
+//     shadowColor: "#000",
+//     shadowOffset: { width: 0, height: -4 },
+//     shadowOpacity: 0.1,
+//     shadowRadius: 8,
+//     elevation: 20,
+//   },
+  
+//   inquiryBtn: {
+//     backgroundColor: Colors.primary,
+//     paddingVertical: 16,
+//     borderRadius: 12,
+//     alignItems: "center",
+//   },
+  
+//   inquiryText: { 
+//     color: Colors.white, 
+//     fontFamily: Fonts.bold, 
+//     fontSize: 18 
+//   },
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useMemo } from "react";
+// import { 
+//   ScrollView, 
+//   StyleSheet, 
+//   View, 
+//   TouchableOpacity, 
+//   Text, 
+//   Dimensions 
+// } from "react-native";
+// import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+// import { Colors } from "../../theme/colors";
+// import { Fonts } from "../../theme/fonts";
+// import Ionicons from "@react-native-vector-icons/ionicons";
+// import { CAR_MEDIA } from '../../dummydata/dummyData';
+
+// // Components Import
+// import DetailHeader from "../../components/cardetail/DetailHeader";
+// import ImageGallery from "../../components/cardetail/ImageGallery";
+// import CarInfoSection from "../../components/cardetail/CarInfoSection";
+// import SimilarCars from "../../components/cardetail/SimilarCars";
+// import FeaturesSpecs from "../../components/cardetail/FeaturesSpecs";
+// import InspectionReport from "../../components/cardetail/InspectionReport";
+// import CarOverview from "../../components/cardetail/CarOverview";
+
+// const { width } = Dimensions.get("window");
+
+// const CarDetailScreen = ({ route, navigation }: any) => {
+//   // पिछले स्क्रीन से कार का डेटा प्राप्त करें
+//   const { car } = route.params || {};
+//   const insets = useSafeAreaInsets();
+  
+//   // --- Local States ---
+//   const [showFullDesc, setShowFullDesc] = useState(false);
+  
+//   // इमेज और वीडियो फ़िल्टर करने के लिए स्टेट्स
+//   const [showImages, setShowImages] = useState(true);
+//   const [showVideos, setShowVideos] = useState(true);
+
+//   // --- Logic: डेटा को फ़िल्टर करना ---
+//   // यह लॉजिक सुनिश्चित करता है कि गैलरी में वही दिखे जो यूज़र ने सेलेक्ट किया है
+//   const filteredMedia = useMemo(() => {
+//     return CAR_MEDIA.filter(item => {
+//       if (showImages && item.type === 'image') return true;
+//       if (showVideos && item.type === 'video') return true;
+//       return false;
+//     });
+//   }, [showImages, showVideos]);
+
+//   // अगर किसी वजह से डेटा नहीं है तो लोडिंग दिखाएं
+//   if (!car) {
+//     return (
+//       <View style={styles.center}>
+//         <Text>Loading car details...</Text>
+//       </View>
+//     );
+//   }
+
+//   return (
+//     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+//       {/* 1. कस्टम हेडर (Back & Share) */}
+//       <DetailHeader onBack={() => navigation.goBack()} />
+      
+//       <ScrollView 
+//         showsVerticalScrollIndicator={false} 
+//         contentContainerStyle={{ paddingBottom: 160 }} // फूटर के लिए एक्स्ट्रा स्पेस
+//       >
+//         {/* 2. इमेज गैलरी (Filtered Media के साथ) */}
+//         {filteredMedia.length > 0 ? (
+//             <ImageGallery media={filteredMedia} car={car} />
+//         ) : (
+//             <View style={styles.emptyGallery}>
+//                 <Ionicons name="images-outline" size={40} color="gray" />
+//                 <Text style={styles.emptyText}>Please select Image or Video to view gallery</Text>
+//             </View>
+//         )}
+
+//         {/* 3. कार इन्फो सेक्शन (अब बटन इसके अंदर डिस्क्रिप्शन के ऊपर हैं) */}
+//         <CarInfoSection 
+//           car={car} 
+//           showFullDesc={showFullDesc} 
+//           setShowFullDesc={setShowFullDesc}
+//           // फ़िल्टर वाले प्रोप्स यहाँ से पास हो रहे हैं
+//           showImages={showImages}
+//           setShowImages={setShowImages}
+//           showVideos={showVideos}
+//           setShowVideos={setShowVideos}
+//         />
+        
+//         {/* 4. कार के अन्य डिटेल्स (Cars24 Style) */}
+//         <CarOverview car={car} />
+//         <InspectionReport />
+//         <FeaturesSpecs />
+//         <SimilarCars />
+
+//       </ScrollView>
+
+//       {/* 5. स्टिकी बॉटम बटन (Inquiry Now) */}
+//       <View style={[
+//         styles.footer, 
+//         { paddingBottom: insets.bottom + 15 } // Safe area support
+//       ]}>
+//         <TouchableOpacity 
+//           style={styles.inquiryBtn} 
+//           onPress={() => navigation.navigate('ScheduleDateScreen', { car })}
+//           activeOpacity={0.8}
+//         >
+//           <Text style={styles.inquiryText}>Enquiry Now</Text>
+//         </TouchableOpacity>
+//       </View>
+//     </SafeAreaView>
+//   );
+// };
+
+// export default CarDetailScreen;
+
+// const styles = StyleSheet.create({
+//   container: { 
+//     flex: 1, 
+//     backgroundColor: Colors.white 
+//   },
+//   center: { 
+//     flex: 1, 
+//     justifyContent: 'center', 
+//     alignItems: 'center' 
+//   },
+  
+//   // जब गैलरी में कुछ न हो तब के लिए स्टाइल
+//   emptyGallery: {
+//     height: 250,
+//     width: width - 40,
+//     backgroundColor: '#F3F4F6',
+//     borderRadius: 20,
+//     alignSelf: 'center',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     marginTop: 10,
+//   },
+//   emptyText: {
+//     fontFamily: Fonts.medium,
+//     color: 'gray',
+//     textAlign: 'center',
+//     marginTop: 10,
+//     paddingHorizontal: 20
+//   },
+
+//   // स्टिकी फूटर स्टाइल
+//   footer: {
+//     position: "absolute",
+//     bottom: 0,
+//     width: "100%",
+//     paddingHorizontal: 40, 
+//     backgroundColor: 'white',
+//     paddingTop: 15,
+    
+//     // प्रीमियम लुक के लिए शैडो
+//     shadowColor: "#000",
+//     shadowOffset: { width: 0, height: -4 },
+//     shadowOpacity: 0.1,
+//     shadowRadius: 8,
+//     elevation: 20,
+//   },
+  
+//   inquiryBtn: {
+//     backgroundColor: Colors.primary,
+//     paddingVertical: 16,
+//     borderRadius: 12,
+//     alignItems: "center",
+//   },
+  
+//   inquiryText: { 
+//     color: Colors.white, 
+//     fontFamily: Fonts.bold, 
+//     fontSize: 18 
+//   },
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState, useMemo } from "react";
+import { 
+  ScrollView, 
+  StyleSheet, 
+  View, 
+  TouchableOpacity, 
+  Text, 
+  Dimensions,
+  Modal, // मोडल के लिए
+  TouchableWithoutFeedback // बाहर क्लिक करने पर बंद करने के लिए
+} from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import Ionicons from "@react-native-vector-icons/ionicons";
 import { Colors } from "../../theme/colors";
 import { Fonts } from "../../theme/fonts";
 import { CAR_MEDIA } from '../../dummydata/dummyData';
@@ -275,60 +772,116 @@ import { CAR_MEDIA } from '../../dummydata/dummyData';
 import DetailHeader from "../../components/cardetail/DetailHeader";
 import ImageGallery from "../../components/cardetail/ImageGallery";
 import CarInfoSection from "../../components/cardetail/CarInfoSection";
-import FeatureGrid from "../../components/cardetail/FeatureGrid";
+import SimilarCars from "../../components/cardetail/SimilarCars";
+import FeaturesSpecs from "../../components/cardetail/FeaturesSpecs";
+import InspectionReport from "../../components/cardetail/InspectionReport";
+import CarOverview from "../../components/cardetail/CarOverview";
+
+const { width } = Dimensions.get("window");
 
 const CarDetailScreen = ({ route, navigation }: any) => {
-  const car = route.params?.car;
+  const { car } = route.params || {};
   const insets = useSafeAreaInsets();
   
-  const [selectedImage, setSelectedImage] = useState(car?.image);
+  // --- Local States ---
   const [showFullDesc, setShowFullDesc] = useState(false);
-  const thumbnails = [car?.image, car?.image, car?.image];
-  const carMedia = [
-  { url: car?.image, type: 'image' },
-  { url: require('../../assets/video/car_video.mp4'), type: 'video' }, // आपका लोकल वीडियो
-  { url: car?.image, type: 'image' },
-];
+  const [showImages, setShowImages] = useState(true);
+  const [showVideos, setShowVideos] = useState(true);
+  
+  // --- Modal State ---
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const filteredMedia = useMemo(() => {
+    return CAR_MEDIA.filter(item => {
+      if (showImages && item.type === 'image') return true;
+      if (showVideos && item.type === 'video') return true;
+      return false;
+    });
+  }, [showImages, showVideos]);
+
+  if (!car) {
+    return (
+      <View style={styles.center}><Text>Loading car details...</Text></View>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <DetailHeader onBack={() => navigation.goBack()} />
       
-      {/* ScrollView में paddingBottom बढ़ाया गया है ताकि कंटेंट पूरा ऊपर तक स्क्रॉल हो */}
       <ScrollView 
         showsVerticalScrollIndicator={false} 
-        contentContainerStyle={{ paddingBottom: 160 }} 
+        contentContainerStyle={{ paddingBottom: 160 }}
       >
-        {/* <ImageGallery 
-          selectedImage={selectedImage} 
-          setSelectedImage={setSelectedImage} 
-          thumbnails={thumbnails} 
-        /> */}
-        {/* <ImageGallery thumbnails={carMedia} /> */}
-        <ImageGallery media={CAR_MEDIA} />
+        {filteredMedia.length > 0 ? (
+            <ImageGallery media={filteredMedia} car={car} />
+        ) : (
+            <View style={styles.emptyGallery}>
+                <Ionicons name="images-outline" size={40} color="gray" />
+                <Text style={styles.emptyText}>Please select Image or Video to view gallery</Text>
+            </View>
+        )}
 
         <CarInfoSection 
           car={car} 
           showFullDesc={showFullDesc} 
-          setShowFullDesc={setShowFullDesc} 
+          setShowFullDesc={setShowFullDesc}
+          showImages={showImages}
+          setShowImages={setShowImages}
+          showVideos={showVideos}
+          setShowVideos={setShowVideos}
         />
         
-        <FeatureGrid />
+        <CarOverview car={car} />
+        <InspectionReport />
+        <FeaturesSpecs />
+        <SimilarCars />
       </ScrollView>
 
-      {/* --- Updated Footer --- */}
-      <View style={[
-        styles.footer, 
-        { paddingBottom: insets.bottom + 15 } // सिस्टम बार के हिसाब से स्पेस
-      ]}>
+      {/* --- Inquiry Button (Trigger Modal) --- */}
+      <View style={[styles.footer, { paddingBottom: insets.bottom + 15 }]}>
         <TouchableOpacity 
           style={styles.inquiryBtn} 
-          onPress={() => navigation.navigate('ScheduleDateScreen', { car })}
+          onPress={() => setModalVisible(true)} // यहाँ मोडल ओपन होगा
           activeOpacity={0.8}
         >
-          <Text style={styles.inquiryText}>Inquiry Now</Text>
+          <Text style={styles.inquiryText}>Enquiry Now</Text>
         </TouchableOpacity>
       </View>
+
+      {/* --- Success Modal --- */}
+      <Modal
+        visible={isModalVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <View style={styles.modalOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={styles.modalContent}>
+                {/* Success Icon */}
+                <View style={styles.iconCircle}>
+                  <Ionicons name="checkmark-circle" size={80} color={Colors.primary} />
+                </View>
+                
+                <Text style={styles.modalTitle}>Enquiry Received!</Text>
+                <Text style={styles.modalSubTitle}>
+                  Thank you for your interest. We will connect with you soon.
+                </Text>
+
+                {/* Close Button */}
+                <TouchableOpacity 
+                  style={styles.okayBtn} 
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text style={styles.okayBtnText}>Great!</Text>
+                </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -337,34 +890,58 @@ export default CarDetailScreen;
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.white },
+  center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  emptyGallery: { height: 250, width: width - 40, backgroundColor: '#F3F4F6', borderRadius: 20, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', marginTop: 10 },
+  emptyText: { fontFamily: Fonts.medium, color: 'gray', textAlign: 'center', marginTop: 10, paddingHorizontal: 20 },
   
-  footer: {
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-    // // --- यहाँ बदलाव किया गया है ---
-    paddingHorizontal: 40, // बटन की चौड़ाई कम करने के लिए padding बढ़ाई
-    // backgroundColor: 'white',
-    // paddingTop: 15, // ऊपर वाले कंटेंट से गैप के लिए
-    
-    // // हल्का सा शैडो ताकि पता चले कि यह अलग हिस्सा है
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: -3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
+  footer: { position: "absolute", bottom: 0, width: "100%", paddingHorizontal: 40, backgroundColor: 'white', paddingTop: 15, shadowColor: "#000", shadowOffset: { width: 0, height: -4 }, shadowOpacity: 0.1, shadowRadius: 8, elevation: 20 },
+  inquiryBtn: { backgroundColor: Colors.primary, paddingVertical: 16, borderRadius: 12, alignItems: "center" },
+  inquiryText: { color: Colors.white, fontFamily: Fonts.bold, fontSize: 18 },
+
+  // --- Modal Styles ---
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.6)', // बैकड्रॉप (धुंधला बैकग्राउंड)
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    width: width * 0.85,
+    backgroundColor: 'white',
+    borderRadius: 25,
+    padding: 30,
+    alignItems: 'center',
     elevation: 10,
   },
-  
-  inquiryBtn: {
-    backgroundColor: Colors.primary,
-    paddingVertical: 16,
-    borderRadius: 12,
-    alignItems: "center",
+  iconCircle: {
+    marginBottom: 20,
   },
-  
-  inquiryText: { 
-    color: Colors.white, 
-    fontFamily: Fonts.bold, 
-    fontSize: 18 
+  modalTitle: {
+    fontFamily: Fonts.bold,
+    fontSize: 22,
+    color: Colors.black,
+    textAlign: 'center',
   },
+  modalSubTitle: {
+    fontFamily: Fonts.medium,
+    fontSize: 15,
+    color: 'gray',
+    textAlign: 'center',
+    marginTop: 10,
+    lineHeight: 22,
+  },
+  okayBtn: {
+    marginTop: 30,
+    backgroundColor: Colors.secondary,
+    paddingHorizontal: 40,
+    paddingVertical: 14,
+    borderRadius: 15,
+    width: '100%',
+    alignItems: 'center',
+  },
+  okayBtnText: {
+    color: 'white',
+    fontFamily: Fonts.bold,
+    fontSize: 16,
+  }
 });

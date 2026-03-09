@@ -468,7 +468,8 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.container}>
       <FlatList
         data={RECOMMENDATIONS}
-        renderItem={renderCarItem}
+        // renderItem={renderCarItem}
+        renderItem={({ item }) => <CarCard item={item} width="48%" />}
         keyExtractor={(item) => item.id}
         numColumns={2}
         ListHeaderComponent={ListHeader}

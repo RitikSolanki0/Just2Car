@@ -88,9 +88,10 @@ interface CarItem {
 
 interface CarCardProps {
   item: CarItem;
+   width?: any; 
 }
 
-const CarCard = React.memo(({ item }: CarCardProps) => {
+const CarCard = React.memo(({ item, width = '100%' }: CarCardProps) => {
   // नेविगेशन हुक का उपयोग करें
   const navigation = useNavigation<any>();
 
@@ -101,7 +102,7 @@ const CarCard = React.memo(({ item }: CarCardProps) => {
 
   return (
     <TouchableOpacity 
-      style={styles.card} 
+      style={[styles.card, { width }]} 
       activeOpacity={0.9} 
       onPress={handlePress} // क्लिक करने पर डिटेल स्क्रीन खुलेगी
     >
@@ -144,7 +145,7 @@ export default CarCard;
 
 const styles = StyleSheet.create({
   card: { 
-    width: '48%', 
+    // width: '48%', 
     backgroundColor: Colors.white, 
     borderRadius: 12, 
     marginBottom: 15, 
