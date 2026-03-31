@@ -261,46 +261,217 @@
 
 
 
-import React from "react";
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  FlatList, 
-  Image, 
-  TouchableOpacity, 
-  Dimensions 
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useSelector } from "react-redux";
-import Ionicons from "@react-native-vector-icons/ionicons";
-import { RootState } from "../../../redux/store";
-import { Colors } from "../../../theme/colors";
-import { Fonts } from "../../../theme/fonts";
+// import React from "react";
+// import { 
+//   View, 
+//   Text, 
+//   StyleSheet, 
+//   FlatList, 
+//   Image, 
+//   TouchableOpacity, 
+//   Dimensions 
+// } from "react-native";
+// import { SafeAreaView } from "react-native-safe-area-context";
+// import { useSelector } from "react-redux";
+// import Ionicons from "@react-native-vector-icons/ionicons";
+// import { RootState } from "../../../redux/store";
+// import { Colors } from "../../../theme/colors";
+// import { Fonts } from "../../../theme/fonts";
 
-const { width } = Dimensions.get("window");
-const isTablet = width > 600; // टैबलेट पहचानने के लिए
+// const { width } = Dimensions.get("window");
+// const isTablet = width > 600; // टैबलेट पहचानने के लिए
+
+// const MyAddScreen = ({ navigation }: any) => {
+//   const myAds = useSelector((state: RootState) => state.myAds.ads);
+
+//   const getStatusInfo = (status: string) => {
+//     switch (status) {
+//       case 'waiting_inspection': 
+//         return { color: '#2563EB', bg: '#EFF6FF', label: 'Waiting for Inspection', icon: 'time-outline' };
+//       case 'waiting_confirmation': 
+//         return { color: Colors.secondary, bg: Colors.primary, label: 'Confirm Time', icon: 'alert-circle' };
+//       case 'approved': 
+//         return { color: '#059669', bg: '#ECFDF5', label: 'Ad Live', icon: 'checkmark-done-circle' };
+//       case 'rejected': 
+//         return { color: '#DC2626', bg: '#FEF2F2', label: 'Ad Rejected', icon: 'close-circle' };
+//       default: 
+//         return { color: 'gray', bg: '#F3F4F6', label: 'Pending', icon: 'help-circle' };
+//     }
+//   };
+
+//   const renderItem = ({ item }: any) => {
+//     const statusStyle = getStatusInfo(item.status);
+//     return (
+//       <TouchableOpacity 
+//         style={[styles.adCard, isTablet && styles.tabletCard]} 
+//         activeOpacity={0.9}
+//         onPress={() => navigation.navigate('MyAdDetailScreen', { ad: item })}
+//       >
+//         <Image 
+//             source={item.image ? { uri: item.image } : require('../../../assets/images/carimages/car1.jpg')} 
+//             style={styles.carImg} 
+//         />
+        
+//         <View style={styles.details}>
+//           <Text style={styles.carTitle} numberOfLines={1}>{item.title}</Text>
+//           <Text style={styles.carPrice}>{item.price}</Text>
+
+//           <View style={[styles.statusBadge, { backgroundColor: statusStyle.bg }]}>
+//             <Ionicons name={statusStyle.icon as any} size={13} color={statusStyle.color} />
+//             <Text style={[styles.statusText, { color: statusStyle.color }]}>{statusStyle.label}</Text>
+//           </View>
+
+//           {item.status === 'waiting_confirmation' && (
+//             <Text style={styles.tapHint}>Tap to confirm time slot</Text>
+//           )}
+//         </View>
+
+//         <View style={styles.arrowIcon}>
+//           <Ionicons name="chevron-forward" size={18} color="#243B53" />
+//         </View>
+//       </TouchableOpacity>
+//     );
+//   };
+
+//   return (
+//     <SafeAreaView style={styles.safeArea}>
+//       <View style={styles.header}>
+//         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
+//           <Ionicons name="chevron-back" size={28} color="black" />
+//         </TouchableOpacity>
+//         <Text style={styles.headerTitle}>My Ads</Text>
+//       </View>
+
+//       {myAds.length > 0 ? (
+//         <FlatList
+//           key={isTablet ? 'h' : 'v'} // key बदलना ज़रूरी है जब numColumns बदलता है
+//           data={myAds}
+//           keyExtractor={(item) => item.id}
+//           numColumns={isTablet ? 2 : 1}
+//           contentContainerStyle={styles.listContainer}
+//           columnWrapperStyle={isTablet ? { justifyContent: 'space-between' } : null}
+//           showsVerticalScrollIndicator={false}
+//           renderItem={renderItem}
+//         />
+//       ) : (
+//         <View style={styles.emptyContainer}>
+//           <Ionicons name="car-sport-outline" size={100} color="#F3F4F6" />
+//           <Text style={styles.emptyText}>You haven't posted any ads yet.</Text>
+//           <TouchableOpacity style={styles.addBtn} onPress={() => navigation.navigate('AddCarScreen')}>
+//              <Text style={styles.addBtnText}>Post an Ad</Text>
+//           </TouchableOpacity>
+//         </View>
+//       )}
+//     </SafeAreaView>
+//   );
+// };
+
+// export default MyAddScreen;
+
+// const styles = StyleSheet.create({
+//   safeArea: { flex: 1, backgroundColor: Colors.white },
+//   header: { 
+//     flexDirection: 'row', 
+//     alignItems: 'center', 
+//     padding: 15, 
+//     borderBottomWidth: 1, 
+//     borderBottomColor: '#f3f4f6' 
+//   },
+//   backBtn: { padding: 5 },
+//   headerTitle: { fontFamily: Fonts.bold, fontSize: 22, color: 'black', marginLeft: 10 },
+  
+//   listContainer: { 
+//     padding: 15, // पैडिंग को थोड़ा कम किया ताकि ग्रिड में जगह मिले
+//     paddingBottom: 120 
+//   },
+
+//   adCard: { 
+//     flexDirection: 'row', 
+//     backgroundColor: 'white', 
+//     borderRadius: 12, 
+//     marginBottom: 15, 
+//     elevation: 5, 
+//     height: 115, 
+//     width: '100%',
+//     overflow: 'hidden', 
+//     shadowColor: Colors.primary, 
+//     shadowOpacity: 0.2, 
+//     shadowRadius: 8,
+//     alignItems: 'center'
+//   },
+
+//   // टैबलेट के लिए कार्ड की चौड़ाई आधी (लगभग)
+//   tabletCard: {
+//     width: '59%',
+//   },
+
+//   carImg: { 
+//     width: width * 0.28, // स्क्रीन की चौड़ाई का 28% हिस्सा (रिस्पॉन्सिव)
+//     maxWidth: 130, // बहुत बड़े स्क्रीन पर इसे फिक्स किया
+//     minWidth: 90,
+//     height: '100%', 
+//     resizeMode: 'cover',
+//   },
+
+//   details: { 
+//     flex: 1, 
+//     paddingHorizontal: 16, 
+//     justifyContent: 'center' 
+//   },
+//   carTitle: { fontFamily: Fonts.bold, fontSize: 16, color: Colors.black },
+//   carPrice: { fontFamily: Fonts.semiBold, fontSize: 14, color: Colors.black, marginTop: 2 },
+  
+//   statusBadge: { 
+//     flexDirection: 'row', 
+//     alignItems: 'center', 
+//     alignSelf: 'flex-start', 
+//     paddingHorizontal: 8, 
+//     paddingVertical: 4, 
+//     borderRadius: 6, 
+//     marginTop: 6 
+//   },
+//   statusText: { fontSize: 9, fontFamily: Fonts.bold, marginLeft: 4 },
+//   tapHint: { fontSize: 8.5, color: '#EA580C', fontFamily: Fonts.bold, marginTop: 4 },
+  
+//   arrowIcon: { paddingRight: 10 },
+
+//   emptyContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 40 },
+//   emptyText: { fontFamily: Fonts.medium, fontSize: 16, color: 'gray', marginTop: 10, textAlign: 'center' },
+//   addBtn: { marginTop: 20, backgroundColor: Colors.primary, paddingHorizontal: 30, paddingVertical: 12, borderRadius: 25 },
+//   addBtnText: { color: 'white', fontFamily: Fonts.bold }
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// api integration and chhote part me yaha se 
+
+import React from "react";
+import { View, Text, FlatList, Image, TouchableOpacity, ActivityIndicator, RefreshControl } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Ionicons from "@react-native-vector-icons/ionicons";
+import { styles, isTablet } from "./MyAddScreenStyles";
+import { useMyAdsLogic } from "./useMyAdsLogic";
 
 const MyAddScreen = ({ navigation }: any) => {
-  const myAds = useSelector((state: RootState) => state.myAds.ads);
-
-  const getStatusInfo = (status: string) => {
-    switch (status) {
-      case 'waiting_inspection': 
-        return { color: '#2563EB', bg: '#EFF6FF', label: 'Waiting for Inspection', icon: 'time-outline' };
-      case 'waiting_confirmation': 
-        return { color: Colors.secondary, bg: Colors.primary, label: 'Confirm Time', icon: 'alert-circle' };
-      case 'approved': 
-        return { color: '#059669', bg: '#ECFDF5', label: 'Ad Live', icon: 'checkmark-done-circle' };
-      case 'rejected': 
-        return { color: '#DC2626', bg: '#FEF2F2', label: 'Ad Rejected', icon: 'close-circle' };
-      default: 
-        return { color: 'gray', bg: '#F3F4F6', label: 'Pending', icon: 'help-circle' };
-    }
-  };
+  const { ads, loading, refreshing, onRefresh, getStatusInfo } = useMyAdsLogic(navigation);
 
   const renderItem = ({ item }: any) => {
-    const statusStyle = getStatusInfo(item.status);
+    // API से 'inspectionStatus' की कोडिंग उठाएं
+    const statusStyle = getStatusInfo(item.inspectionStatus);
+    
     return (
       <TouchableOpacity 
         style={[styles.adCard, isTablet && styles.tabletCard]} 
@@ -308,30 +479,37 @@ const MyAddScreen = ({ navigation }: any) => {
         onPress={() => navigation.navigate('MyAdDetailScreen', { ad: item })}
       >
         <Image 
-            source={item.image ? { uri: item.image } : require('../../../assets/images/carimages/car1.jpg')} 
+            source={item.images && item.images.length > 0 
+                ? { uri: item.images[0] } 
+                : require('../../../assets/images/carimages/car1.jpg')} 
             style={styles.carImg} 
         />
         
         <View style={styles.details}>
-          <Text style={styles.carTitle} numberOfLines={1}>{item.title}</Text>
-          <Text style={styles.carPrice}>{item.price}</Text>
+          <Text style={styles.carTitle} numberOfLines={1}>{item.model}</Text>
+          <Text style={styles.carReg}>{item.registrationNumber}</Text>
+          <Text style={styles.carPrice}>₹ {item.expectedPrice?.toLocaleString()}</Text>
 
           <View style={[styles.statusBadge, { backgroundColor: statusStyle.bg }]}>
-            <Ionicons name={statusStyle.icon as any} size={13} color={statusStyle.color} />
+            <Ionicons name={statusStyle.icon as any} size={12} color={statusStyle.color} />
             <Text style={[styles.statusText, { color: statusStyle.color }]}>{statusStyle.label}</Text>
           </View>
-
-          {item.status === 'waiting_confirmation' && (
-            <Text style={styles.tapHint}>Tap to confirm time slot</Text>
-          )}
         </View>
 
         <View style={styles.arrowIcon}>
-          <Ionicons name="chevron-forward" size={18} color="#243B53" />
+          <Ionicons name="chevron-forward" size={18} color="#CCC" />
         </View>
       </TouchableOpacity>
     );
   };
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center' }}>
+        <ActivityIndicator size="large" color="#243B53" />
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -342,16 +520,19 @@ const MyAddScreen = ({ navigation }: any) => {
         <Text style={styles.headerTitle}>My Ads</Text>
       </View>
 
-      {myAds.length > 0 ? (
+      {ads.length > 0 ? (
         <FlatList
-          key={isTablet ? 'h' : 'v'} // key बदलना ज़रूरी है जब numColumns बदलता है
-          data={myAds}
-          keyExtractor={(item) => item.id}
+          key={isTablet ? 'tablet' : 'mobile'}
+          data={ads}
+          keyExtractor={(item) => item._id}
           numColumns={isTablet ? 2 : 1}
           contentContainerStyle={styles.listContainer}
           columnWrapperStyle={isTablet ? { justifyContent: 'space-between' } : null}
           showsVerticalScrollIndicator={false}
           renderItem={renderItem}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         />
       ) : (
         <View style={styles.emptyContainer}>
@@ -367,76 +548,3 @@ const MyAddScreen = ({ navigation }: any) => {
 };
 
 export default MyAddScreen;
-
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: Colors.white },
-  header: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    padding: 15, 
-    borderBottomWidth: 1, 
-    borderBottomColor: '#f3f4f6' 
-  },
-  backBtn: { padding: 5 },
-  headerTitle: { fontFamily: Fonts.bold, fontSize: 22, color: 'black', marginLeft: 10 },
-  
-  listContainer: { 
-    padding: 15, // पैडिंग को थोड़ा कम किया ताकि ग्रिड में जगह मिले
-    paddingBottom: 120 
-  },
-
-  adCard: { 
-    flexDirection: 'row', 
-    backgroundColor: 'white', 
-    borderRadius: 12, 
-    marginBottom: 15, 
-    elevation: 5, 
-    height: 115, 
-    width: '100%',
-    overflow: 'hidden', 
-    shadowColor: Colors.primary, 
-    shadowOpacity: 0.2, 
-    shadowRadius: 8,
-    alignItems: 'center'
-  },
-
-  // टैबलेट के लिए कार्ड की चौड़ाई आधी (लगभग)
-  tabletCard: {
-    width: '59%',
-  },
-
-  carImg: { 
-    width: width * 0.28, // स्क्रीन की चौड़ाई का 28% हिस्सा (रिस्पॉन्सिव)
-    maxWidth: 130, // बहुत बड़े स्क्रीन पर इसे फिक्स किया
-    minWidth: 90,
-    height: '100%', 
-    resizeMode: 'cover',
-  },
-
-  details: { 
-    flex: 1, 
-    paddingHorizontal: 16, 
-    justifyContent: 'center' 
-  },
-  carTitle: { fontFamily: Fonts.bold, fontSize: 16, color: Colors.black },
-  carPrice: { fontFamily: Fonts.semiBold, fontSize: 14, color: Colors.black, marginTop: 2 },
-  
-  statusBadge: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    alignSelf: 'flex-start', 
-    paddingHorizontal: 8, 
-    paddingVertical: 4, 
-    borderRadius: 6, 
-    marginTop: 6 
-  },
-  statusText: { fontSize: 9, fontFamily: Fonts.bold, marginLeft: 4 },
-  tapHint: { fontSize: 8.5, color: '#EA580C', fontFamily: Fonts.bold, marginTop: 4 },
-  
-  arrowIcon: { paddingRight: 10 },
-
-  emptyContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 40 },
-  emptyText: { fontFamily: Fonts.medium, fontSize: 16, color: 'gray', marginTop: 10, textAlign: 'center' },
-  addBtn: { marginTop: 20, backgroundColor: Colors.primary, paddingHorizontal: 30, paddingVertical: 12, borderRadius: 25 },
-  addBtnText: { color: 'white', fontFamily: Fonts.bold }
-});

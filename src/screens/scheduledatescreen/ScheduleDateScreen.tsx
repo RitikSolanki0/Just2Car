@@ -1330,162 +1330,287 @@
 
 
 
-import React, { useState, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView, Modal, TextInput } from "react-native";
+// import React, { useState, useEffect } from "react";
+// import { View, Text, Image, TouchableOpacity, ScrollView, Modal, TextInput } from "react-native";
+// import Ionicons from "@react-native-vector-icons/ionicons";
+// import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+// import { styles } from './ScheduleDateStyles';
+// import TimePickerModal from './TimePickerModal';
+// import { Colors } from "../../theme/colors";
+
+// const ScheduleDateScreen = ({ navigation, route }: any) => {
+//   const { car } = route.params || {};
+//   const insets = useSafeAreaInsets();
+
+//   // --- Logic States ---
+//   const [selectedDate, setSelectedDate] = useState("");
+//   const [selectedTime, setSelectedTime] = useState("11:00 AM");
+//   const [availableDates, setAvailableDates] = useState<string[]>([]);
+//   const [availableTimes, setAvailableTimes] = useState(["09:00 AM", "11:00 AM", "01:00 PM", "04:00 PM"]);
+//   const [location, setLocation] = useState("Hub");
+//   const [address, setAddress] = useState(""); 
+//   const [showSuccess, setShowSuccess] = useState(false);
+//   const [showPicker, setShowPicker] = useState(false);
+
+//   // --- 1. आने वाले 7 दिनों की तारीखें जेनरेट करना ---
+//   useEffect(() => {
+//     const dates = [];
+//     for (let i = 1; i <= 7; i++) {
+//       const d = new Date();
+//       d.setDate(d.getDate() + i);
+//       dates.push(`${d.getDate().toString().padStart(2, '0')} ${d.toLocaleString('default', { month: 'short' })}`);
+//     }
+//     setAvailableDates(dates);
+//     setSelectedDate(dates[0]);
+//   }, []);
+
+//   // --- 2. नया टाइम ऐड करने का फंक्शन ---
+//   const addNewTime = (newTime: string) => {
+//     if (!availableTimes.includes(newTime)) setAvailableTimes([...availableTimes, newTime]);
+//     setSelectedTime(newTime);
+//     setShowPicker(false);
+//   };
+
+//   // --- 3. फिक्स: handleDone फंक्शन (यही मिसिंग था) ---
+//   const handleDone = () => {
+//     setShowSuccess(false);
+//     navigation.navigate('BottomNavigator'); // सुनिश्चित करें कि आपका Tab Navigator इसी नाम से है
+//   };
+
+//   return (
+//     <SafeAreaView style={styles.safeArea}>
+//       {/* Header */}
+//       <View style={styles.header}>
+//         <TouchableOpacity onPress={() => navigation.goBack()}>
+//           <Ionicons name="arrow-back" size={28} color="black" />
+//         </TouchableOpacity>
+//         <Text style={styles.headerTitle}>Book a Inspection Time</Text>
+//         <TouchableOpacity>
+//           {/* <Ionicons name="help-circle-outline" size={28} color="black" /> */}
+//         </TouchableOpacity>
+//       </View>
+
+//       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
+//         {/* Car Image */}
+//         <Image 
+//           source={car?.image ? (typeof car.image === 'string' ? { uri: car.image } : car.image) : require("../../assets/images/carimages/car1.jpg")} 
+//           style={styles.imageContainer} 
+//         />
+
+//         <View style={styles.detailsSection}>
+//           <Text style={styles.carName}>{car?.title || car?.name || "Car Name"}</Text>
+//           <Text style={styles.carPrice}>{car?.price || "₹ 0.00"}</Text>
+
+//           {/* Choose Location */}
+//           <Text style={styles.sectionTitle}>Choose Location</Text>
+//           <View style={styles.buttonRow}>
+//             <TouchableOpacity 
+//               style={[styles.locationBtn, location === "Hub" ? styles.btnActive : styles.btnInactive]} 
+//               onPress={() => setLocation("Hub")}
+//             >
+//               <Text style={[styles.btnText, location === "Hub" ? styles.textWhite : styles.textBlack]}>At Our Hub</Text>
+//             </TouchableOpacity>
+//             <TouchableOpacity 
+//               style={[styles.locationBtn, location === "Home" ? styles.btnYellow : styles.btnInactive]} 
+//               onPress={() => setLocation("Home")}
+//             >
+//               <Text style={[styles.btnText, location === "Home" ? styles.textWhite : styles.textBlack]}>Your Home</Text>
+//             </TouchableOpacity>
+//           </View>
+
+//           {/* Conditional Address Input */}
+//           {location === "Home" && (
+//             <View style={styles.inputWrapper}>
+//               <TextInput
+//                 placeholder="Enter your complete home address"
+//                 placeholderTextColor="#9CA3AF"
+//                 style={styles.addressInput}
+//                 multiline={true}
+//                 value={address}
+//                 onChangeText={setAddress}
+//               />
+//             </View>
+//           )}
+
+//           {/* Date Selection */}
+//           <Text style={styles.sectionTitle}>Select Date</Text>
+//           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.selectorRow}>
+//             {availableDates.map(date => (
+//               <TouchableOpacity 
+//                 key={date} 
+//                 style={[styles.pill, selectedDate === date ? styles.btnActive : styles.pillInactive]} 
+//                 onPress={() => setSelectedDate(date)}
+//               >
+//                 <Text style={[styles.pillText, selectedDate === date ? styles.textWhite : styles.textGray]}>{date}</Text>
+//               </TouchableOpacity>
+//             ))}
+//           </ScrollView>
+
+//           {/* Time Selection */}
+//           <Text style={styles.sectionTitle}>Choose Time</Text>
+//           <View style={styles.gridRow}>
+//             {availableTimes.map(time => (
+//               <TouchableOpacity 
+//                 key={time} 
+//                 style={[styles.pillLarge, selectedTime === time ? styles.btnActive : styles.pillInactive]} 
+//                 onPress={() => setSelectedTime(time)}
+//               >
+//                 <Text style={[styles.pillText, selectedTime === time ? styles.textWhite : styles.textGray]}>{time}</Text>
+//               </TouchableOpacity>
+//             ))}
+//             <TouchableOpacity style={styles.addMoreBtn} onPress={() => setShowPicker(true)}>
+//               <Ionicons name="add" size={30} color="#9CA3AF" />
+//             </TouchableOpacity>
+//           </View>
+//         </View>
+//       </ScrollView>
+
+//       {/* Footer */}
+//       <View style={[styles.footer, { paddingBottom: insets.bottom + 20 }]}>
+//         <TouchableOpacity style={styles.confirmBtn} onPress={() => setShowSuccess(true)}>
+//           <Text style={styles.confirmText}>SUBMIT</Text>
+//         </TouchableOpacity>
+//       </View>
+
+//       {/* Modals */}
+//       <TimePickerModal visible={showPicker} onClose={() => setShowPicker(false)} onSave={addNewTime} />
+      
+//       <Modal visible={showSuccess} transparent animationType="fade">
+//         <View style={styles.modalOverlay}>
+//           <View style={styles.modalContent}>
+//             <Ionicons name="checkmark-circle" size={80} color={Colors.primary} />
+//             <Text style={styles.modalTitle}>Thank You!</Text>
+//             <Text style={styles.modalSubTitle}>We will share you the confirmation message soon.</Text>
+            
+//             {/* यहाँ handleDone इस्तेमाल हो रहा है */}
+//             <TouchableOpacity style={styles.okayBtn} onPress={handleDone}>
+//               <Text style={styles.okayBtnText}>Done</Text>
+//             </TouchableOpacity>
+//           </View>
+//         </View>
+//       </Modal>
+//     </SafeAreaView>
+//   );
+// };
+
+// export default ScheduleDateScreen;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// api integration and chote part me yaha se 
+
+import React from "react";
+import { View, Text, Image, TouchableOpacity, ScrollView, Modal, TextInput, ActivityIndicator } from "react-native";
 import Ionicons from "@react-native-vector-icons/ionicons";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { styles } from './ScheduleDateStyles';
 import TimePickerModal from './TimePickerModal';
+import { useScheduleDateLogic } from './useScheduleDateLogic';
 import { Colors } from "../../theme/colors";
+import { formatDate } from "../../utils/dateHelpers"; // हमने जो पहले बनाया था
 
 const ScheduleDateScreen = ({ navigation, route }: any) => {
   const { car } = route.params || {};
   const insets = useSafeAreaInsets();
+  
+  const logic = useScheduleDateLogic(navigation, car);
 
-  // --- Logic States ---
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("11:00 AM");
-  const [availableDates, setAvailableDates] = useState<string[]>([]);
-  const [availableTimes, setAvailableTimes] = useState(["09:00 AM", "11:00 AM", "01:00 PM", "04:00 PM"]);
-  const [location, setLocation] = useState("Hub");
-  const [address, setAddress] = useState(""); 
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [showPicker, setShowPicker] = useState(false);
-
-  // --- 1. आने वाले 7 दिनों की तारीखें जेनरेट करना ---
-  useEffect(() => {
-    const dates = [];
-    for (let i = 1; i <= 7; i++) {
-      const d = new Date();
-      d.setDate(d.getDate() + i);
-      dates.push(`${d.getDate().toString().padStart(2, '0')} ${d.toLocaleString('default', { month: 'short' })}`);
-    }
-    setAvailableDates(dates);
-    setSelectedDate(dates[0]);
-  }, []);
-
-  // --- 2. नया टाइम ऐड करने का फंक्शन ---
   const addNewTime = (newTime: string) => {
-    if (!availableTimes.includes(newTime)) setAvailableTimes([...availableTimes, newTime]);
-    setSelectedTime(newTime);
-    setShowPicker(false);
-  };
-
-  // --- 3. फिक्स: handleDone फंक्शन (यही मिसिंग था) ---
-  const handleDone = () => {
-    setShowSuccess(false);
-    navigation.navigate('BottomNavigator'); // सुनिश्चित करें कि आपका Tab Navigator इसी नाम से है
+    if (!logic.availableTimes.includes(newTime)) {
+        logic.setAvailableTimes([...logic.availableTimes, newTime]);
+    }
+    logic.setSelectedTime(newTime);
+    logic.setShowPicker(false);
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={28} color="black" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Book a Inspection Time</Text>
-        <TouchableOpacity>
-          {/* <Ionicons name="help-circle-outline" size={28} color="black" /> */}
-        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}><Ionicons name="arrow-back" size={28} color="black" /></TouchableOpacity>
+        <Text style={styles.headerTitle}>Book an Inspection</Text>
+        <View style={{width: 28}} />
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
-        {/* Car Image */}
-        <Image 
-          source={car?.image ? (typeof car.image === 'string' ? { uri: car.image } : car.image) : require("../../assets/images/carimages/car1.jpg")} 
-          style={styles.imageContainer} 
-        />
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 150 }}>
+        <Image source={car?.images && car.images.length > 0 ? { uri: car.images[0] } : require("../../assets/images/carimages/car1.jpg")} style={styles.imageContainer} />
 
         <View style={styles.detailsSection}>
-          <Text style={styles.carName}>{car?.title || car?.name || "Car Name"}</Text>
-          <Text style={styles.carPrice}>{car?.price || "₹ 0.00"}</Text>
+          <Text style={styles.carName}>{car?.model || "Car Details"}</Text>
+          <Text style={styles.carPrice}>₹ {car?.expectedPrice?.toLocaleString()}</Text>
 
-          {/* Choose Location */}
           <Text style={styles.sectionTitle}>Choose Location</Text>
           <View style={styles.buttonRow}>
-            <TouchableOpacity 
-              style={[styles.locationBtn, location === "Hub" ? styles.btnActive : styles.btnInactive]} 
-              onPress={() => setLocation("Hub")}
-            >
-              <Text style={[styles.btnText, location === "Hub" ? styles.textWhite : styles.textBlack]}>At Our Hub</Text>
+            <TouchableOpacity style={[styles.locationBtn, logic.location === "Hub" ? styles.btnActive : styles.btnInactive]} onPress={() => logic.setLocation("Hub")}>
+              <Text style={[styles.btnText, logic.location === "Hub" ? styles.textWhite : styles.textBlack]}>At Our Hub</Text>
             </TouchableOpacity>
-            <TouchableOpacity 
-              style={[styles.locationBtn, location === "Home" ? styles.btnYellow : styles.btnInactive]} 
-              onPress={() => setLocation("Home")}
-            >
-              <Text style={[styles.btnText, location === "Home" ? styles.textWhite : styles.textBlack]}>Your Home</Text>
+            <TouchableOpacity style={[styles.locationBtn, logic.location === "Home" ? styles.btnYellow : styles.btnInactive]} onPress={() => logic.setLocation("Home")}>
+              <Text style={[styles.btnText, logic.location === "Home" ? styles.textWhite : styles.textBlack]}>Your Home</Text>
             </TouchableOpacity>
           </View>
 
-          {/* Conditional Address Input */}
-          {location === "Home" && (
-            <View style={styles.inputWrapper}>
-              <TextInput
-                placeholder="Enter your complete home address"
-                placeholderTextColor="#9CA3AF"
-                style={styles.addressInput}
-                multiline={true}
-                value={address}
-                onChangeText={setAddress}
-              />
-            </View>
+          {logic.location === "Home" && (
+            <TextInput placeholder="Enter your full home address" style={styles.reasonInput} value={logic.address} onChangeText={logic.setAddress} multiline />
           )}
 
-          {/* Date Selection */}
           <Text style={styles.sectionTitle}>Select Date</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.selectorRow}>
-            {availableDates.map(date => (
-              <TouchableOpacity 
-                key={date} 
-                style={[styles.pill, selectedDate === date ? styles.btnActive : styles.pillInactive]} 
-                onPress={() => setSelectedDate(date)}
-              >
-                <Text style={[styles.pillText, selectedDate === date ? styles.textWhite : styles.textGray]}>{date}</Text>
+            {logic.availableDates.map(date => (
+              <TouchableOpacity key={date} style={[styles.pill, logic.selectedDate === date ? styles.btnActive : styles.pillInactive]} onPress={() => logic.setSelectedDate(date)}>
+                <Text style={[styles.pillText, logic.selectedDate === date ? styles.textWhite : styles.textGray]}>{formatDate(date)}</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
 
-          {/* Time Selection */}
           <Text style={styles.sectionTitle}>Choose Time</Text>
           <View style={styles.gridRow}>
-            {availableTimes.map(time => (
-              <TouchableOpacity 
-                key={time} 
-                style={[styles.pillLarge, selectedTime === time ? styles.btnActive : styles.pillInactive]} 
-                onPress={() => setSelectedTime(time)}
-              >
-                <Text style={[styles.pillText, selectedTime === time ? styles.textWhite : styles.textGray]}>{time}</Text>
+            {logic.availableTimes.map(time => (
+              <TouchableOpacity key={time} style={[styles.pillLarge, logic.selectedTime === time ? styles.btnActive : styles.pillInactive]} onPress={() => logic.setSelectedTime(time)}>
+                <Text style={[styles.pillText, logic.selectedTime === time ? styles.textWhite : styles.textGray]}>{time}</Text>
               </TouchableOpacity>
             ))}
-            <TouchableOpacity style={styles.addMoreBtn} onPress={() => setShowPicker(true)}>
+            <TouchableOpacity style={styles.addMoreBtn} onPress={() => logic.setShowPicker(true)}>
               <Ionicons name="add" size={30} color="#9CA3AF" />
             </TouchableOpacity>
           </View>
+
+          <Text style={styles.sectionTitle}>Reason for Reschedule</Text>
+          <TextInput placeholder="Why do you want to reschedule?" style={styles.reasonInput} value={logic.reason} onChangeText={logic.setReason} multiline />
         </View>
       </ScrollView>
 
-      {/* Footer */}
-      <View style={[styles.footer, { paddingBottom: insets.bottom + 20 }]}>
-        <TouchableOpacity style={styles.confirmBtn} onPress={() => setShowSuccess(true)}>
-          <Text style={styles.confirmText}>SUBMIT</Text>
+      {/* --- SUBMIT Button --- */}
+      <View style={[styles.footer, { paddingBottom: insets.bottom + 15 }]}>
+        <TouchableOpacity style={styles.confirmBtn} onPress={logic.handleRescheduleSubmit} disabled={logic.loading}>
+          {logic.loading ? <ActivityIndicator color="white" /> : <Text style={styles.confirmText}>SUBMIT</Text>}
         </TouchableOpacity>
       </View>
 
-      {/* Modals */}
-      <TimePickerModal visible={showPicker} onClose={() => setShowPicker(false)} onSave={addNewTime} />
+      <TimePickerModal visible={logic.showPicker} onClose={() => logic.setShowPicker(false)} onSave={addNewTime} />
       
-      <Modal visible={showSuccess} transparent animationType="fade">
+      {/* Success Modal */}
+      <Modal visible={logic.showSuccess} transparent animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <Ionicons name="checkmark-circle" size={80} color={Colors.primary} />
             <Text style={styles.modalTitle}>Thank You!</Text>
             <Text style={styles.modalSubTitle}>We will share you the confirmation message soon.</Text>
-            
-            {/* यहाँ handleDone इस्तेमाल हो रहा है */}
-            <TouchableOpacity style={styles.okayBtn} onPress={handleDone}>
-              <Text style={styles.okayBtnText}>Done</Text>
-            </TouchableOpacity>
+            <TouchableOpacity style={styles.okayBtn} onPress={() => {logic.setShowSuccess(false); navigation.navigate('BottomNavigator');}}><Text style={styles.okayBtnText}>Done</Text></TouchableOpacity>
           </View>
         </View>
       </Modal>

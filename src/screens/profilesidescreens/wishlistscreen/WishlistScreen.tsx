@@ -160,7 +160,8 @@ const WishlistScreen = () => {
         {wishlistItems.length > 0 ? (
           <FlatList
             data={wishlistItems}
-            keyExtractor={(item) => String(item.id)}
+            // keyExtractor={(item) => String(item.id)}
+            keyExtractor={(item) => item._id || item.id} 
             numColumns={2}
             columnWrapperStyle={styles.row}
             showsVerticalScrollIndicator={false}

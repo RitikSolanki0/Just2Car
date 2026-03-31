@@ -1390,6 +1390,272 @@
 
 
 
+// import React, { useState } from "react";
+// import {
+//   View,
+//   Text,
+//   StyleSheet,
+//   TextInput,
+//   TouchableOpacity,
+//   ScrollView,
+//   Alert
+// } from "react-native";
+// import { SafeAreaView } from "react-native-safe-area-context";
+// import ImagePicker from 'react-native-image-crop-picker';
+// import { useDispatch } from 'react-redux';
+// import { Colors } from "../../../theme/colors";
+// import { Fonts } from "../../../theme/fonts";
+// import { addAd } from '../../../redux/myAdsSlice';
+// import { showSuccessToast } from '../../../utils/showToast';
+
+// // Data Imports
+// import { BRANDS_LIST, MODELS_LIST, VARIANTS_LIST, FUELS_LIST } from '../../../dummydata/dummyData';
+
+// // Components Imports
+// import AddCarHeader from "../../../components/addcar/AddCarHeader";
+// import ConditionYearSection from "../../../components/addcar/ConditionYearSection";
+// import BrandModelSection from "../../../components/addcar/BrandModelSection";
+// import TechnicalSection from "../../../components/addcar/TechnicalSection";
+// import PricingLocationSection from "../../../components/addcar/PricingLocationSection";
+// import FeaturesSection from "../../../components/addcar/FeaturesSection";
+// import MediaUploadSection from "../../../components/addcar/MediaUploadSection";
+
+// const AddCarScreen = ({ navigation }: any) => {
+//   const dispatch = useDispatch();
+
+//   // --- States ---
+//   const [title, setTitle] = useState("");
+//   const [condition, setCondition] = useState("1st");
+//   const [year, setYear] = useState(""); // <-- फिक्स: year स्टेट जोड़ी गई
+//   const [brand, setBrand] = useState("");
+//   const [model, setModel] = useState("");
+//   const [variant, setVariant] = useState("");
+//   const [fuel, setFuel] = useState("");
+//   const [transmission, setTransmission] = useState("Manual");
+//   const [kms, setKms] = useState("");
+//   const [price, setPrice] = useState("");
+//   const [location, setLocation] = useState("");
+//   const [mobile, setMobile] = useState("");
+//   const [description, setDescription] = useState(""); // <-- फिक्स: description स्टेट जोड़ी गई
+//   const [features, setFeatures] = useState<string[]>([]);
+//   const [mediaFiles, setMediaFiles] = useState<any[]>([]);
+
+//    const resetForm = () => {
+//     setTitle("");
+//     setCondition("1st");
+//     setYear("");
+//     setBrand("");
+//     setModel("");
+//     setVariant("");
+//     setFuel("");
+//     setTransmission("Manual");
+//     setKms("");
+//     setPrice("");
+//     setLocation("");
+//     setMobile("");
+//     setDescription("");
+//     setFeatures([]);
+//     setMediaFiles([]);
+//   };
+
+//   // --- फॉर्म सबमिट करने का लॉजिक ---
+//   const handleSellCarSubmission = () => {
+//     console.log("Submitting:", { title, brand, price, mobile, year });
+
+//     if (!title.trim()) {
+//       Alert.alert("Error", "Please enter Title");
+//       return;
+//     }
+//     if (!brand) {
+//       Alert.alert("Error", "Please select Brand");
+//       return;
+//     }
+//     if (!year) {
+//       Alert.alert("Error", "Please enter Year");
+//       return;
+//     }
+//     if (!price) {
+//       Alert.alert("Error", "Please set Price");
+//       return;
+//     }
+//     if (!mobile || mobile.length < 10) {
+//       Alert.alert("Error", "Please enter a valid 10-digit Mobile Number");
+//       return;
+//     }
+
+//     const newAdData = {
+//       id: Date.now().toString(),
+//       title: title,
+//       price: `₹ ${price}`,
+//       image: mediaFiles.length > 0 ? mediaFiles[0].path : null,
+//       status: 'waiting_confirmation', // आप इसे 'waiting_confirmation' भी रख सकते हैं
+//       details: {
+//         condition,
+//         brand,
+//         model,
+//         variant,
+//         fuel,
+//         transmission,
+//         kms,
+//         location,
+//         mobile,
+//         features,
+//         year,
+//         description
+//       }
+//     };
+
+//     dispatch(addAd(newAdData as any));
+//     showSuccessToast("Success", "Your car ad has been submitted! ❤️");
+//      resetForm(); 
+//     navigation.navigate('HomeScreen');
+//   };
+
+//   // मीडिया अपलोड लॉजिक
+//   const handleUploadMedia = () => {
+//     if (mediaFiles.length >= 5) {
+//       Alert.alert("Limit Reached", "Max 5 files allowed.");
+//       return;
+//     }
+//     ImagePicker.openPicker({
+//       multiple: true, mediaType: 'any', maxFiles: 5 - mediaFiles.length,
+//     }).then(results => {
+//       let validFiles: any[] = [];
+//       results.forEach((file: any) => {
+//         if (file.mime && file.mime.startsWith('video')) {
+//           const duration = (file as any).duration / 1000;
+//           if (duration <= 60) validFiles.push(file);
+//         } else validFiles.push(file);
+//       });
+//       setMediaFiles([...mediaFiles, ...validFiles].slice(0, 5));
+//     }).catch(e => { if (e.code !== 'E_PICKER_CANCELLED') console.log(e); });
+//   };
+
+//   const removeMedia = (index: number) => {
+//     const updated = [...mediaFiles];
+//     updated.splice(index, 1);
+//     setMediaFiles(updated);
+//   };
+
+//   return (
+//     <SafeAreaView style={styles.safeArea}>
+//       <AddCarHeader onBack={() => navigation.goBack()} />
+
+//       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+
+//         {/* Title Input */}
+//         <Text style={styles.label}>Title</Text>
+//         <TextInput
+//           placeholder="e.g. Maruti Swift 2021"
+//           style={styles.inputFull}
+//           value={title}
+//           onChangeText={setTitle}
+//           placeholderTextColor="#C7C7CD"
+//         />
+
+//         {/* Condition & Year Section */}
+//         <ConditionYearSection
+//           condition={condition}
+//           setCondition={setCondition}
+//           year={year}
+//           setYear={setYear} // <-- साल की स्टेट यहाँ पास करें
+//         />
+
+//         <BrandModelSection
+//           brand={brand} setBrand={setBrand}
+//           model={model} setModel={setModel}
+//           variant={variant} setVariant={setVariant}
+//           brandsList={BRANDS_LIST} modelsList={MODELS_LIST} variantsList={VARIANTS_LIST}
+//         />
+
+//         <TechnicalSection
+//           fuel={fuel} setFuel={setFuel} fuelsList={FUELS_LIST}
+//           transmission={transmission} setTransmission={setTransmission}
+//           kms={kms} setKms={setKms}
+//         />
+
+//         <PricingLocationSection
+//           price={price} setPrice={setPrice}
+//           location={location} setLocation={setLocation}
+//           mobile={mobile} setMobile={setMobile}
+//         />
+
+//         <FeaturesSection features={features} setFeatures={setFeatures} />
+
+//         {/* <MediaUploadSection mediaFiles={mediaFiles} onUpload={handleUploadMedia} onRemove={removeMedia} /> */}
+//         <MediaUploadSection
+//           mediaFiles={mediaFiles}
+//           setMediaFiles={setMediaFiles}
+//           onUpload={handleUploadMedia}
+//           onRemove={removeMedia}
+//         />
+
+//         {/* Description Input */}
+//         <Text style={styles.label}>Description</Text>
+//         <TextInput
+//           placeholder="More details about car..."
+//           multiline
+//           numberOfLines={4}
+//           style={styles.textArea}
+//           textAlignVertical="top"
+//           value={description}
+//           onChangeText={setDescription} // <-- स्टेट अपडेट यहाँ होगी
+//           placeholderTextColor="#C7C7CD"
+//         />
+
+//         <TouchableOpacity style={styles.submitBtn} onPress={handleSellCarSubmission}>
+//           <Text style={styles.submitText}>Sell Your Car</Text>
+//         </TouchableOpacity>
+
+//         <View style={{ height: 100 }} />
+//       </ScrollView>
+//     </SafeAreaView>
+//   );
+// };
+
+// export default AddCarScreen;
+
+// const styles = StyleSheet.create({
+//   safeArea: { flex: 1, backgroundColor: Colors.white },
+//   scrollContent: { paddingHorizontal: 20 },
+//   label: { fontFamily: Fonts.bold, fontSize: 16, color: 'black', marginTop: 18, marginBottom: 8 },
+//   inputFull: { backgroundColor: "#F2F4F7", borderRadius: 12, paddingHorizontal: 15, height: 50, fontFamily: Fonts.regular, color: 'black' },
+//   textArea: { backgroundColor: "#F2F4F7", borderRadius: 12, padding: 15, height: 100, fontFamily: Fonts.regular, color: 'black' },
+//   submitBtn: { backgroundColor: Colors.primary, paddingVertical: 18, borderRadius: 12, alignItems: "center", marginTop: 25 },
+//   submitText: { color: Colors.white, fontFamily: Fonts.bold, fontSize: 16 },
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// api integration and chhote part me yaha se 
+
+
 import React, { useState } from "react";
 import {
   View,
@@ -1398,7 +1664,8 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Alert
+  Alert,
+  ActivityIndicator
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ImagePicker from 'react-native-image-crop-picker';
@@ -1419,192 +1686,71 @@ import TechnicalSection from "../../../components/addcar/TechnicalSection";
 import PricingLocationSection from "../../../components/addcar/PricingLocationSection";
 import FeaturesSection from "../../../components/addcar/FeaturesSection";
 import MediaUploadSection from "../../../components/addcar/MediaUploadSection";
+import CustomDropdown from "../../../components/addcar/CustomDropdown";
+import { useAddCarLogic } from "./useAddCarLogic";
+import SellerDetailsSection from "../../../components/addcar/SellerDetailsSection";
+import CarDetailsSection from "../../../components/addcar/CarDetailsSection";
 
 const AddCarScreen = ({ navigation }: any) => {
-  const dispatch = useDispatch();
-
-  // --- States ---
-  const [title, setTitle] = useState("");
-  const [condition, setCondition] = useState("1st");
-  const [year, setYear] = useState(""); // <-- फिक्स: year स्टेट जोड़ी गई
-  const [brand, setBrand] = useState("");
-  const [model, setModel] = useState("");
-  const [variant, setVariant] = useState("");
-  const [fuel, setFuel] = useState("");
-  const [transmission, setTransmission] = useState("Manual");
-  const [kms, setKms] = useState("");
-  const [price, setPrice] = useState("");
-  const [location, setLocation] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [description, setDescription] = useState(""); // <-- फिक्स: description स्टेट जोड़ी गई
-  const [features, setFeatures] = useState<string[]>([]);
-  const [mediaFiles, setMediaFiles] = useState<any[]>([]);
-
-   const resetForm = () => {
-    setTitle("");
-    setCondition("1st");
-    setYear("");
-    setBrand("");
-    setModel("");
-    setVariant("");
-    setFuel("");
-    setTransmission("Manual");
-    setKms("");
-    setPrice("");
-    setLocation("");
-    setMobile("");
-    setDescription("");
-    setFeatures([]);
-    setMediaFiles([]);
-  };
-
-  // --- फॉर्म सबमिट करने का लॉजिक ---
-  const handleSellCarSubmission = () => {
-    console.log("Submitting:", { title, brand, price, mobile, year });
-
-    if (!title.trim()) {
-      Alert.alert("Error", "Please enter Title");
-      return;
-    }
-    if (!brand) {
-      Alert.alert("Error", "Please select Brand");
-      return;
-    }
-    if (!year) {
-      Alert.alert("Error", "Please enter Year");
-      return;
-    }
-    if (!price) {
-      Alert.alert("Error", "Please set Price");
-      return;
-    }
-    if (!mobile || mobile.length < 10) {
-      Alert.alert("Error", "Please enter a valid 10-digit Mobile Number");
-      return;
-    }
-
-    const newAdData = {
-      id: Date.now().toString(),
-      title: title,
-      price: `₹ ${price}`,
-      image: mediaFiles.length > 0 ? mediaFiles[0].path : null,
-      status: 'waiting_confirmation', // आप इसे 'waiting_confirmation' भी रख सकते हैं
-      details: {
-        condition,
-        brand,
-        model,
-        variant,
-        fuel,
-        transmission,
-        kms,
-        location,
-        mobile,
-        features,
-        year,
-        description
-      }
-    };
-
-    dispatch(addAd(newAdData as any));
-    showSuccessToast("Success", "Your car ad has been submitted! ❤️");
-     resetForm(); 
-    navigation.navigate('HomeScreen');
-  };
-
-  // मीडिया अपलोड लॉजिक
-  const handleUploadMedia = () => {
-    if (mediaFiles.length >= 5) {
-      Alert.alert("Limit Reached", "Max 5 files allowed.");
-      return;
-    }
-    ImagePicker.openPicker({
-      multiple: true, mediaType: 'any', maxFiles: 5 - mediaFiles.length,
-    }).then(results => {
-      let validFiles: any[] = [];
-      results.forEach((file: any) => {
-        if (file.mime && file.mime.startsWith('video')) {
-          const duration = (file as any).duration / 1000;
-          if (duration <= 60) validFiles.push(file);
-        } else validFiles.push(file);
-      });
-      setMediaFiles([...mediaFiles, ...validFiles].slice(0, 5));
-    }).catch(e => { if (e.code !== 'E_PICKER_CANCELLED') console.log(e); });
-  };
-
-  const removeMedia = (index: number) => {
-    const updated = [...mediaFiles];
-    updated.splice(index, 1);
-    setMediaFiles(updated);
-  };
+  const logic = useAddCarLogic(navigation);
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <AddCarHeader onBack={() => navigation.goBack()} />
-
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
 
-        {/* Title Input */}
-        <Text style={styles.label}>Title</Text>
-        <TextInput
-          placeholder="e.g. Maruti Swift 2021"
-          style={styles.inputFull}
-          value={title}
-          onChangeText={setTitle}
-          placeholderTextColor="#C7C7CD"
-        />
+<SellerDetailsSection 
+      name={logic.sellerName} setName={logic.setSellerName}
+      email={logic.sellerEmail} setEmail={logic.setSellerEmail}
+      mobile={logic.sellerMobile} setMobile={logic.setSellerMobile}
+    />
 
-        {/* Condition & Year Section */}
-        <ConditionYearSection
-          condition={condition}
-          setCondition={setCondition}
-          year={year}
-          setYear={setYear} // <-- साल की स्टेट यहाँ पास करें
-        />
+    {/* 2. Car Identity (New Component) */}
+    <CarDetailsSection 
+      carName={logic.carName} setCarName={logic.setCarName}
+      regNumber={logic.regNumber} setRegNumber={logic.setRegNumber}
+    />
+        {/* Location Dropdowns */}
+        <View style={styles.row}>
+          <CustomDropdown label="State" data={logic.states} selectedValue={logic.selectedState.name} onSelect={logic.onStateChange} />
+          <View style={{ width: 10 }} />
+          <CustomDropdown label="City" data={logic.cities} selectedValue={logic.selectedCity.name} onSelect={logic.onCitySelect} />
+        </View>
 
+        {/* Brand & Model */}
         <BrandModelSection
-          brand={brand} setBrand={setBrand}
-          model={model} setModel={setModel}
-          variant={variant} setVariant={setVariant}
-          brandsList={BRANDS_LIST} modelsList={MODELS_LIST} variantsList={VARIANTS_LIST}
+          brand={logic.selectedBrand.name} setBrand={logic.onBrandChange}
+          model={logic.selectedModel.name} setModel={logic.onModelSelect}
+          variant={logic.variant} setVariant={logic.setVariant}
+          brandsList={logic.brands} modelsList={logic.models}
+          variantsList={["VXI", "ZXI", "Base"]}
         />
+
+        <ConditionYearSection condition={logic.condition} setCondition={logic.setCondition} year={logic.year} setYear={logic.setYear} />
 
         <TechnicalSection
-          fuel={fuel} setFuel={setFuel} fuelsList={FUELS_LIST}
-          transmission={transmission} setTransmission={setTransmission}
-          kms={kms} setKms={setKms}
+          fuel={logic.fuelType} setFuel={logic.setFuelType} fuelsList={["Petrol", "Diesel", "CNG", "Electric"]}
+          transmission={logic.transmission} setTransmission={logic.setTransmission}
+          kms={logic.kmDriven} setKms={logic.setKmDriven}
         />
 
         <PricingLocationSection
-          price={price} setPrice={setPrice}
-          location={location} setLocation={setLocation}
-          mobile={mobile} setMobile={setMobile}
+          price={logic.expectedPrice} setPrice={logic.setExpectedPrice}
+          location={logic.location} setLocation={logic.setLocation} // Location already handled above
+          mobile={logic.sellerMobile}
+          setMobile={logic.setSellerMobile}
+          address={logic.address}
+          setAddress={logic.setAddress}
         />
 
-        <FeaturesSection features={features} setFeatures={setFeatures} />
+        <FeaturesSection features={logic.features} setFeatures={logic.setFeatures} />
+        <MediaUploadSection mediaFiles={logic.mediaFiles} setMediaFiles={logic.setMediaFiles} />
 
-        {/* <MediaUploadSection mediaFiles={mediaFiles} onUpload={handleUploadMedia} onRemove={removeMedia} /> */}
-        <MediaUploadSection
-          mediaFiles={mediaFiles}
-          setMediaFiles={setMediaFiles}
-          onUpload={handleUploadMedia}
-          onRemove={removeMedia}
-        />
-
-        {/* Description Input */}
         <Text style={styles.label}>Description</Text>
-        <TextInput
-          placeholder="More details about car..."
-          multiline
-          numberOfLines={4}
-          style={styles.textArea}
-          textAlignVertical="top"
-          value={description}
-          onChangeText={setDescription} // <-- स्टेट अपडेट यहाँ होगी
-          placeholderTextColor="#C7C7CD"
-        />
+        <TextInput multiline style={styles.textArea} value={logic.description} onChangeText={logic.setDescription} />
 
-        <TouchableOpacity style={styles.submitBtn} onPress={handleSellCarSubmission}>
-          <Text style={styles.submitText}>Sell Your Car</Text>
+        <TouchableOpacity style={styles.submitBtn} onPress={logic.handleSellCarSubmission}>
+          {logic.loading ? <ActivityIndicator color="white" /> : <Text style={styles.submitText}>Sell Your Car</Text>}
         </TouchableOpacity>
 
         <View style={{ height: 100 }} />
@@ -1623,4 +1769,10 @@ const styles = StyleSheet.create({
   textArea: { backgroundColor: "#F2F4F7", borderRadius: 12, padding: 15, height: 100, fontFamily: Fonts.regular, color: 'black' },
   submitBtn: { backgroundColor: Colors.primary, paddingVertical: 18, borderRadius: 12, alignItems: "center", marginTop: 25 },
   submitText: { color: Colors.white, fontFamily: Fonts.bold, fontSize: 16 },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: 'flex-start'
+  },
 });
+

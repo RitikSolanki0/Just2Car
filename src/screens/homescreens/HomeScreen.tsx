@@ -449,15 +449,17 @@ import BrandSection from '../../components/home/BrandSection';
 import BannerSection from '../../components/home/BannerSection';
 import DealerBanner from '../../components/home/DealerBanner';
 import FilterSection from '../../components/home/FilterSection';
+import { useHomeLogic } from './useHomeLogic';
 
 const HomeScreen = () => {
+   const { brands, banners, cars, loading } = useHomeLogic();
   const renderCarItem = useCallback(({ item }: any) => <CarCard item={item} />, []);
 
   const ListHeader = () => (
     <>
       <HomeHeader />
-      <BrandSection />
-      <BannerSection />
+      <BrandSection data={brands} loading={loading} />
+      <BannerSection data={banners} loading={loading} />
       <DealerBanner />
       <FilterSection />
       <Text style={styles.freshTitle}>Fresh Recommendation</Text>
@@ -465,17 +467,32 @@ const HomeScreen = () => {
   );
 
   return (
+    // <SafeAreaView style={styles.container}>
+    //   <FlatList
+    //     data={RECOMMENDATIONS}
+    //     // renderItem={renderCarItem}
+    //     renderItem={({ item }) => <CarCard item={item} width="48%" />}
+    //     keyExtractor={(item) => item.id}
+    //     numColumns={2}
+    //     ListHeaderComponent={ListHeader}
+    //     columnWrapperStyle={{ justifyContent: 'space-between' }}
+    //     contentContainerStyle={{ paddingBottom: 100 }}
+    //     showsVerticalScrollIndicator={false}
+    //   />
+    // </SafeAreaView>
+
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={RECOMMENDATIONS}
-        // renderItem={renderCarItem}
-        renderItem={({ item }) => <CarCard item={item} width="48%" />}
-        keyExtractor={(item) => item.id}
+        data={cars} // अब असली API डेटा यहाँ है
+        keyExtractor={(item) => item._id} // MongoDB की _id यूज़ करें
         numColumns={2}
         ListHeaderComponent={ListHeader}
         columnWrapperStyle={{ justifyContent: 'space-between' }}
         contentContainerStyle={{ paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <CarCard item={item} width="48%" />
+        )}
       />
     </SafeAreaView>
   );

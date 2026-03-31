@@ -58,9 +58,13 @@ const wishlistSlice = createSlice({
   reducers: {
     toggleWishlist: (state, action: PayloadAction<any>) => {
       // ID को सुरक्षित तरीके से चेक करें (String में बदल कर)
-      const index = state.items.findIndex(
-        (item) => String(item.id) === String(action.payload.id)
-      );
+      // const index = state.items.findIndex(
+      //   (item) => String(item.id) === String(action.payload.id)
+      // );
+        const itemID = action.payload._id || action.payload.id;
+        const index = state.items.findIndex(
+        (item) => (item._id || item.id) === itemID
+        );
 
       if (index >= 0) {
         state.items.splice(index, 1);

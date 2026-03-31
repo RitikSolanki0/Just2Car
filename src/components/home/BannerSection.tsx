@@ -397,6 +397,267 @@
 
 
 
+// import React from 'react';
+// import { StyleSheet, View, Dimensions, Image } from 'react-native';
+// import Carousel from 'react-native-reanimated-carousel';
+// import Animated, { 
+//   useAnimatedStyle, 
+//   interpolate, 
+//   useSharedValue,
+//   interpolateColor,
+//   Extrapolation,
+//   // --- यहाँ SharedValue को टाइप की तरह इम्पोर्ट करें ---
+//   SharedValue 
+// } from 'react-native-reanimated';
+// import { BANNERS } from '../../dummydata/dummyData';
+// import { Colors } from '../../theme/colors';
+
+// const { width } = Dimensions.get('window');
+// const ITEM_WIDTH = width - 30;
+// const BANNER_HEIGHT = 190;
+
+// const BannerSection = () => {
+//   const progressValue = useSharedValue(0);
+
+//   return (
+//     <View style={styles.container}>
+//       <Carousel
+//         loop
+//         width={width}
+//         height={BANNER_HEIGHT + 20}
+//         autoPlay={true}
+//         autoPlayInterval={3000}
+//         data={BANNERS}
+//         scrollAnimationDuration={800}
+//         onProgressChange={(_, absoluteProgress) => {
+//           progressValue.value = absoluteProgress;
+//         }}
+//         mode="parallax"
+//         modeConfig={{
+//           parallaxScrollingScale: 0.94,
+//           parallaxScrollingOffset: 45,
+//         }}
+//         renderItem={({ item }) => (
+//           <View style={styles.cardContainer}>
+//             <Image source={item.image} style={styles.bannerImg} />
+//           </View>
+//         )}
+//       />
+
+//       {/* --- Synchronized Dots --- */}
+//       <View style={styles.dotContainer}>
+//         {BANNERS.map((_, index) => (
+//           <Dot key={index} index={index} progressValue={progressValue} />
+//         ))}
+//       </View>
+//     </View>
+//   );
+// };
+
+// // --- Animated Dot Component (Type Fixed) ---
+// const Dot = ({ index, progressValue }: { index: number; progressValue: SharedValue<number> }) => {
+  
+//   const animatedStyle = useAnimatedStyle(() => {
+//     const dotWidth = interpolate(
+//       progressValue.value,
+//       [index - 1, index, index + 1],
+//       [8, 25, 8],
+//       Extrapolation.CLAMP
+//     );
+
+//     const opacity = interpolate(
+//       progressValue.value,
+//       [index - 1, index, index + 1],
+//       [0.4, 1, 0.4],
+//       Extrapolation.CLAMP
+//     );
+
+//     const color = interpolateColor(
+//       progressValue.value,
+//       [index - 1, index, index + 1],
+//       ['#D1D5DB', Colors.secondary, '#D1D5DB']
+//     );
+
+//     return {
+//       width: dotWidth,
+//       backgroundColor: color,
+//       opacity: opacity,
+//     };
+//   });
+
+//   return <Animated.View style={[styles.dot, animatedStyle]} />;
+// };
+
+// export default BannerSection;
+
+// const styles = StyleSheet.create({
+//   container: {
+//     marginTop: 10,
+//     alignItems: 'center',
+//   },
+//   cardContainer: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   bannerImg: { 
+//     width: ITEM_WIDTH, 
+//     height: BANNER_HEIGHT, 
+//     borderRadius: 20, 
+//     resizeMode: 'cover' 
+//   },
+//   dotContainer: {
+//     flexDirection: 'row',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     marginTop: 0,
+//   },
+//   dot: {
+//     height: 8,
+//     borderRadius: 4,
+//     marginHorizontal: 4,
+//   },
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React from 'react';
+// import { StyleSheet, View, Dimensions, Image, ActivityIndicator } from 'react-native';
+// import Carousel from 'react-native-reanimated-carousel';
+// import Animated, { 
+//   useAnimatedStyle, 
+//   interpolate, 
+//   useSharedValue,
+//   interpolateColor,
+//   Extrapolation,
+//   SharedValue 
+// } from 'react-native-reanimated';
+// import { Colors } from '../../theme/colors';
+
+// const { width } = Dimensions.get('window');
+// const ITEM_WIDTH = width - 30;
+// const BANNER_HEIGHT = 190;
+
+// interface BannerSectionProps {
+//   data: any[];
+//   loading: boolean;
+// }
+
+// const BannerSection = ({ data, loading }: BannerSectionProps) => {
+//   const progressValue = useSharedValue(0);
+
+//   // अगर डेटा लोड हो रहा है या खाली है
+//   if (loading) {
+//     return (
+//       <View style={[styles.container, { height: BANNER_HEIGHT, justifyContent: 'center' }]}>
+//         <ActivityIndicator color={Colors.secondary} />
+//       </View>
+//     );
+//   }
+
+//   if (data.length === 0) return null;
+
+//   return (
+//     <View style={styles.container}>
+//       <Carousel
+//         loop
+//         width={width}
+//         height={BANNER_HEIGHT + 20}
+//         autoPlay={true}
+//         autoPlayInterval={4000}
+//         data={data} // अब यहाँ असली डेटा है
+//         scrollAnimationDuration={800}
+//         onProgressChange={(_, absoluteProgress) => {
+//           progressValue.value = absoluteProgress;
+//         }}
+//         mode="parallax"
+//         modeConfig={{
+//           parallaxScrollingScale: 0.94,
+//           parallaxScrollingOffset: 45,
+//         }}
+//         renderItem={({ item }) => (
+//           <View style={styles.cardContainer}>
+//             <Image 
+//               source={{ uri: item.image }} // API से इमेज URL आ रहा है
+//               style={styles.bannerImg} 
+//             />
+//           </View>
+//         )}
+//       />
+
+//       {/* --- Synchronized Dots --- */}
+//       <View style={styles.dotContainer}>
+//         {data.map((_, index) => (
+//           <Dot key={index} index={index} progressValue={progressValue} total={data.length} />
+//         ))}
+//       </View>
+//     </View>
+//   );
+// };
+
+// // --- Animated Dot Component ---
+// const Dot = ({ index, progressValue, total }: { index: number; progressValue: SharedValue<number>; total: number }) => {
+//   const animatedStyle = useAnimatedStyle(() => {
+//     const dotWidth = interpolate(
+//       progressValue.value,
+//       [index - 1, index, index + 1],
+//       [8, 25, 8],
+//       Extrapolation.CLAMP
+//     );
+
+//     const color = interpolateColor(
+//       progressValue.value,
+//       [index - 1, index, index + 1],
+//       ['#D1D5DB', Colors.secondary, '#D1D5DB']
+//     );
+
+//     return {
+//       width: dotWidth,
+//       backgroundColor: color,
+//     };
+//   });
+
+//   return <Animated.View style={[styles.dot, animatedStyle]} />;
+// };
+
+// export default BannerSection;
+
+// const styles = StyleSheet.create({
+//   container: { marginTop: 10, alignItems: 'center' },
+//   cardContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+//   bannerImg: { width: ITEM_WIDTH, height: BANNER_HEIGHT, borderRadius: 20, resizeMode: 'cover' },
+//   dotContainer: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 0 },
+//   dot: { height: 8, borderRadius: 4, marginHorizontal: 4 },
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React from 'react';
 import { StyleSheet, View, Dimensions, Image } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
@@ -406,18 +667,30 @@ import Animated, {
   useSharedValue,
   interpolateColor,
   Extrapolation,
-  // --- यहाँ SharedValue को टाइप की तरह इम्पोर्ट करें ---
   SharedValue 
 } from 'react-native-reanimated';
-import { BANNERS } from '../../dummydata/dummyData';
 import { Colors } from '../../theme/colors';
+import BannerSkeleton from '../skeletons/BannerSkeleton'; // स्केलेटन इम्पोर्ट
 
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = width - 30;
 const BANNER_HEIGHT = 190;
 
-const BannerSection = () => {
+interface BannerSectionProps {
+  data: any[];
+  loading: boolean;
+}
+
+const BannerSection = ({ data, loading }: BannerSectionProps) => {
   const progressValue = useSharedValue(0);
+
+  // --- लोड हो रहा है तो स्केलेटन दिखाएं ---
+  if (loading) {
+    return <BannerSkeleton />;
+  }
+
+  // अगर डेटा खाली है तो कुछ न दिखाएं
+  if (!data || data.length === 0) return null;
 
   return (
     <View style={styles.container}>
@@ -426,8 +699,8 @@ const BannerSection = () => {
         width={width}
         height={BANNER_HEIGHT + 20}
         autoPlay={true}
-        autoPlayInterval={3000}
-        data={BANNERS}
+        autoPlayInterval={4000}
+        data={data}
         scrollAnimationDuration={800}
         onProgressChange={(_, absoluteProgress) => {
           progressValue.value = absoluteProgress;
@@ -439,36 +712,35 @@ const BannerSection = () => {
         }}
         renderItem={({ item }) => (
           <View style={styles.cardContainer}>
-            <Image source={item.image} style={styles.bannerImg} />
+            <Image 
+              source={{ uri: item.image }} 
+              style={styles.bannerImg} 
+            />
           </View>
         )}
       />
 
-      {/* --- Synchronized Dots --- */}
+      {/* --- Real-time Synchronized Dots --- */}
       <View style={styles.dotContainer}>
-        {BANNERS.map((_, index) => (
-          <Dot key={index} index={index} progressValue={progressValue} />
+        {data.map((_, index) => (
+          <Dot 
+            key={index} 
+            index={index} 
+            progressValue={progressValue} 
+          />
         ))}
       </View>
     </View>
   );
 };
 
-// --- Animated Dot Component (Type Fixed) ---
+// --- Animated Dot Component ---
 const Dot = ({ index, progressValue }: { index: number; progressValue: SharedValue<number> }) => {
-  
   const animatedStyle = useAnimatedStyle(() => {
     const dotWidth = interpolate(
       progressValue.value,
       [index - 1, index, index + 1],
       [8, 25, 8],
-      Extrapolation.CLAMP
-    );
-
-    const opacity = interpolate(
-      progressValue.value,
-      [index - 1, index, index + 1],
-      [0.4, 1, 0.4],
       Extrapolation.CLAMP
     );
 
@@ -481,7 +753,6 @@ const Dot = ({ index, progressValue }: { index: number; progressValue: SharedVal
     return {
       width: dotWidth,
       backgroundColor: color,
-      opacity: opacity,
     };
   });
 
@@ -491,15 +762,8 @@ const Dot = ({ index, progressValue }: { index: number; progressValue: SharedVal
 export default BannerSection;
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 10,
-    alignItems: 'center',
-  },
-  cardContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  container: { marginTop: 10, alignItems: 'center' },
+  cardContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   bannerImg: { 
     width: ITEM_WIDTH, 
     height: BANNER_HEIGHT, 

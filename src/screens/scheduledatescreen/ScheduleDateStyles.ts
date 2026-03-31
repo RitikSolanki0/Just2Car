@@ -82,4 +82,14 @@ export const styles = StyleSheet.create({
     color: "black",
     minHeight: 50,
   },
+   reasonInput: {
+    marginTop: 15,
+    backgroundColor: "#F3F4F6",
+    borderRadius: 12,
+    padding: 15,
+    minHeight: 80,
+    fontFamily: Fonts.medium,
+    textAlignVertical: 'top',
+    color: 'black'
+  },
 });

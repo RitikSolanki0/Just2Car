@@ -75,7 +75,7 @@ import { View, Text, TextInput, StyleSheet } from 'react-native';
 import Ionicons from "@react-native-vector-icons/ionicons";
 import { Fonts } from '../../theme/fonts';
 
-const PricingLocationSection = ({ price, setPrice, location, setLocation, mobile, setMobile }: any) => (
+const PricingLocationSection = ({ price, setPrice, location, setLocation, mobile, setMobile , address, setAddress }: any) => (
   <View>
     <Text style={styles.label}>Set Price</Text>
     <TextInput 
@@ -85,6 +85,17 @@ const PricingLocationSection = ({ price, setPrice, location, setLocation, mobile
       value={price}
       onChangeText={(text) => setPrice(text)} // <-- यह बहुत ज़रूरी है
     />
+
+  <Text style={styles.label}>Full Address</Text>
+    <View style={styles.inputWithIcon}>
+      <Ionicons name="map-outline" size={20} color="gray" />
+      <TextInput
+        style={styles.flexInput}
+        placeholder="House no, Street, Area"
+        value={address} // logic.address से कनेक्टेड
+        onChangeText={setAddress} // logic.setAddress को अपडेट करेगा
+      />
+    </View>
 
     <Text style={styles.label}>Location</Text>
     <View style={styles.inputWithIcon}>
@@ -105,8 +116,10 @@ const PricingLocationSection = ({ price, setPrice, location, setLocation, mobile
         placeholder="Enter 10 digit number" 
         keyboardType="phone-pad" 
         maxLength={10}
-        value={mobile}
-        onChangeText={(text) => setMobile(text)} // <-- यह भी
+        // value={mobile}
+        // onChangeText={(text) => setMobile(text)} // <-- यह भी
+        value={mobile} // प्रोप से आ रहा है
+          onChangeText={(text) => setMobile(text)}
       />
     </View>
   </View>

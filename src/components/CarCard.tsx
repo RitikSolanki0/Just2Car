@@ -67,36 +67,278 @@
 
 
 
+// import React from 'react';
+// import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+// import Ionicons from "@react-native-vector-icons/ionicons";
+// import { useNavigation } from '@react-navigation/native'; // <-- नेविगेशन के लिए
+// import { Colors } from '../theme/colors';
+// import { Fonts } from '../theme/fonts';
+
+// // TypeScript Interface (Optional but recommended)
+// interface CarItem {
+//   id: string;
+//   name: string;
+//   price: string;
+//   year: string;
+//   kms: string;
+//   location: string;
+//   image: any;
+//   isFeatured?: boolean;
+// }
+
+// interface CarCardProps {
+//   item: CarItem;
+//    width?: any; 
+// }
+
+// // const CarCard = React.memo(({ item, width = '100%' }: CarCardProps) => {
+// //   // नेविगेशन हुक का उपयोग करें
+// //   const navigation = useNavigation<any>();
+
+// //   const handlePress = () => {
+// //     // 'CarDetail' स्क्रीन पर जाएँ और कार का पूरा डेटा साथ भेजें
+// //     navigation.navigate('CarDetailScreen', { car: item });
+// //   };
+
+// //   return (
+// //     <TouchableOpacity 
+// //       style={[styles.card, { width }]} 
+// //       activeOpacity={0.9} 
+// //       onPress={handlePress} // क्लिक करने पर डिटेल स्क्रीन खुलेगी
+// //     >
+// //       {/* --- Image Section --- */}
+// //       <View style={styles.imageContainer}>
+// //         <Image source={item.image} style={styles.carImage} />
+        
+// //         {/* Featured Tag */}
+// //         {item.isFeatured && (
+// //           <View style={styles.featuredTag}>
+// //             <Text style={styles.featuredText}>FEATURED</Text>
+// //           </View>
+// //         )}
+
+// //         {/* Wishlist Heart Icon */}
+// //         {/* <TouchableOpacity style={styles.heartIcon} activeOpacity={0.7}>
+// //           <Ionicons name="heart-outline" size={18} color={Colors.secondary} />
+// //         </TouchableOpacity> */}
+// //       </View>
+
+// //       {/* --- Text Details Section --- */}
+// //       <View style={styles.details}>
+// //         <Text style={styles.price}>{item.price}</Text>
+// //         <Text style={styles.name} numberOfLines={1}>{item.name}</Text>
+// //         <Text style={styles.info}>{item.year} - {item.kms}</Text>
+        
+// //         {/* Location Row */}
+// //         <View style={styles.locationRow}>
+// //           <Ionicons name="location-outline" size={12} color={Colors.textSecondary} />
+// //           <Text style={styles.locationText} numberOfLines={1}>
+// //             {item.location}
+// //           </Text>
+// //         </View>
+// //       </View>
+// //     </TouchableOpacity>
+// //   );
+// // });
+
+// const CarCard = React.memo(({ item, width = '100%' }: any) => {
+//   const navigation = useNavigation<any>();
+
+//   return (
+//     <TouchableOpacity 
+//       style={[styles.card, { width }]} 
+//       activeOpacity={0.9} 
+//       onPress={() => navigation.navigate('CarDetailScreen', { car: item })}
+//     >
+//       <View style={styles.imageContainer}>
+//         <Image 
+//             // API से images[0] लें
+//             source={item.images && item.images.length > 0 
+//                 ? { uri: item.images[0] } 
+//                 : require('../assets/images/carimages/car1.jpg')} 
+//             style={styles.carImage} 
+//         />
+        
+//         {/* Wishlist Icon */}
+//         <TouchableOpacity style={styles.heartIcon}>
+//           <Ionicons name="heart-outline" size={18} color={Colors.secondary} />
+//         </TouchableOpacity>
+//       </View>
+
+//       <View style={styles.details}>
+//         {/* API: expectedPrice */}
+//         <Text style={styles.price}>₹ {item.expectedPrice?.toLocaleString()}</Text>
+        
+//         {/* API: model */}
+//         <Text style={styles.name} numberOfLines={1}>{item.model}</Text>
+        
+//         {/* API: year & kmDriven */}
+//         <Text style={styles.info}>{item.year} - {item.kmDriven} km</Text>
+        
+//         {/* API: city.name */}
+//         <View style={styles.locationRow}>
+//           <Ionicons name="location-outline" size={12} color="gray" />
+//           <Text style={styles.locationText} numberOfLines={1}>
+//             {item.city?.name || 'Not Available'}
+//           </Text>
+//         </View>
+//       </View>
+//     </TouchableOpacity>
+//   );
+// });
+
+// export default CarCard;
+
+// const styles = StyleSheet.create({
+//   card: { 
+//     // width: '48%', 
+//     backgroundColor: Colors.white, 
+//     borderRadius: 12, 
+//     marginBottom: 15, 
+//     // Shadow for Android
+//     elevation: 4, 
+//     // Shadow for iOS
+//     shadowColor: '#000', 
+//     shadowOffset: { width: 0, height: 2 },
+//     shadowOpacity: 0.1, 
+//     shadowRadius: 5, 
+//     overflow: 'hidden' 
+//   },
+//   imageContainer: { 
+//     width: '100%', 
+//     height: 110, // थोड़ी हाइट बढ़ाई है बेहतर लुक के लिए
+//     backgroundColor: '#f0f0f0'
+//   },
+//   carImage: { 
+//     width: '100%', 
+//     height: '100%', 
+//     resizeMode: 'cover' 
+//   },
+//   featuredTag: { 
+//     position: 'absolute', 
+//     bottom: 0, 
+//     left: 0, 
+//     backgroundColor: Colors.secondary, 
+//     paddingHorizontal: 10, 
+//     paddingVertical: 3,
+//     borderTopRightRadius: 8
+//   },
+//   featuredText: { 
+//     fontSize: 9, 
+//     fontFamily: Fonts.bold, 
+//     color: Colors.primary 
+//   },
+//   heartIcon: { 
+//     position: 'absolute', 
+//     top: 8, 
+//     right: 8, 
+//     backgroundColor: 'rgba(255,255,255,0.9)', 
+//     borderRadius: 20, 
+//     padding: 6,
+//     elevation: 2
+//   },
+//   details: { 
+//     padding: 10 
+//   },
+//   price: { 
+//     fontSize: 16, 
+//     fontFamily: Fonts.bold, 
+//     color: Colors.primary 
+//   },
+//   name: { 
+//     fontSize: 13, 
+//     fontFamily: Fonts.medium, 
+//     color: Colors.textPrimary,
+//     marginTop: 2
+//   },
+//   info: { 
+//     fontSize: 11, 
+//     color: Colors.textSecondary, 
+//     fontFamily: Fonts.regular,
+//     marginTop: 2 
+//   },
+//   locationRow: { 
+//     flexDirection: 'row', 
+//     alignItems: 'center', 
+//     marginTop: 6,
+//     borderTopWidth: 0.5,
+//     borderTopColor: '#f0f0f0',
+//     paddingTop: 6
+//   },
+//   locationText: { 
+//     fontSize: 10, 
+//     color: Colors.textSecondary, 
+//     marginLeft: 4,
+//     fontFamily: Fonts.regular 
+//   }
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import Ionicons from "@react-native-vector-icons/ionicons";
-import { useNavigation } from '@react-navigation/native'; // <-- नेविगेशन के लिए
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux'; // Redux Hooks
 import { Colors } from '../theme/colors';
 import { Fonts } from '../theme/fonts';
+import { RootState } from '../redux/store';
+import { toggleWishlist } from '../redux/wishlistSlice';
+import { showSuccessToast } from '../utils/showToast';
 
-// TypeScript Interface (Optional but recommended)
+// --- TypeScript Interface ---
 interface CarItem {
-  id: string;
-  name: string;
-  price: string;
-  year: string;
-  kms: string;
-  location: string;
-  image: any;
+  _id: string; // API uses _id
+  model: string;
+  expectedPrice: number;
+  year: number;
+  kmDriven: number;
+  city?: { name: string };
+  images: string[];
   isFeatured?: boolean;
 }
 
 interface CarCardProps {
   item: CarItem;
-   width?: any; 
+  width?: any; 
 }
 
 const CarCard = React.memo(({ item, width = '100%' }: CarCardProps) => {
-  // नेविगेशन हुक का उपयोग करें
   const navigation = useNavigation<any>();
+  const dispatch = useDispatch();
+
+  // --- Redux Logic: Check if car is already in wishlist ---
+  const wishlistItems = useSelector((state: RootState) => state.wishlist.items);
+  const isFavorite = wishlistItems.some((fav: any) => String(fav._id) === String(item._id));
+
+  // --- Function: Toggle Wishlist ---
+  const handleWishlistToggle = () => {
+    dispatch(toggleWishlist(item)); // Redux Action
+    
+    if (!isFavorite) {
+      showSuccessToast("Saved", "Car added to your wishlist ❤️");
+    } else {
+      showSuccessToast("Removed", "Car removed from wishlist");
+    }
+  };
 
   const handlePress = () => {
-    // 'CarDetail' स्क्रीन पर जाएँ और कार का पूरा डेटा साथ भेजें
     navigation.navigate('CarDetailScreen', { car: item });
   };
 
@@ -104,36 +346,50 @@ const CarCard = React.memo(({ item, width = '100%' }: CarCardProps) => {
     <TouchableOpacity 
       style={[styles.card, { width }]} 
       activeOpacity={0.9} 
-      onPress={handlePress} // क्लिक करने पर डिटेल स्क्रीन खुलेगी
+      onPress={handlePress}
     >
       {/* --- Image Section --- */}
       <View style={styles.imageContainer}>
-        <Image source={item.image} style={styles.carImage} />
+        <Image 
+          source={item.images && item.images.length > 0 
+            ? { uri: item.images[0] } 
+            : require('../assets/images/carimages/car1.jpg')} 
+          style={styles.carImage} 
+        />
         
-        {/* Featured Tag */}
+        {/* Featured Tag (If applicable) */}
         {item.isFeatured && (
           <View style={styles.featuredTag}>
             <Text style={styles.featuredText}>FEATURED</Text>
           </View>
         )}
 
-        {/* Wishlist Heart Icon */}
-        {/* <TouchableOpacity style={styles.heartIcon} activeOpacity={0.7}>
-          <Ionicons name="heart-outline" size={18} color={Colors.secondary} />
-        </TouchableOpacity> */}
+        {/* --- Wishlist Heart Button --- */}
+        <TouchableOpacity 
+          style={styles.heartIcon} 
+          activeOpacity={0.7}
+          onPress={handleWishlistToggle} 
+        >
+          <Ionicons 
+            name={isFavorite ? "heart" : "heart-outline"} 
+            size={18} 
+            color={isFavorite ? "#EF4444" : Colors.primary} 
+          />
+        </TouchableOpacity>
       </View>
 
-      {/* --- Text Details Section --- */}
+      {/* --- Details Section --- */}
       <View style={styles.details}>
-        <Text style={styles.price}>{item.price}</Text>
-        <Text style={styles.name} numberOfLines={1}>{item.name}</Text>
-        <Text style={styles.info}>{item.year} - {item.kms}</Text>
+        <Text style={styles.price}>
+          ₹ {item.expectedPrice ? item.expectedPrice.toLocaleString() : '0'}
+        </Text>
+        <Text style={styles.name} numberOfLines={1}>{item.model}</Text>
+        <Text style={styles.info}>{item.year} - {item.kmDriven} km</Text>
         
-        {/* Location Row */}
         <View style={styles.locationRow}>
           <Ionicons name="location-outline" size={12} color={Colors.textSecondary} />
           <Text style={styles.locationText} numberOfLines={1}>
-            {item.location}
+            {item.city?.name || 'Not Available'}
           </Text>
         </View>
       </View>
@@ -145,13 +401,10 @@ export default CarCard;
 
 const styles = StyleSheet.create({
   card: { 
-    // width: '48%', 
     backgroundColor: Colors.white, 
     borderRadius: 12, 
     marginBottom: 15, 
-    // Shadow for Android
     elevation: 4, 
-    // Shadow for iOS
     shadowColor: '#000', 
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1, 
@@ -160,7 +413,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: { 
     width: '100%', 
-    height: 110, // थोड़ी हाइट बढ़ाई है बेहतर लुक के लिए
+    height: 110, 
     backgroundColor: '#f0f0f0'
   },
   carImage: { 
@@ -175,7 +428,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondary, 
     paddingHorizontal: 10, 
     paddingVertical: 3,
-    borderTopRightRadius: 8
+    borderTopRightRadius: 8,
+    zIndex: 1
   },
   featuredText: { 
     fontSize: 9, 
@@ -189,7 +443,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.9)', 
     borderRadius: 20, 
     padding: 6,
-    elevation: 2
+    elevation: 5,
+    zIndex: 10 // सुनिश्चित करता है कि बटन इमेज के ऊपर रहे
   },
   details: { 
     padding: 10 
