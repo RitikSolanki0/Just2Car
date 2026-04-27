@@ -38,12 +38,12 @@
 //         <Stack.Screen name="ConfirmScheduleDateScreen" component={ConfirmScheduleDateScreen} />
 //         <Stack.Screen name="NotificationScreen" component={NotificationScreen} />
 //         <Stack.Screen name="FiltersScreen" component={FiltersScreen} />
-        
+
 //         <Stack.Screen name="WishlistScreen" component={WishlistScreen} />
 //         <Stack.Screen name="PrivacyPolicyScreen" component={PrivacyPolicyScreen} />
 //         <Stack.Screen name="TermsAndConditionsScreen" component={TermsAndConditionsScreen} />
 //         <Stack.Screen name="AboutUsScreen" component={AboutUsScreen} />
-        
+
 //         <Stack.Screen name='MyAdDetailScreen' component={MyAdDetailScreen} />
 //       </Stack.Navigator>
 //     </NavigationContainer>
@@ -138,7 +138,7 @@
 
 //         {/* Main App */}
 //         <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
-        
+
 //         {/* Other Screens */}
 //         <Stack.Screen name="CarDetailScreen" component={CarDetailScreen} />
 //         <Stack.Screen name="ScheduleDateScreen" component={ScheduleDateScreen} />
@@ -220,7 +220,7 @@
 //       try {
 //         // टोकन चेक करें
 //         const token = await AsyncStorage.getItem('userToken');
-        
+
 //         // एक छोटा सा डिले (Branding के लिए)
 //         // असली प्रोफेशनल एप्स में यहाँ अन्य जरूरी काम (जैसे API Init) भी किए जाते हैं
 //         // await new Promise(resolve => setTimeout(resolve, 2000));
@@ -260,7 +260,7 @@
 
 //         {/* Main App */}
 //         <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
-        
+
 //         {/* Other Screens (कुछ भी डिलीट नहीं किया गया) */}
 //         <Stack.Screen name="CarDetailScreen" component={CarDetailScreen} />
 //         <Stack.Screen name="ScheduleDateScreen" component={ScheduleDateScreen} />
@@ -326,11 +326,12 @@ import AboutUsScreen from '../screens/profilesidescreens/aboutus/AboutUsScreen';
 import SignupScreen from '../screens/auth/signupscreen/SignupScreen';
 import SplashScreen from '../screens/auth/splashscreen/SplashScreen';
 import UpdateProfileScreen from '../screens/profilesidescreens/updateprofile/UpdateProfileScreen';
+import PackageScreen from '../screens/profilesidescreens/packagescreen/PackageScreen';
 
 const Stack = createNativeStackNavigator();
 
 const NavigationScreen = () => {
-  const [isAppReady, setIsAppReady] = useState(false); 
+  const [isAppReady, setIsAppReady] = useState(false);
   const dispatch = useDispatch();
 
   // --- 1. Redux से ग्लोबल टोकन को सुनें (यही नेविगेशन कंट्रोल करेगा) ---
@@ -344,12 +345,12 @@ const NavigationScreen = () => {
         // स्टोरेज से टोकन और यूजर डेटा निकालें
         const token = await AsyncStorage.getItem('userToken');
         const storedUser = await AsyncStorage.getItem('userData');
-        
+
         // --- 2. अगर टोकन है, तो उसे Redux में डाल दें ---
         if (token && storedUser) {
           dispatch(setSignIn({ token, user: JSON.parse(storedUser) }));
         }
-        
+
         // स्पलैश स्क्रीन दिखाने के लिए डिले
         await new Promise(resolve => setTimeout(() => resolve(null), 2000));
 
@@ -368,13 +369,13 @@ const NavigationScreen = () => {
 
   // जब तक चेक हो रहा है, यूज़र को सिर्फ SplashScreen दिखेगी
   if (!isAppReady) {
-    return <SplashScreen />; 
+    return <SplashScreen />;
   }
 
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        
+
         {/* --- 3. सबसे ज़रूरी: Conditional Rendering --- */}
         {userToken == null ? (
           // --- Auth Stack: अगर टोकन नहीं है तो सिर्फ ये स्क्रीन्स दिखेंगी ---
@@ -394,9 +395,11 @@ const NavigationScreen = () => {
             <Stack.Screen name="WishlistScreen" component={WishlistScreen} />
             <Stack.Screen name="PrivacyPolicyScreen" component={PrivacyPolicyScreen} />
             <Stack.Screen name="TermsAndConditionsScreen" component={TermsAndConditionsScreen} />
+            <Stack.Screen name="PackageScreen" component={PackageScreen} />
             <Stack.Screen name="AboutUsScreen" component={AboutUsScreen} />
             <Stack.Screen name='MyAdDetailScreen' component={MyAdDetailScreen} />
             <Stack.Screen name="UpdateProfileScreen" component={UpdateProfileScreen} />
+
           </Stack.Group>
         )}
 

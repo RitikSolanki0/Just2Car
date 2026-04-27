@@ -123,8 +123,6 @@ const ImageVideoSelectButton = ({ showImages, setShowImages, showVideos, setShow
             Video
           </Text>
         </TouchableOpacity>
-
-        {/* 'See All' यहाँ से हटा दिया गया है */}
       </View>
     </View>
   );
@@ -135,7 +133,6 @@ export default ImageVideoSelectButton;
 const styles = StyleSheet.create({
   container: { 
     marginTop: 5, 
-    // पैडिंग हटा दी क्योंकि CarInfoSection इसे हैंडल कर रहा है
     marginStart: 20,
   },
   mediaRow: { 

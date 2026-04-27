@@ -553,17 +553,516 @@
 
 // api integration and chhote parts me yaha se 
 
+// import React from "react";
+// import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+// import { SafeAreaView } from "react-native-safe-area-context";
+// import Ionicons from "@react-native-vector-icons/ionicons";
+// import { styles } from "./MyAdDetailStyles";
+// import { useMyAdDetailLogic } from "./useMyAdDetailLogic";
+// import { Colors } from "../../theme/colors";
+
+// const MyAdDetailScreen = ({ route, navigation }: any) => {
+//   const { ad } = route.params;
+//   const { statusInfo } = useMyAdDetailLogic(ad);
+
+//   return (
+//     <SafeAreaView style={styles.container}>
+//       <View style={styles.header}>
+//         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconBtn}>
+//           <Ionicons name="arrow-back" size={26} color="black" />
+//         </TouchableOpacity>
+//         <Text style={styles.headerTitle}>Car Details</Text>
+//         <View style={{width: 30}} />
+//       </View>
+
+//       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+        
+//         {/* Car Image (API key: images[0]) */}
+//         <Image 
+//             source={ad.images && ad.images.length > 0 ? { uri: ad.images[0] } : require('../../assets/images/carimages/car1.jpg')} 
+//             style={styles.mainImg} 
+//         />
+
+//         <View style={styles.content}>
+//           <View style={styles.mainInfo}>
+//             <Text style={styles.title}>{ad.make} {ad.model}</Text>
+//             <Text style={styles.price}>₹ {ad.expectedPrice?.toLocaleString()}</Text>
+//           </View>
+
+//           {/* --- Inspection Status Card --- */}
+//           <View style={[styles.statusCard, { backgroundColor: statusInfo.bg, borderColor: statusInfo.color }]}>
+//              <View style={styles.row}>
+//                 <Ionicons name={statusInfo.icon as any} size={24} color={statusInfo.color} />
+//                 <Text style={[styles.statusHeading, { color: statusInfo.color }]}>{statusInfo.title}</Text>
+//              </View>
+//              <Text style={styles.statusDescription}>{statusInfo.desc}</Text>
+
+//              {/* Action Button: सिर्फ 'scheduled' होने पर */}
+//              {statusInfo.canConfirm && (
+//                <TouchableOpacity 
+//                  style={styles.inlineConfirmBtn}
+//                  onPress={() => navigation.navigate('ConfirmScheduleDateScreen', { car: ad })}
+//                >
+//                  <Text style={styles.inlineBtnText}>Confirm Now</Text>
+//                  <Ionicons name="arrow-forward" size={18} color="white" />
+//                </TouchableOpacity>
+//              )}
+//           </View>
+
+//           {/* --- Seller Info --- */}
+//           <Text style={styles.sectionTitle}>Seller Information</Text>
+//           <View style={styles.infoBox}>
+//              <Text style={styles.infoLabel}>Name</Text>
+//              <Text style={styles.infoValue}>{ad.sellerName}</Text>
+//              <View style={{height: 10}} />
+//              <Text style={styles.infoLabel}>Contact</Text>
+//              <Text style={styles.infoValue}>{ad.sellerMobile} | {ad.sellerEmail}</Text>
+//           </View>
+
+//           {/* --- Location --- */}
+//           <Text style={styles.sectionTitle}>Location Details</Text>
+//           <View style={styles.infoBox}>
+//              <View style={styles.locationRow}>
+//                 <Ionicons name="location" size={18} color="gray" />
+//                 <Text style={[styles.infoValue, {marginLeft: 8}]}>{ad.address}, {ad.city?.name}</Text>
+//              </View>
+//              <Text style={styles.infoLabel}>State: {ad.state?.name}</Text>
+//              <Text style={styles.infoLabel}>Reg City: {ad.registrationCity}</Text>
+//           </View>
+
+//           {/* --- Technical Overview --- */}
+//           <Text style={styles.sectionTitle}>Technical Overview</Text>
+//           <View style={styles.grid}>
+//              <DetailItem label="Variant" value={ad.variant} />
+//              <DetailItem label="Year" value={ad.year} />
+//              <DetailItem label="Fuel" value={ad.fuelType} />
+//              <DetailItem label="KM Driven" value={ad.kmDriven} />
+//              <DetailItem label="Transmission" value={ad.transmission} />
+//              <DetailItem label="Owners" value={ad.noOfOwners} />
+//              <DetailItem label="Reg No" value={ad.registrationNumber} />
+//           </View>
+
+//           {/* --- Description --- */}
+//           <Text style={styles.sectionTitle}>Description</Text>
+//           <Text style={styles.descriptionText}>{ad.description}</Text>
+
+//           {/* --- Features --- */}
+//           {ad.features?.length > 0 && (
+//             <View>
+//               <Text style={styles.sectionTitle}>Features</Text>
+//               <View style={styles.featureRow}>
+//                  {ad.features.map((f: string, i: number) => (
+//                    <View key={i} style={styles.featureBadge}>
+//                      <Ionicons name="checkmark-done" size={14} color={Colors.primary} />
+//                      <Text style={styles.featureText}>{f}</Text>
+//                    </View>
+//                  ))}
+//               </View>
+//             </View>
+//           )}
+//         </View>
+//       </ScrollView>
+//     </SafeAreaView>
+//   );
+// };
+
+// const DetailItem = ({ label, value }: any) => (
+//   <View style={styles.gridItem}>
+//     <Text style={styles.itemLabel}>{label}</Text>
+//     <Text style={styles.itemValue}>{value}</Text>
+//   </View>
+// );
+
+// export default MyAdDetailScreen;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React from "react";
+// import { View, Text, ScrollView, Image, TouchableOpacity, ActivityIndicator } from "react-native";
+// import { SafeAreaView } from "react-native-safe-area-context";
+// import Ionicons from "@react-native-vector-icons/ionicons";
+// import { styles } from "./MyAdDetailStyles";
+// import { useMyAdDetailLogic } from "./useMyAdDetailLogic";
+// import { Colors } from "../../theme/colors";
+// import { formatDate, formatTime } from "../../utils/dateHelpers";
+
+// const MyAdDetailScreen = ({ route, navigation }: any) => {
+//   const { ad } = route.params;
+//   const { statusInfo, inspector, loadingInspector, handleCall  } = useMyAdDetailLogic(ad);
+
+//   return (
+//     <SafeAreaView style={styles.container}>
+//       {/* Header */}
+//       <View style={styles.header}>
+//         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconBtn}>
+//           <Ionicons name="arrow-back" size={26} color="black" />
+//         </TouchableOpacity>
+//         <Text style={styles.headerTitle}>Car Details</Text>
+//         <View style={{width: 30}} />
+//       </View>
+
+//       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+        
+//         {/* Car Image */}
+//         <Image 
+//             source={ad.images && ad.images.length > 0 ? { uri: ad.images[0] } : require('../../assets/images/carimages/car1.jpg')} 
+//             style={styles.mainImg} 
+//         />
+
+//         <View style={styles.content}>
+//           <View style={styles.mainInfo}>
+//             <Text style={styles.title}>{ad.brand.name} {ad.model.name}</Text>
+//             <Text style={styles.price}>₹ {ad.expectedPrice?.toLocaleString()}</Text>
+//           </View>
+
+//           {/* --- 1. Inspection Status Card --- */}
+//           <View style={[styles.statusCard, { backgroundColor: statusInfo.bg, borderColor: statusInfo.color }]}>
+//              <View style={styles.row}>
+//                 <Ionicons name={statusInfo.icon as any} size={24} color={statusInfo.color} />
+//                 <Text style={[styles.statusHeading, { color: statusInfo.color }]}>{statusInfo.title}</Text>
+//              </View>
+//              <Text style={styles.statusDescription}>{statusInfo.desc}</Text>
+
+//              {/* Action Button: सिर्फ 'scheduled' होने पर */}
+//              {statusInfo.canConfirm && (
+//                <TouchableOpacity 
+//                  style={styles.inlineConfirmBtn}
+//                  onPress={() => navigation.navigate('ConfirmScheduleDateScreen', { car: ad })}
+//                >
+//                  <Text style={styles.inlineBtnText}>Confirm Slot Now</Text>
+//                  <Ionicons name="arrow-forward" size={18} color="white" />
+//                </TouchableOpacity>
+//              )}
+//           </View>
+
+//           {/* --- 2. Inspector Details (सिर्फ Status 'assigned' होने पर) --- */}
+//           {ad.inspectionStatus === 'assigned' && (
+//             loadingInspector ? (
+//                 <ActivityIndicator color={Colors.primary} style={{marginBottom: 20}} />
+//             ) : inspector && (
+//                 <View style={styles.inspectorCard}>
+//                    <View style={styles.inspectorHeader}>
+//                       <Image 
+//                         source={inspector.profileImage ? { uri: inspector.profileImage } : require('../../assets/images/imageslogo.png')} 
+//                         style={styles.inspectorImg} 
+//                       />
+//                       <View style={styles.inspectorInfo}>
+//                          <Text style={styles.inspectorTag}>ASSIGNED INSPECTOR</Text>
+//                          <Text style={styles.inspectorName}>{inspector.fullName}</Text>
+//                          <Text style={{fontSize: 12, color: 'gray'}}>{inspector.phone}</Text>
+//                       </View>
+//                       <TouchableOpacity style={styles.callBtn} onPress={() => handleCall(inspector.phone)} >
+//                          <Ionicons name="call" size={20} color="#8B5CF6" />
+//                       </TouchableOpacity>
+//                    </View>
+
+//                    {/* Schedule details coming from car object */}
+//                    <View style={styles.scheduleInfoRow}>
+//                       <View style={styles.scheduleItem}>
+//                          <Ionicons name="calendar-outline" size={18} color="gray" />
+//                          <Text style={styles.scheduleText}>{formatDate(ad.scheduledDate)}</Text>
+//                       </View>
+//                       <View style={styles.scheduleItem}>
+//                          <Ionicons name="time-outline" size={18} color="gray" />
+//                          <Text style={styles.scheduleText}>{formatTime(ad.scheduledTime)}</Text>
+//                       </View>
+//                    </View>
+//                 </View>
+//             )
+//           )}
+
+//           {/* --- 3. Seller Information --- */}
+//           <Text style={styles.sectionTitle}>Seller Information</Text>
+//           <View style={styles.infoBox}>
+//              <Text style={styles.infoLabel}>Name</Text>
+//              <Text style={styles.infoValue}>{ad.sellerName}</Text>
+//              <View style={{height: 10}} />
+//              <Text style={styles.infoLabel}>Contact</Text>
+//              <Text style={styles.infoValue}>{ad.sellerMobile} | {ad.sellerEmail}</Text>
+//           </View>
+
+//           {/* --- 4. Location Details --- */}
+//           <Text style={styles.sectionTitle}>Location Details</Text>
+//           <View style={styles.infoBox}>
+//              <View style={styles.locationRow}>
+//                 <Ionicons name="location" size={18} color="gray" />
+//                 <Text style={[styles.infoValue, {marginLeft: 8}]}>{ad.address}, {ad.city?.name}</Text>
+//              </View>
+//              <Text style={styles.infoLabel}>State: {ad.state?.name}</Text>
+//              <Text style={styles.infoLabel}>Reg City: {ad.registrationCity}</Text>
+//           </View>
+
+//           {/* --- 5. Technical Grid --- */}
+//           <Text style={styles.sectionTitle}>Technical Overview</Text>
+//           <View style={styles.grid}>
+//              <DetailItem label="Variant" value={ad.variant} />
+//              <DetailItem label="Year" value={ad.year} />
+//              <DetailItem label="Fuel" value={ad.fuelType} />
+//              <DetailItem label="KM Driven" value={ad.kmDriven} />
+//              <DetailItem label="Transmission" value={ad.transmission} />
+//              <DetailItem label="Owners" value={ad.noOfOwners} />
+//              <DetailItem label="Reg No" value={ad.registrationNumber} />
+//           </View>
+
+//           {/* --- 6. Description --- */}
+//           <Text style={styles.sectionTitle}>Description</Text>
+//           <Text style={styles.descriptionText}>{ad.description}</Text>
+
+//           {/* --- 7. Features --- */}
+//           {ad.features?.length > 0 && (
+//             <View>
+//               <Text style={styles.sectionTitle}>Features</Text>
+//               <View style={styles.featureRow}>
+//                  {ad.features.map((f: string, i: number) => (
+//                    <View key={i} style={styles.featureBadge}>
+//                      <Ionicons name="checkmark-done" size={14} color={Colors.primary} />
+//                      <Text style={styles.featureText}>{f}</Text>
+//                    </View>
+//                  ))}
+//               </View>
+//             </View>
+//           )}
+//         </View>
+//       </ScrollView>
+//     </SafeAreaView>
+//   );
+// };
+
+// const DetailItem = ({ label, value }: any) => (
+//   <View style={styles.gridItem}>
+//     <Text style={styles.itemLabel}>{label}</Text>
+//     <Text style={styles.itemValue}>{value}</Text>
+//   </View>
+// );
+
+// export default MyAdDetailScreen;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React from "react";
+// import { View, Text, ScrollView, Image, TouchableOpacity, ActivityIndicator } from "react-native";
+// import { SafeAreaView } from "react-native-safe-area-context";
+// import Ionicons from "@react-native-vector-icons/ionicons";
+// import { styles } from "./MyAdDetailStyles";
+// import { useMyAdDetailLogic } from "./useMyAdDetailLogic";
+// import { Colors } from "../../theme/colors";
+// import { formatDate, formatTime } from "../../utils/dateHelpers";
+// import { Fonts } from "../../theme/fonts";
+
+// const MyAdDetailScreen = ({ route, navigation }: any) => {
+//   const { ad } = route.params;
+//   const { statusInfo, inspector, loadingInspector, handleCall } = useMyAdDetailLogic(ad);
+
+//   return (
+//     <SafeAreaView style={styles.container}>
+//       {/* Header */}
+//       <View style={styles.header}>
+//         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconBtn}>
+//           <Ionicons name="arrow-back" size={26} color="black" />
+//         </TouchableOpacity>
+//         <Text style={styles.headerTitle}>Car Details</Text>
+//         <View style={{width: 30}} />
+//       </View>
+
+//       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+        
+//         {/* Car Image */}
+//         <Image 
+//             source={ad.images && ad.images.length > 0 ? { uri: ad.images[0] } : require('../../assets/images/carimages/car1.jpg')} 
+//             style={styles.mainImg} 
+//         />
+
+//         <View style={styles.content}>
+//           <View style={styles.mainInfo}>
+//             <Text style={styles.title}>{ad.brand?.name} {ad.model?.name || ad.model}</Text>
+//             <Text style={styles.price}>₹ {ad.expectedPrice?.toLocaleString()}</Text>
+//           </View>
+
+//           {/* --- 1. Inspection Status Card (Handles Rejection) --- */}
+//           <View style={[styles.statusCard, { backgroundColor: statusInfo.bg, borderColor: statusInfo.color }]}>
+//              <View style={styles.row}>
+//                 <Ionicons name={statusInfo.icon as any} size={24} color={statusInfo.color} />
+//                 <Text style={[styles.statusHeading, { color: statusInfo.color }]}>{statusInfo.title}</Text>
+//              </View>
+//              <Text style={styles.statusDescription}>{statusInfo.desc}</Text>
+
+//              {/* --- 🚀 रिजेक्शन डेट (सिर्फ तब दिखेगी जब कार रिजेक्ट हो) --- */}
+//              {ad.status === 'rejected' && statusInfo.date && (
+//                 <Text style={{marginTop: 10, color: '#DC2626', fontFamily: Fonts.bold, fontSize: 11}}>
+//                     REJECTED ON: {formatDate(statusInfo.date)}
+//                 </Text>
+//              )}
+
+//              {/* Action Button: सिर्फ 'scheduled' होने पर */}
+//              {statusInfo.canConfirm && (
+//                <TouchableOpacity 
+//                  style={styles.inlineConfirmBtn}
+//                  onPress={() => navigation.navigate('ConfirmScheduleDateScreen', { car: ad })}
+//                >
+//                  <Text style={styles.inlineBtnText}>Confirm Slot Now</Text>
+//                  <Ionicons name="arrow-forward" size={18} color="white" />
+//                </TouchableOpacity>
+//              )}
+//           </View>
+
+//           {/* --- 2. Inspector Details --- */}
+//           {ad.inspectionStatus === 'assigned' && !loadingInspector && inspector && (
+//                 <View style={styles.inspectorCard}>
+//                    <View style={styles.inspectorHeader}>
+//                       <Image source={inspector.profileImage ? { uri: inspector.profileImage } : require('../../assets/images/imageslogo.png')} style={styles.inspectorImg} />
+//                       <View style={styles.inspectorInfo}>
+//                          <Text style={styles.inspectorTag}>ASSIGNED INSPECTOR</Text>
+//                          <Text style={styles.inspectorName}>{inspector.fullName}</Text>
+//                          <Text style={{fontSize: 12, color: 'gray'}}>{inspector.phone}</Text>
+//                       </View>
+//                       <TouchableOpacity style={styles.callBtn} onPress={() => handleCall(inspector.phone)} >
+//                          <Ionicons name="call" size={20} color="#8B5CF6" />
+//                       </TouchableOpacity>
+//                    </View>
+//                    <View style={styles.scheduleInfoRow}>
+//                       <View style={styles.scheduleItem}>
+//                          <Ionicons name="calendar-outline" size={18} color="gray" />
+//                          <Text style={styles.scheduleText}>{formatDate(ad.scheduledDate)}</Text>
+//                       </View>
+//                       <View style={styles.scheduleItem}>
+//                          <Ionicons name="time-outline" size={18} color="gray" />
+//                          <Text style={styles.scheduleText}>{formatTime(ad.scheduledTime)}</Text>
+//                       </View>
+//                    </View>
+//                 </View>
+//           )}
+
+//           {/* --- 3. Seller Information --- */}
+//           <Text style={styles.sectionTitle}>Seller Information</Text>
+//           <View style={styles.infoBox}>
+//              <Text style={styles.infoLabel}>Name</Text>
+//              <Text style={styles.infoValue}>{ad.sellerName}</Text>
+//              <View style={{height: 10}} />
+//              <Text style={styles.infoLabel}>Contact</Text>
+//              <Text style={styles.infoValue}>{ad.sellerMobile} | {ad.sellerEmail}</Text>
+//           </View>
+
+//           {/* --- 4. Location Details --- */}
+//           <Text style={styles.sectionTitle}>Location Details</Text>
+//           <View style={styles.infoBox}>
+//              <View style={styles.locationRow}>
+//                 <Ionicons name="location" size={18} color="gray" />
+//                 <Text style={[styles.infoValue, {marginLeft: 8}]}>{ad.address}, {ad.city?.name}</Text>
+//              </View>
+//              <Text style={styles.infoLabel}>State: {ad.state?.name}</Text>
+//              <Text style={styles.infoLabel}>Reg City: {ad.registrationCity}</Text>
+//           </View>
+
+//           {/* --- 5. Technical Grid --- */}
+//           <Text style={styles.sectionTitle}>Technical Overview</Text>
+//           <View style={styles.grid}>
+//              <DetailItem label="Variant" value={ad.variant} />
+//              <DetailItem label="Year" value={ad.year} />
+//              <DetailItem label="Fuel" value={ad.fuelType} />
+//              <DetailItem label="KM Driven" value={ad.kmDriven} />
+//              <DetailItem label="Transmission" value={ad.transmission} />
+//              <DetailItem label="Owners" value={ad.noOfOwners} />
+//              <DetailItem label="Reg No" value={ad.registrationNumber} />
+//           </View>
+
+//           {/* --- 6. Description --- */}
+//           <Text style={styles.sectionTitle}>Description</Text>
+//           <Text style={styles.descriptionText}>{ad.description}</Text>
+
+//           {/* --- 7. Features --- */}
+//           {ad.features?.length > 0 && (
+//             <View>
+//               <Text style={styles.sectionTitle}>Features</Text>
+//               <View style={styles.featureRow}>
+//                  {ad.features.map((f: string, i: number) => (
+//                    <View key={i} style={styles.featureBadge}>
+//                      <Ionicons name="checkmark-done" size={14} color={Colors.primary} />
+//                      <Text style={styles.featureText}>{f}</Text>
+//                    </View>
+//                  ))}
+//               </View>
+//             </View>
+//           )}
+//         </View>
+//       </ScrollView>
+//     </SafeAreaView>
+//   );
+// };
+
+// const DetailItem = ({ label, value }: any) => (
+//   <View style={styles.gridItem}>
+//     <Text style={styles.itemLabel}>{label}</Text>
+//     <Text style={styles.itemValue}>{value}</Text>
+//   </View>
+// );
+
+// export default MyAdDetailScreen;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React from "react";
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, Image, TouchableOpacity, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@react-native-vector-icons/ionicons";
 import { styles } from "./MyAdDetailStyles";
 import { useMyAdDetailLogic } from "./useMyAdDetailLogic";
 import { Colors } from "../../theme/colors";
+import { formatDate, formatTime } from "../../utils/dateHelpers";
+import { Fonts } from "../../theme/fonts";
 
 const MyAdDetailScreen = ({ route, navigation }: any) => {
   const { ad } = route.params;
-  const { statusInfo } = useMyAdDetailLogic(ad);
+  const { statusInfo, inspector, loadingInspector, handleCall } = useMyAdDetailLogic(ad);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -576,8 +1075,6 @@ const MyAdDetailScreen = ({ route, navigation }: any) => {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-        
-        {/* Car Image (API key: images[0]) */}
         <Image 
             source={ad.images && ad.images.length > 0 ? { uri: ad.images[0] } : require('../../assets/images/carimages/car1.jpg')} 
             style={styles.mainImg} 
@@ -585,31 +1082,81 @@ const MyAdDetailScreen = ({ route, navigation }: any) => {
 
         <View style={styles.content}>
           <View style={styles.mainInfo}>
-            <Text style={styles.title}>{ad.make} {ad.model}</Text>
-            <Text style={styles.price}>₹ {ad.expectedPrice?.toLocaleString()}</Text>
+            <Text style={styles.title}>{ad.brand?.name} {ad.model?.name || ad.model}</Text>
+            <Text style={styles.price}>₹ {ad.expectedPrice?.toLocaleString('en-IN')}</Text>
           </View>
 
-          {/* --- Inspection Status Card --- */}
+          {/* --- 🚀 नया: Analytics Bar (Views & Inquiries) --- */}
+          <View style={styles.analyticsBar}>
+            <View style={styles.analyticsItem}>
+                <View style={styles.analyticsIconBg}>
+                    <Ionicons name="eye-outline" size={20} color={Colors.primary} />
+                </View>
+                <View>
+                    <Text style={styles.analyticsLabel}>Total Views</Text>
+                    <Text style={styles.analyticsValue}>{ad.views || 0}</Text>
+                </View>
+            </View>
+
+            <View style={styles.analyticsItem}>
+                <View style={styles.analyticsIconBg}>
+                    <Ionicons name="chatbubble-ellipses-outline" size={18} color={Colors.primary} />
+                </View>
+                <View>
+                    <Text style={styles.analyticsLabel}>Inquiries</Text>
+                    <Text style={styles.analyticsValue}>{ad.inquiryCount || 0}</Text>
+                </View>
+            </View>
+          </View>
+
+          {/* Inspection Status Card */}
           <View style={[styles.statusCard, { backgroundColor: statusInfo.bg, borderColor: statusInfo.color }]}>
              <View style={styles.row}>
                 <Ionicons name={statusInfo.icon as any} size={24} color={statusInfo.color} />
                 <Text style={[styles.statusHeading, { color: statusInfo.color }]}>{statusInfo.title}</Text>
              </View>
              <Text style={styles.statusDescription}>{statusInfo.desc}</Text>
-
-             {/* Action Button: सिर्फ 'scheduled' होने पर */}
+             {ad.status === 'rejected' && statusInfo.date && (
+                <Text style={{marginTop: 10, color: '#DC2626', fontFamily: Fonts.bold, fontSize: 11}}>
+                    REJECTED ON: {formatDate(statusInfo.date)}
+                </Text>
+             )}
              {statusInfo.canConfirm && (
-               <TouchableOpacity 
-                 style={styles.inlineConfirmBtn}
-                 onPress={() => navigation.navigate('ConfirmScheduleDateScreen', { car: ad })}
-               >
-                 <Text style={styles.inlineBtnText}>Confirm Now</Text>
+               <TouchableOpacity style={styles.inlineConfirmBtn} onPress={() => navigation.navigate('ConfirmScheduleDateScreen', { car: ad })}>
+                 <Text style={styles.inlineBtnText}>Confirm Slot Now</Text>
                  <Ionicons name="arrow-forward" size={18} color="white" />
                </TouchableOpacity>
              )}
           </View>
 
-          {/* --- Seller Info --- */}
+          {/* ... बाकी पुराने सेक्शन्स (Inspector, Seller Info, etc.) वही रहेंगे ... */}
+          {ad.inspectionStatus === 'assigned' && !loadingInspector && inspector && (
+                <View style={styles.inspectorCard}>
+                   {/* Inspector Card Code */}
+                   <View style={styles.inspectorHeader}>
+                      <Image source={inspector.profileImage ? { uri: inspector.profileImage } : require('../../assets/images/imageslogo.png')} style={styles.inspectorImg} />
+                      <View style={styles.inspectorInfo}>
+                         <Text style={styles.inspectorTag}>ASSIGNED INSPECTOR</Text>
+                         <Text style={styles.inspectorName}>{inspector.fullName}</Text>
+                         <Text style={{fontSize: 12, color: 'gray'}}>{inspector.phone}</Text>
+                      </View>
+                      <TouchableOpacity style={styles.callBtn} onPress={() => handleCall(inspector.phone)} >
+                         <Ionicons name="call" size={20} color="#8B5CF6" />
+                      </TouchableOpacity>
+                   </View>
+                   <View style={styles.scheduleInfoRow}>
+                      <View style={styles.scheduleItem}>
+                         <Ionicons name="calendar-outline" size={18} color="gray" />
+                         <Text style={styles.scheduleText}>{formatDate(ad.scheduledDate)}</Text>
+                      </View>
+                      <View style={styles.scheduleItem}>
+                         <Ionicons name="time-outline" size={18} color="gray" />
+                         <Text style={styles.scheduleText}>{formatTime(ad.scheduledTime)}</Text>
+                      </View>
+                   </View>
+                </View>
+          )}
+
           <Text style={styles.sectionTitle}>Seller Information</Text>
           <View style={styles.infoBox}>
              <Text style={styles.infoLabel}>Name</Text>
@@ -619,18 +1166,7 @@ const MyAdDetailScreen = ({ route, navigation }: any) => {
              <Text style={styles.infoValue}>{ad.sellerMobile} | {ad.sellerEmail}</Text>
           </View>
 
-          {/* --- Location --- */}
-          <Text style={styles.sectionTitle}>Location Details</Text>
-          <View style={styles.infoBox}>
-             <View style={styles.locationRow}>
-                <Ionicons name="location" size={18} color="gray" />
-                <Text style={[styles.infoValue, {marginLeft: 8}]}>{ad.address}, {ad.city?.name}</Text>
-             </View>
-             <Text style={styles.infoLabel}>State: {ad.state?.name}</Text>
-             <Text style={styles.infoLabel}>Reg City: {ad.registrationCity}</Text>
-          </View>
-
-          {/* --- Technical Overview --- */}
+          {/* ... Technical Grid, Description, Features ... */}
           <Text style={styles.sectionTitle}>Technical Overview</Text>
           <View style={styles.grid}>
              <DetailItem label="Variant" value={ad.variant} />
@@ -639,27 +1175,7 @@ const MyAdDetailScreen = ({ route, navigation }: any) => {
              <DetailItem label="KM Driven" value={ad.kmDriven} />
              <DetailItem label="Transmission" value={ad.transmission} />
              <DetailItem label="Owners" value={ad.noOfOwners} />
-             <DetailItem label="Reg No" value={ad.registrationNumber} />
           </View>
-
-          {/* --- Description --- */}
-          <Text style={styles.sectionTitle}>Description</Text>
-          <Text style={styles.descriptionText}>{ad.description}</Text>
-
-          {/* --- Features --- */}
-          {ad.features?.length > 0 && (
-            <View>
-              <Text style={styles.sectionTitle}>Features</Text>
-              <View style={styles.featureRow}>
-                 {ad.features.map((f: string, i: number) => (
-                   <View key={i} style={styles.featureBadge}>
-                     <Ionicons name="checkmark-done" size={14} color={Colors.primary} />
-                     <Text style={styles.featureText}>{f}</Text>
-                   </View>
-                 ))}
-              </View>
-            </View>
-          )}
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -7,7 +7,7 @@ const { width } = Dimensions.get('window');
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.primary, // गहरा नीला बैकग्राउंड
+    backgroundColor: Colors.primary, 
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
     color: 'white',
   },
   orangeLetter: {
-    color: Colors.secondary, // पीला/नारंगी '2'
+    color: Colors.secondary, 
   },
   brandName: {
     fontSize: 32,

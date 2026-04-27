@@ -458,6 +458,232 @@
 
 // api integration and chhote part me yaha se 
 
+// import React from "react";
+// import { View, Text, FlatList, Image, TouchableOpacity, ActivityIndicator, RefreshControl } from "react-native";
+// import { SafeAreaView } from "react-native-safe-area-context";
+// import Ionicons from "@react-native-vector-icons/ionicons";
+// import { styles, isTablet } from "./MyAddScreenStyles";
+// import { useMyAdsLogic } from "./useMyAdsLogic";
+
+// const MyAddScreen = ({ navigation }: any) => {
+//   const { ads, loading, refreshing, onRefresh, getStatusInfo } = useMyAdsLogic(navigation);
+
+//   const renderItem = ({ item }: any) => {
+//     // API से 'inspectionStatus' की कोडिंग उठाएं
+//     const statusStyle = getStatusInfo(item.inspectionStatus);
+    
+//     return (
+//       <TouchableOpacity 
+//         style={[styles.adCard, isTablet && styles.tabletCard]} 
+//         activeOpacity={0.9}
+//         onPress={() => navigation.navigate('MyAdDetailScreen', { ad: item })}
+//       >
+//         <Image 
+//             source={item.images && item.images.length > 0 
+//                 ? { uri: item.images[0] } 
+//                 : require('../../../assets/images/carimages/car1.jpg')} 
+//             style={styles.carImg} 
+//         />
+        
+//         <View style={styles.details}>
+//           <Text style={styles.carTitle} numberOfLines={1}>{item.model.name}</Text>
+//           <Text style={styles.carReg}>{item.registrationNumber}</Text>
+//           <Text style={styles.carPrice}>₹ {item.expectedPrice?.toLocaleString()}</Text>
+
+//           <View style={[styles.statusBadge, { backgroundColor: statusStyle.bg }]}>
+//             <Ionicons name={statusStyle.icon as any} size={12} color={statusStyle.color} />
+//             <Text style={[styles.statusText, { color: statusStyle.color }]}>{statusStyle.label}</Text>
+//           </View>
+//         </View>
+
+//         <View style={styles.arrowIcon}>
+//           <Ionicons name="chevron-forward" size={18} color="#CCC" />
+//         </View>
+//       </TouchableOpacity>
+//     );
+//   };
+
+//   if (loading) {
+//     return (
+//       <View style={{ flex: 1, justifyContent: 'center' }}>
+//         <ActivityIndicator size="large" color="#243B53" />
+//       </View>
+//     );
+//   }
+
+//   return (
+//     <SafeAreaView style={styles.safeArea}>
+//       <View style={styles.header}>
+//         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
+//           <Ionicons name="chevron-back" size={28} color="black" />
+//         </TouchableOpacity>
+//         <Text style={styles.headerTitle}>My Ads</Text>
+//       </View>
+
+//       {ads.length > 0 ? (
+//         <FlatList
+//           key={isTablet ? 'tablet' : 'mobile'}
+//           data={ads}
+//           keyExtractor={(item) => item._id}
+//           numColumns={isTablet ? 2 : 1}
+//           contentContainerStyle={styles.listContainer}
+//           columnWrapperStyle={isTablet ? { justifyContent: 'space-between' } : null}
+//           showsVerticalScrollIndicator={false}
+//           renderItem={renderItem}
+//           refreshControl={
+//             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+//           }
+//         />
+//       ) : (
+//         <View style={styles.emptyContainer}>
+//           <Ionicons name="car-sport-outline" size={100} color="#F3F4F6" />
+//           <Text style={styles.emptyText}>You haven't posted any ads yet.</Text>
+//           <TouchableOpacity style={styles.addBtn} onPress={() => navigation.navigate('AddCarScreen')}>
+//              <Text style={styles.addBtnText}>Post an Ad</Text>
+//           </TouchableOpacity>
+//         </View>
+//       )}
+//     </SafeAreaView>
+//   );
+// };
+
+// export default MyAddScreen;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React from "react";
+// import { View, Text, FlatList, Image, TouchableOpacity, ActivityIndicator, RefreshControl } from "react-native";
+// import { SafeAreaView } from "react-native-safe-area-context";
+// import Ionicons from "@react-native-vector-icons/ionicons";
+// import { styles, isTablet } from "./MyAddScreenStyles";
+// import { useMyAdsLogic } from "./useMyAdsLogic";
+
+// const MyAddScreen = ({ navigation }: any) => {
+//   const { ads, loading, refreshing, onRefresh, getStatusInfo } = useMyAdsLogic(navigation);
+
+//   const renderItem = ({ item }: any) => {
+//     // --- 🚀 फिक्स: यहाँ 'item.inspectionStatus' के बजाय पूरा 'item' भेजें ---
+//     const statusStyle = getStatusInfo(item); 
+    
+//     return (
+//       <TouchableOpacity 
+//         style={[styles.adCard, isTablet && styles.tabletCard]} 
+//         activeOpacity={0.9}
+//         onPress={() => navigation.navigate('MyAdDetailScreen', { ad: item })}
+//       >
+//         <Image 
+//             source={item.images && item.images.length > 0 
+//                 ? { uri: item.images[0] } 
+//                 : require('../../../assets/images/carimages/car1.jpg')} 
+//             style={styles.carImg} 
+//         />
+        
+//         <View style={styles.details}>
+//           {/* नाम और नंबर */}
+//           <Text style={styles.carTitle} numberOfLines={1}>
+//             {item.make} {item.model?.name || item.model}
+//           </Text>
+//           <Text style={styles.carReg}>{item.registrationNumber}</Text>
+//           <Text style={styles.carPrice}>₹ {item.expectedPrice?.toLocaleString('en-IN')}</Text>
+
+//           {/* स्टेटस बैज */}
+//           <View style={[styles.statusBadge, { backgroundColor: statusStyle.bg }]}>
+//             <Ionicons name={statusStyle.icon as any} size={12} color={statusStyle.color} />
+//             <Text style={[styles.statusText, { color: statusStyle.color }]}>{statusStyle.label}</Text>
+//           </View>
+
+//           {/* एक्शन हिंट: सिर्फ शेड्यूल्ड होने पर */}
+//           {item.inspectionStatus === 'scheduled' && item.status !== 'rejected' && (
+//             <Text style={styles.tapHint}>Tap to confirm time slot</Text>
+//           )}
+//         </View>
+
+//         <View style={styles.arrowIcon}>
+//           <Ionicons name="chevron-forward" size={18} color="#CCC" />
+//         </View>
+//       </TouchableOpacity>
+//     );
+//   };
+
+//   if (loading) {
+//     return (
+//       <View style={{ flex: 1, justifyContent: 'center' }}>
+//         <ActivityIndicator size="large" color="#243B53" />
+//       </View>
+//     );
+//   }
+
+//   return (
+//     <SafeAreaView style={styles.safeArea}>
+//       <View style={styles.header}>
+//         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
+//           <Ionicons name="chevron-back" size={28} color="black" />
+//         </TouchableOpacity>
+//         <Text style={styles.headerTitle}>My Ads</Text>
+//       </View>
+
+//       {ads.length > 0 ? (
+//         <FlatList
+//           key={isTablet ? 'tablet' : 'mobile'}
+//           data={ads}
+//           keyExtractor={(item) => item._id}
+//           numColumns={isTablet ? 2 : 1}
+//           contentContainerStyle={styles.listContainer}
+//           columnWrapperStyle={isTablet ? { justifyContent: 'space-between' } : null}
+//           showsVerticalScrollIndicator={false}
+//           renderItem={renderItem}
+//           refreshControl={
+//             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+//           }
+//         />
+//       ) : (
+//         <View style={styles.emptyContainer}>
+//           <Ionicons name="car-sport-outline" size={100} color="#F3F4F6" />
+//           <Text style={styles.emptyText}>You haven't posted any ads yet.</Text>
+//           <TouchableOpacity style={styles.addBtn} onPress={() => navigation.navigate('Add')}>
+//              <Text style={styles.addBtnText}>Post an Ad</Text>
+//           </TouchableOpacity>
+//         </View>
+//       )}
+//     </SafeAreaView>
+//   );
+// };
+
+// export default MyAddScreen;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React from "react";
 import { View, Text, FlatList, Image, TouchableOpacity, ActivityIndicator, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -469,8 +695,7 @@ const MyAddScreen = ({ navigation }: any) => {
   const { ads, loading, refreshing, onRefresh, getStatusInfo } = useMyAdsLogic(navigation);
 
   const renderItem = ({ item }: any) => {
-    // API से 'inspectionStatus' की कोडिंग उठाएं
-    const statusStyle = getStatusInfo(item.inspectionStatus);
+    const statusStyle = getStatusInfo(item); 
     
     return (
       <TouchableOpacity 
@@ -486,14 +711,40 @@ const MyAddScreen = ({ navigation }: any) => {
         />
         
         <View style={styles.details}>
-          <Text style={styles.carTitle} numberOfLines={1}>{item.model}</Text>
-          <Text style={styles.carReg}>{item.registrationNumber}</Text>
-          <Text style={styles.carPrice}>₹ {item.expectedPrice?.toLocaleString()}</Text>
+            <Text style={styles.carTitle} numberOfLines={1}>
+    {item.make} {item.model?.name || item.model}
+  </Text>
+  <Text style={styles.carReg}>{item.registrationNumber}</Text>
+  <Text style={styles.carPrice}>₹ {item.expectedPrice?.toLocaleString('en-IN')}</Text>
 
-          <View style={[styles.statusBadge, { backgroundColor: statusStyle.bg }]}>
-            <Ionicons name={statusStyle.icon as any} size={12} color={statusStyle.color} />
-            <Text style={[styles.statusText, { color: statusStyle.color }]}>{statusStyle.label}</Text>
-          </View>
+  {/* --- 🚀 स्टेटस और स्टैट्स को एक ही लाइन में रखने वाला कंटेनर --- */}
+  <View style={styles.statusAndStatsContainer}>
+    
+    {/* स्टेटस बैज */}
+    <View style={[styles.statusBadge, { backgroundColor: statusStyle.bg }]}>
+      <Ionicons name={statusStyle.icon as any} size={11} color={statusStyle.color} />
+      <Text style={[styles.statusText, { color: statusStyle.color }]} numberOfLines={1}>
+        {statusStyle.label}
+      </Text>
+    </View>
+
+    {/* व्यूज़ और इनक्वायरी */}
+    <View style={styles.statsRow}>
+      <View style={styles.statItem}>
+          <Ionicons name="eye-outline" size={14} color="#6B7280" />
+          <Text style={styles.statText}>{item.views || 0}</Text>
+      </View>
+      <View style={styles.statItem}>
+          <Ionicons name="chatbubble-ellipses-outline" size={13} color="#6B7280" />
+          <Text style={styles.statText}>{item.inquiryCount || 0}</Text>
+      </View>
+    </View>
+
+  </View>
+
+          {item.inspectionStatus === 'scheduled' && item.status !== 'rejected' && (
+            <Text style={styles.tapHint}>Tap to confirm time slot</Text>
+          )}
         </View>
 
         <View style={styles.arrowIcon}>
@@ -538,7 +789,7 @@ const MyAddScreen = ({ navigation }: any) => {
         <View style={styles.emptyContainer}>
           <Ionicons name="car-sport-outline" size={100} color="#F3F4F6" />
           <Text style={styles.emptyText}>You haven't posted any ads yet.</Text>
-          <TouchableOpacity style={styles.addBtn} onPress={() => navigation.navigate('AddCarScreen')}>
+          <TouchableOpacity style={styles.addBtn} onPress={() => navigation.navigate('Add')}>
              <Text style={styles.addBtnText}>Post an Ad</Text>
           </TouchableOpacity>
         </View>

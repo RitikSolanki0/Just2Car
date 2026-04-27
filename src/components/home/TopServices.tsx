@@ -390,16 +390,151 @@
 
 
 
+// import React, { useState } from 'react';
+// import { 
+//   Text, 
+//   TouchableOpacity, 
+//   StyleSheet, 
+//   View,
+// } from 'react-native';
+// import Ionicons from "@react-native-vector-icons/ionicons";
+// import { Colors } from '../../theme/colors';
+// import { Fonts } from '../../theme/fonts';
+
+// const TopServices = () => {
+//   const [activeTab, setActiveTab] = useState('Just2Car');
+
+//   const services = [
+//     { id: 1, title: 'Just2Car', icon: 'car-sport', color: '#243B53' },
+//     { id: 2, title: 'Buy & Sell', icon: 'swap-horizontal', color: '#f87a20' },
+//     { id: 3, title: 'Insurance', icon: 'shield-checkmark', color: '#41ac68' },
+//     { id: 4, title: 'Parts', icon: 'settings', color: '#f8af31' },
+//   ] as const;
+
+//   return (
+//     <View style={styles.container}>
+//       <View style={styles.tabWrapper}>
+//         {services.map((item, index) => {
+//           const isActive = activeTab === item.title;
+          
+//           return (
+//             <TouchableOpacity 
+//               key={item.id}
+//               activeOpacity={0.9}
+//               onPress={() => setActiveTab(item.title)}
+//               style={[
+//                 styles.tabBtn,
+//                 { 
+//                   backgroundColor: isActive ? item.color : '#ffffff',
+//                   borderColor: isActive ? item.color : '#E5E7EB',
+//                   marginRight: index === services.length - 1 ? 0 : 8 
+//                 }
+//               ]}
+//             >
+//               {/* आइकन ऊपर (Top) */}
+//               <View style={[
+//                 styles.iconCircle, 
+//                 { backgroundColor: isActive ? 'rgba(255,255,255,0.2)' : item.color + '15' }
+//               ]}>
+//                  <Ionicons 
+//                     name={isActive ? (item.icon as any) : (item.icon + "-outline" as any)} 
+//                     size={18} // आइकन साइज बढ़ा दिया
+//                     color={isActive ? 'white' : item.color} 
+//                  />
+//               </View>
+
+//               {/* टेक्स्ट नीचे (Bottom) */}
+//               <Text style={[
+//                 styles.tabText, 
+//                 { color: isActive ? 'white' : '#374151' }
+//               ]} 
+//               numberOfLines={1}
+//               >
+//                 {item.title}
+//               </Text>
+//             </TouchableOpacity>
+//           );
+//         })}
+//       </View>
+//     </View>
+//   );
+// };
+
+// export default TopServices;
+
+// const styles = StyleSheet.create({
+//   container: {
+//     marginTop: 15,
+//     marginBottom: 5,
+//     paddingHorizontal: 12,
+//   },
+//   tabWrapper: {
+//     flexDirection: 'row',
+//     width: '100%',
+//   },
+//   tabBtn: {
+//     flex: 1,
+//     flexDirection: 'column', // आइकन ऊपर और टेक्स्ट नीचे करने के लिए
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     height: 65, // ऊँचाई बढ़ा दी ताकि वर्टिकल स्पेस मिले
+//     borderRadius: 12,
+//     borderWidth: 1,
+//     paddingVertical: 8,
+    
+//     // प्रीमियम शैडो
+//     elevation: 3,
+//     shadowColor: Colors.primary,
+//     shadowOffset: { width: 0, height: 2 },
+//     shadowOpacity: 0.1,
+//     shadowRadius: 3,
+//   },
+//   iconCircle: {
+//     width: 32, // गोले का साइज बढ़ा दिया
+//     height: 32,
+//     borderRadius: 16,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     marginBottom: 4, // टेक्स्ट से ऊपर गैप
+//   },
+//   tabText: {
+//     fontSize: 12, // टेक्स्ट साइज बढ़ा दिया (पहले 8.5 था)
+//     fontFamily: Fonts.bold,
+//     textAlign: 'center',
+//   },
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { useState } from 'react';
 import { 
   Text, 
   TouchableOpacity, 
   StyleSheet, 
   View,
+  ScrollView, 
+  Dimensions
 } from 'react-native';
 import Ionicons from "@react-native-vector-icons/ionicons";
 import { Colors } from '../../theme/colors';
 import { Fonts } from '../../theme/fonts';
+
+const { width } = Dimensions.get('window');
 
 const TopServices = () => {
   const [activeTab, setActiveTab] = useState('Just2Car');
@@ -409,11 +544,17 @@ const TopServices = () => {
     { id: 2, title: 'Buy & Sell', icon: 'swap-horizontal', color: '#f87a20' },
     { id: 3, title: 'Insurance', icon: 'shield-checkmark', color: '#41ac68' },
     { id: 4, title: 'Parts', icon: 'settings', color: '#f8af31' },
+    { id: 5, title: 'RTO', icon: 'document-text', color: '#4648de' }, 
+    { id: 6, title: 'Car Loan', icon: 'wallet', color: '#703caf' }, 
   ] as const;
 
   return (
     <View style={styles.container}>
-      <View style={styles.tabWrapper}>
+      <ScrollView 
+        horizontal 
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
         {services.map((item, index) => {
           const isActive = activeTab === item.title;
           
@@ -427,23 +568,24 @@ const TopServices = () => {
                 { 
                   backgroundColor: isActive ? item.color : '#ffffff',
                   borderColor: isActive ? item.color : '#E5E7EB',
-                  marginRight: index === services.length - 1 ? 0 : 8 
+                  // गैप के लिए मार्जिन
+                  marginRight: 10 
                 }
               ]}
             >
-              {/* आइकन ऊपर (Top) */}
+              {/* आइकन ऊपर */}
               <View style={[
                 styles.iconCircle, 
                 { backgroundColor: isActive ? 'rgba(255,255,255,0.2)' : item.color + '15' }
               ]}>
                  <Ionicons 
                     name={isActive ? (item.icon as any) : (item.icon + "-outline" as any)} 
-                    size={18} // आइकन साइज बढ़ा दिया
+                    size={20} 
                     color={isActive ? 'white' : item.color} 
                  />
               </View>
 
-              {/* टेक्स्ट नीचे (Bottom) */}
+              {/* टेक्स्ट नीचे */}
               <Text style={[
                 styles.tabText, 
                 { color: isActive ? 'white' : '#374151' }
@@ -455,7 +597,7 @@ const TopServices = () => {
             </TouchableOpacity>
           );
         })}
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -466,18 +608,17 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 15,
     marginBottom: 5,
-    paddingHorizontal: 12,
   },
-  tabWrapper: {
-    flexDirection: 'row',
-    width: '100%',
+  scrollContent: {
+    paddingHorizontal: 12, // किनारों से दूरी
+    paddingBottom: 5, // शैडो न कटे इसलिए
   },
   tabBtn: {
-    flex: 1,
-    flexDirection: 'column', // आइकन ऊपर और टेक्स्ट नीचे करने के लिए
+    width: 85, // फिक्स चौड़ाई ताकि सब एक जैसे दिखें
+    flexDirection: 'column', 
     alignItems: 'center',
     justifyContent: 'center',
-    height: 65, // ऊँचाई बढ़ा दी ताकि वर्टिकल स्पेस मिले
+    height: 70, // थोड़ी ऊँचाई बढ़ाई
     borderRadius: 12,
     borderWidth: 1,
     paddingVertical: 8,
@@ -490,15 +631,15 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
   iconCircle: {
-    width: 32, // गोले का साइज बढ़ा दिया
-    height: 32,
-    borderRadius: 16,
+    width: 34, 
+    height: 34,
+    borderRadius: 17,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 4, // टेक्स्ट से ऊपर गैप
+    marginBottom: 6,
   },
   tabText: {
-    fontSize: 12, // टेक्स्ट साइज बढ़ा दिया (पहले 8.5 था)
+    fontSize: 12, 
     fontFamily: Fonts.bold,
     textAlign: 'center',
   },

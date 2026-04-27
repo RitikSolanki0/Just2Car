@@ -79,15 +79,15 @@ const CarInfoSection = ({
   <View style={styles.contentSection}>
     {/* कार का नाम और रेटिंग */}
     <View style={styles.titleRow}>
-      <Text style={styles.carName}>{car?.name || "Tesla Model 3"}</Text>
+      <Text style={styles.carName}>{car?.carName || "Tesla Model 3"}</Text>
       <View style={styles.ratingRow}>
-        <Text style={styles.ratingText}>4.5/5</Text>
+        <Text style={styles.ratingText}>{car?.rating || "No Rating"}/10</Text>
         <Ionicons name="star" size={18} color={Colors.secondary} />
       </View>
     </View>
 
     {/* कार का प्राइस */}
-    <Text style={styles.priceText}>Rs. {car?.price || "18,00,000.00"}</Text>
+    <Text style={styles.priceText}>Rs. {car?.price || "Not Available "}</Text>
 
     {/* --- बटन अब यहाँ आ गया (डिस्क्रिप्शन के ऊपर) --- */}
     <View style={styles.buttonWrapper}>

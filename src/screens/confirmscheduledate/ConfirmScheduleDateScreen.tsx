@@ -549,7 +549,7 @@ const ConfirmScheduleDateScreen = ({ navigation, route }: any) => {
         <View style={styles.infoContainer}>
           <View style={styles.titleRow}>
             <View style={{flex: 1}}>
-              <Text style={styles.carName}>{car?.model || "Car Model"}</Text>
+              <Text style={styles.carName}>{typeof car?.model === 'object' ? car.model.name : car?.model || "Car Name"}</Text>
               <Text style={styles.carPrice}>₹ {car?.expectedPrice?.toLocaleString()}</Text>
               <Text style={styles.exShowroom}>
                 Reg Number: <Text style={styles.boldText}>{car?.registrationNumber}</Text>
@@ -571,7 +571,8 @@ const ConfirmScheduleDateScreen = ({ navigation, route }: any) => {
             <View style={styles.detailItem}>
               <Ionicons name="location" size={22} color="#EF4444" />
               <Text style={styles.detailText}>
-                {car?.address}, {car?.city?.name || car?.city}
+                {/* {car?.address}, {car?.city?.name || car?.city} */}
+                {car?.address}, {car?.city?.name || car?.city || "N/A"}
               </Text>
             </View>
 

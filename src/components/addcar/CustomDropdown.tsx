@@ -53,7 +53,7 @@ const CustomDropdown = ({ label, placeholder, data, selectedValue, onSelect }: a
                 data={data}
                 keyExtractor={(item) => item}
                 showsVerticalScrollIndicator={false}
-                style={{ maxHeight: height * 0.4 }} // 5-6 वैल्यूज़ के बाद स्क्रॉल होगा
+                style={{ maxHeight: height * 0.4 }} 
                 renderItem={({ item }) => (
                   <TouchableOpacity 
                     style={styles.optionItem} 

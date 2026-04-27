@@ -3,21 +3,9 @@ import { View, Text, TextInput, StyleSheet } from 'react-native';
 import Ionicons from "@react-native-vector-icons/ionicons";
 import { Fonts } from '../../theme/fonts';
 
-const CarDetailsSection = ({ carName, setCarName, regNumber, setRegNumber }: any) => (
+const CarDetailsSection = ({  regNumber, setRegNumber }: any) => (
   <View style={styles.container}>
     <Text style={styles.sectionHeading}>Car Identity</Text>
-
-    {/* Car Display Name */}
-    <Text style={styles.label}>Car Name</Text>
-    <View style={styles.inputWithIcon}>
-      <Ionicons name="car-outline" size={20} color="gray" />
-      <TextInput 
-        style={styles.flexInput} 
-        placeholder="e.g. Maruti Swift VXI" 
-        value={carName} 
-        onChangeText={setCarName} 
-      />
-    </View>
 
     {/* Registration Number */}
     <Text style={styles.label}>Registration Number</Text>

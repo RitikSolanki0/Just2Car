@@ -521,6 +521,7 @@ const ProfileScreen = ({ navigation }: any) => {
 
   const menuItems = [
     { id: 'fav', label: 'Favorites', icon: 'heart-outline' },
+    // { id: 'package', label: 'My Package', icon: 'ribbon-outline' },      
     { id: 'about', label: 'About Us', icon: 'information-circle-outline' },
     { id: 'share', label: 'Tell your friends', icon: 'person-add-outline' },
     { id: 'privacy', label: 'Privacy Policy', icon: 'lock-closed-outline' },
@@ -545,15 +546,15 @@ const ProfileScreen = ({ navigation }: any) => {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-        
+
         <View style={styles.profileSection}>
           <View style={styles.imageWrapper}>
             <Image
               // --- Logic: Backend Image or Local fallback ---
               source={
-                profileData?.profileImage 
-                ? { uri: profileData.profileImage } 
-                : require("../../../assets/images/imageslogo.png")
+                profileData?.profileImage
+                  ? { uri: profileData.profileImage }
+                  : require("../../../assets/images/imageslogo.png")
               }
               style={styles.profileImage}
               resizeMode="cover"

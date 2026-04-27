@@ -32,7 +32,7 @@ export const useProfileLogic = (navigation: any) => {
     }
   };
 
-   useEffect(() => {
+  useEffect(() => {
     // पहली बार लोड करने के लिए
     fetchProfile();
 
@@ -55,7 +55,7 @@ export const useProfileLogic = (navigation: any) => {
     }
   };
 
-const handleLogout = () => {
+  const handleLogout = () => {
     Alert.alert("Logout", "Are you sure you want to logout from Just2Car?", [
       { text: "Cancel", style: "cancel" },
       {
@@ -64,12 +64,12 @@ const handleLogout = () => {
         onPress: async () => {
           try {
             // 1. पूरी मेमोरी साफ़ करें
-            await AsyncStorage.clear(); 
-            
+            await AsyncStorage.clear();
+
             // 2. Redux स्टेट को खाली करें
             // जैसे ही टोकन null होगा, NavigationScreen अपने आप लॉगिन पर भेज देगी
-            dispatch(setSignOut()); 
-            
+            dispatch(setSignOut());
+
             // --- ❌ यहाँ navigation.reset की ज़रूरत नहीं है, इसे हटा दिया गया है ---
           } catch (error) {
             console.log("Logout Error:", error);
@@ -82,6 +82,7 @@ const handleLogout = () => {
   const onMenuPress = (id: string) => {
     if (id === 'fav') navigation.navigate('WishlistScreen');
     else if (id === 'share') handleShareApp();
+    else if (id === 'package') navigation.navigate('PackageScreen');
     else if (id === 'about') navigation.navigate('AboutUsScreen');
     else if (id === 'terms') navigation.navigate('TermsAndConditionsScreen');
     else if (id === 'privacy') navigation.navigate('PrivacyPolicyScreen');

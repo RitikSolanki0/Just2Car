@@ -1,685 +1,3 @@
-// import React, { useState } from "react";
-// import {
-//   View,
-//   Text,
-//   StyleSheet,
-//   Image,
-//   TouchableOpacity,
-//   ScrollView,
-// } from "react-native";
-// import Ionicons from "@react-native-vector-icons/ionicons";
-// import { Colors } from "../../theme/colors";
-// import { Fonts } from "../../theme/fonts";
-// import { SafeAreaView } from "react-native-safe-area-context";
-
-// const ScheduleDateScreen = ({ navigation, route }: any) => {
-//   const car = route.params?.car;
-
-//   // --- States for selection ---
-//   const [location, setLocation] = useState("Hub"); // Hub or Home
-//   const [selectedDate, setSelectedDate] = useState("08 Sep");
-//   const [selectedTime, setSelectedTime] = useState("11 AM");
-
-//   const dates = ["08 Sep", "09 Sep", "10 Sep", "11 Sep"];
-//   const times = ["9 AM", "11 AM", "1 PM", "4 PM"];
-
-//   return (
-//     <SafeAreaView style={styles.safeArea}>
-//       {/* Header */}
-//       <View style={styles.header}>
-//         <TouchableOpacity onPress={() => navigation.goBack()}>
-//           <Ionicons name="arrow-back" size={28} color={Colors.black} />
-//         </TouchableOpacity>
-//         <Text style={styles.headerTitle}>Book a Inspection Time</Text>
-//         <TouchableOpacity>
-//           <Ionicons name="help-circle-outline" size={28} color={Colors.black} />
-//         </TouchableOpacity>
-//       </View>
-
-//       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
-//         {/* Car Image */}
-//         <View style={styles.imageContainer}>
-//           <Image 
-//             source={car?.image || require("../../assets/images/carimages/car1.jpg")} 
-//             style={styles.carImage} 
-//           />
-//         </View>
-
-//         {/* Car Details */}
-//         <View style={styles.detailsSection}>
-//           <Text style={styles.carName}>{car?.name || "Audi Q3"}</Text>
-//           <Text style={styles.carPrice}>Rs.46.27 - 51.94 Lakh</Text>
-//           <View style={styles.locationRow}>
-//             <Text style={styles.locationText}>New Delhi </Text>
-//             {/* <TouchableOpacity><Text style={styles.editText}>Edit</Text></TouchableOpacity> */}
-//           </View>
-
-//           {/* Choose Location */}
-//           <Text style={styles.sectionTitle}>Choose Location</Text>
-//           <View style={styles.buttonRow}>
-//             <TouchableOpacity 
-//               style={[styles.locationBtn, location === "Hub" ? styles.btnActive : styles.btnInactive]}
-//               onPress={() => setLocation("Hub")}
-//             >
-//               <Text style={[styles.btnText, location === "Hub" ? styles.textWhite : styles.textBlack]}>At Our Hub</Text>
-//             </TouchableOpacity>
-            
-//             <TouchableOpacity 
-//               style={[styles.locationBtn, location === "Home" ? styles.btnYellow : styles.btnInactive]}
-//               onPress={() => setLocation("Home")}
-//             >
-//               <Text style={styles.btnText}>Your Home</Text>
-//             </TouchableOpacity>
-//           </View>
-
-//           {/* Select Date */}
-//           <Text style={styles.sectionTitle}>Select Date</Text>
-//           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.selectorRow}>
-//             {dates.map((date) => (
-//               <TouchableOpacity 
-//                 key={date} 
-//                 style={[styles.pill, selectedDate === date ? styles.btnActive : styles.pillInactive]}
-//                 onPress={() => setSelectedDate(date)}
-//               >
-//                 <Text style={[styles.pillText, selectedDate === date ? styles.textWhite : styles.textGray]}>{date}</Text>
-//               </TouchableOpacity>
-//             ))}
-//           </ScrollView>
-
-//           {/* Choose Time */}
-//           <Text style={styles.sectionTitle}>Choose Time</Text>
-//           <View style={styles.gridRow}>
-//             {times.map((time) => (
-//               <TouchableOpacity 
-//                 key={time} 
-//                 style={[styles.pillLarge, selectedTime === time ? styles.btnActive : styles.pillInactive]}
-//                 onPress={() => setSelectedTime(time)}
-//               >
-//                 <Text style={[styles.pillText, selectedTime === time ? styles.textWhite : styles.textGray]}>{time}</Text>
-//               </TouchableOpacity>
-//             ))}
-//           </View>
-
-//         </View>
-//       </ScrollView>
-
-//       {/* Confirm Button */}
-//       <View style={styles.footer}>
-//         <TouchableOpacity style={styles.confirmBtn} onPress={() => navigation.navigate('ConfirmScheduleDateScreen', { car, date: selectedDate, time: selectedTime })}>
-//           <Text style={styles.confirmText}>CONFIRM</Text>
-//         </TouchableOpacity>
-//       </View>
-//     </SafeAreaView>
-//   );
-// };
-
-// export default ScheduleDateScreen;
-
-// const styles = StyleSheet.create({
-//   safeArea: { flex: 1, backgroundColor: Colors.white },
-//   header: {
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     alignItems: "center",
-//     paddingHorizontal: 15,
-//     paddingVertical: 10,
-//   },
-//   headerTitle: { fontFamily: Fonts.bold, fontSize: 18, color: Colors.black },
-//   imageContainer: { marginTop: 10, width: "100%", height: 220 },
-//   carImage: { width: "100%", height: "100%", resizeMode: "cover" },
-//   detailsSection: { paddingHorizontal: 20, marginTop: 20 },
-//   carName: { fontFamily: Fonts.bold, fontSize: 24, color: Colors.black },
-//   carPrice: { fontFamily: Fonts.bold, fontSize: 18, color: Colors.black, marginTop: 5 },
-//   locationRow: { flexDirection: "row", alignItems: "center", marginTop: 5 },
-//   locationText: { fontFamily: Fonts.medium, fontSize: 14, color: Colors.black },
-//   editText: { color: "#3498db", fontSize: 12, textDecorationLine: 'underline' },
-  
-//   sectionTitle: { fontFamily: Fonts.bold, fontSize: 16, color: Colors.black, marginTop: 25, marginBottom: 15 },
-  
-//   buttonRow: { flexDirection: "row", justifyContent: "space-between" },
-//   locationBtn: { flex: 1, height: 50, borderRadius: 8, justifyContent: "center", alignItems: "center" },
-//   btnActive: { backgroundColor: Colors.primary },
-//   btnYellow: { backgroundColor: Colors.secondary },
-//   btnInactive: { backgroundColor: "#E0E0E0" },
-//   btnText: { fontFamily: Fonts.bold, fontSize: 14 },
-//   textWhite: { color: Colors.white },
-//   textBlack: { color: Colors.black },
-//   textGray: { color: "white" }, // In inactive state, text is white inside gray box in Figma
-
-//   selectorRow: { flexDirection: "row" },
-//   pill: { 
-//     paddingHorizontal: 20, 
-//     height: 55, 
-//     borderRadius: 10, 
-//     justifyContent: "center", 
-//     alignItems: "center", 
-//     marginRight: 12 
-//   },
-//   pillInactive: { backgroundColor: "#D3D3D3" },
-//   pillText: { fontFamily: Fonts.bold, fontSize: 15 },
-  
-//   gridRow: { flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" },
-//   pillLarge: { 
-//     width: "23%", 
-//     height: 60, 
-//     borderRadius: 10, 
-//     justifyContent: "center", 
-//     alignItems: "center", 
-//     marginBottom: 10 
-//   },
-
-//   footer: { paddingHorizontal: 20, paddingBottom: 20 },
-//   confirmBtn: { 
-//     backgroundColor: Colors.secondary, 
-//     height: 60, 
-//     borderRadius: 10, 
-//     justifyContent: "center", 
-//     alignItems: "center" 
-//   },
-//   confirmText: { fontFamily: Fonts.bold, fontSize: 18, color: Colors.white, letterSpacing: 1 },
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from "react";
-// import {
-//   View,
-//   Text,
-//   StyleSheet,
-//   Image,
-//   TouchableOpacity,
-//   ScrollView,
-//   Modal, // मोडल के लिए
-//   TouchableWithoutFeedback
-// } from "react-native";
-// import Ionicons from "@react-native-vector-icons/ionicons";
-// import { Colors } from "../../theme/colors";
-// import { Fonts } from "../../theme/fonts";
-// import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-
-// const ScheduleDateScreen = ({ navigation, route }: any) => {
-//   const { car } = route.params || {};
-//   const insets = useSafeAreaInsets();
-
-//   const [location, setLocation] = useState("Hub");
-//   const [selectedDate, setSelectedDate] = useState("08 Sep");
-//   const [selectedTime, setSelectedTime] = useState("11 AM");
-
-//   // --- Modal State ---
-//   const [isModalVisible, setIsModalVisible] = useState(false);
-
-//   const dates = ["08 Sep", "09 Sep", "10 Sep", "11 Sep", "12 Sep"];
-//   const times = ["9 AM", "11 AM", "1 PM", "4 PM"];
-
-//   // सबमिट बटन हैंडलर
-//   const handleSubmit = () => {
-//     setIsModalVisible(true);
-//   };
-
-//   // मोडल बंद करके होम पर जाने के लिए
-//   const handleDone = () => {
-//     setIsModalVisible(false);
-//     navigation.navigate('BottomNavigator'); // या जो भी आपका होम रूट है
-//   };
-
-//   return (
-//     <SafeAreaView style={styles.safeArea}>
-//       {/* Header */}
-//       <View style={styles.header}>
-//         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconBtn}>
-//           <Ionicons name="arrow-back" size={28} color={Colors.black} />
-//         </TouchableOpacity>
-//         <Text style={styles.headerTitle}>Book a Inspection Time</Text>
-//         <TouchableOpacity style={styles.iconBtn}>
-//           <Ionicons name="help-circle-outline" size={28} color={Colors.black} />
-//         </TouchableOpacity>
-//       </View>
-
-//       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
-//         <View style={styles.imageContainer}>
-//           <Image 
-//             source={car?.image ? (typeof car.image === 'string' ? { uri: car.image } : car.image) : require("../../assets/images/carimages/car1.jpg")} 
-//             style={styles.carImage} 
-//           />
-//         </View>
-
-//         <View style={styles.detailsSection}>
-//           <Text style={styles.carName}>{car?.title || car?.name || "Car Name"}</Text>
-//           <Text style={styles.carPrice}>{car?.price || "₹ 0.00"}</Text>
-//           <View style={styles.locationRow}>
-//             <Ionicons name="location-outline" size={14} color="gray" />
-//             <Text style={styles.locationText}> New Delhi</Text>
-//           </View>
-
-//           <Text style={styles.sectionTitle}>Choose Location</Text>
-//           <View style={styles.buttonRow}>
-//             <TouchableOpacity 
-//               style={[styles.locationBtn, location === "Hub" ? styles.btnActive : styles.btnInactive]}
-//               onPress={() => setLocation("Hub")}
-//             >
-//               <Text style={[styles.btnText, location === "Hub" ? styles.textWhite : styles.textBlack]}>At Our Hub</Text>
-//             </TouchableOpacity>
-            
-//             <TouchableOpacity 
-//               style={[styles.locationBtn, location === "Home" ? styles.btnYellow : styles.btnInactive]}
-//               onPress={() => setLocation("Home")}
-//             >
-//               <Text style={[styles.btnText, location === "Home" ? styles.textWhite : styles.textBlack]}>Your Home</Text>
-//             </TouchableOpacity>
-//           </View>
-
-//           <Text style={styles.sectionTitle}>Select Date</Text>
-//           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.selectorRow}>
-//             {dates.map((date) => (
-//               <TouchableOpacity 
-//                 key={date} 
-//                 style={[styles.pill, selectedDate === date ? styles.btnActive : styles.pillInactive]}
-//                 onPress={() => setSelectedDate(date)}
-//               >
-//                 <Text style={[styles.pillText, selectedDate === date ? styles.textWhite : styles.textGray]}>{date}</Text>
-//               </TouchableOpacity>
-//             ))}
-//           </ScrollView>
-
-//           <Text style={styles.sectionTitle}>Choose Time</Text>
-//           <View style={styles.gridRow}>
-//             {times.map((time) => (
-//               <TouchableOpacity 
-//                 key={time} 
-//                 style={[styles.pillLarge, selectedTime === time ? styles.btnActive : styles.pillInactive]}
-//                 onPress={() => setSelectedTime(time)}
-//               >
-//                 <Text style={[styles.pillText, selectedTime === time ? styles.textWhite : styles.textGray]}>{time}</Text>
-//               </TouchableOpacity>
-//             ))}
-//           </View>
-//         </View>
-//       </ScrollView>
-
-//       {/* --- Footer Submit Button --- */}
-//       <View style={[styles.footer, { paddingBottom: insets.bottom + 20 }]}>
-//         <TouchableOpacity 
-//           style={styles.confirmBtn} 
-//           onPress={handleSubmit} // यहाँ फंक्शन कॉल होगा
-//         >
-//           <Text style={styles.confirmText}>SUBMIT</Text>
-//         </TouchableOpacity>
-//       </View>
-
-//       {/* --- Success Modal --- */}
-//       <Modal
-//         visible={isModalVisible}
-//         transparent={true}
-//         animationType="fade"
-//       >
-//         <TouchableWithoutFeedback onPress={handleDone}>
-//           <View style={styles.modalOverlay}>
-//             <TouchableWithoutFeedback>
-//               <View style={styles.modalContent}>
-//                 <View style={styles.iconCircle}>
-//                   <Ionicons name="checkmark-circle" size={80} color={Colors.primary} />
-//                 </View>
-                
-//                 <Text style={styles.modalTitle}>Thank You!</Text>
-//                 <Text style={styles.modalSubTitle}>
-//                   We will share you the confirmation message soon.
-//                 </Text>
-
-//                 <TouchableOpacity 
-//                   style={styles.okayBtn} 
-//                   onPress={handleDone}
-//                 >
-//                   <Text style={styles.okayBtnText}>Done</Text>
-//                 </TouchableOpacity>
-//               </View>
-//             </TouchableWithoutFeedback>
-//           </View>
-//         </TouchableWithoutFeedback>
-//       </Modal>
-
-//     </SafeAreaView>
-//   );
-// };
-
-// export default ScheduleDateScreen;
-
-// const styles = StyleSheet.create({
-//   safeArea: { flex: 1, backgroundColor: Colors.white },
-//   header: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 15, height: 60 },
-//   headerTitle: { fontFamily: Fonts.bold, fontSize: 18, color: Colors.black },
-//   iconBtn: { padding: 5 },
-//   imageContainer: { width: "100%", height: 220 },
-//   carImage: { width: "100%", height: "100%", resizeMode: "cover" },
-//   detailsSection: { paddingHorizontal: 20, marginTop: 20 },
-//   carName: { fontFamily: Fonts.bold, fontSize: 24, color: Colors.black },
-//   carPrice: { fontFamily: Fonts.bold, fontSize: 18, color: Colors.secondary, marginTop: 5 },
-//   locationRow: { flexDirection: "row", alignItems: "center", marginTop: 5 },
-//   locationText: { fontFamily: Fonts.medium, fontSize: 14, color: 'gray' },
-//   sectionTitle: { fontFamily: Fonts.bold, fontSize: 16, color: Colors.black, marginTop: 25, marginBottom: 15 },
-//   buttonRow: { flexDirection: "row", justifyContent: "space-between" },
-//   locationBtn: { flex: 1, height: 50, borderRadius: 10, justifyContent: "center", alignItems: "center" },
-//   btnActive: { backgroundColor: Colors.primary },
-//   btnYellow: { backgroundColor: Colors.secondary },
-//   btnInactive: { backgroundColor: "#F3F4F6" },
-//   btnText: { fontFamily: Fonts.bold, fontSize: 14 },
-//   textWhite: { color: Colors.white },
-//   textBlack: { color: Colors.black },
-//   textGray: { color: "#9CA3AF" },
-//   selectorRow: { flexDirection: "row" },
-//   pill: { paddingHorizontal: 25, height: 55, borderRadius: 12, justifyContent: "center", alignItems: "center", marginRight: 12 },
-//   pillInactive: { backgroundColor: "#F3F4F6" },
-//   pillText: { fontFamily: Fonts.bold, fontSize: 15 },
-//   gridRow: { flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" },
-//   pillLarge: { width: "23%", height: 60, borderRadius: 12, justifyContent: "center", alignItems: "center", marginBottom: 10 },
-//   footer: { position: 'absolute', bottom: 0, width: '100%', paddingHorizontal: 20, backgroundColor: 'white', paddingTop: 10 },
-//   confirmBtn: { backgroundColor: Colors.secondary, height: 60, borderRadius: 12, justifyContent: "center", alignItems: "center", elevation: 5 },
-//   confirmText: { fontFamily: Fonts.bold, fontSize: 18, color: Colors.white, letterSpacing: 1 },
-
-//   // Modal Styles
-//   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'center', alignItems: 'center' },
-//   modalContent: { width: '85%', backgroundColor: 'white', borderRadius: 25, padding: 30, alignItems: 'center', elevation: 10 },
-//   iconCircle: { marginBottom: 20 },
-//   modalTitle: { fontFamily: Fonts.bold, fontSize: 24, color: Colors.black },
-//   modalSubTitle: { fontFamily: Fonts.medium, fontSize: 16, color: 'gray', textAlign: 'center', marginTop: 10, lineHeight: 22 },
-//   okayBtn: { marginTop: 30, backgroundColor: Colors.secondary, paddingVertical: 14, borderRadius: 15, width: '100%', alignItems: 'center' },
-//   okayBtnText: { color: 'white', fontFamily: Fonts.bold, fontSize: 16 },
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState, useEffect } from "react";
-// import {
-//   View,
-//   Text,
-//   StyleSheet,
-//   Image,
-//   TouchableOpacity,
-//   ScrollView,
-//   Modal,
-//   TextInput,
-//   TouchableWithoutFeedback,
-// } from "react-native";
-// import Ionicons from "@react-native-vector-icons/ionicons";
-// import { Colors } from "../../theme/colors";
-// import { Fonts } from "../../theme/fonts";
-// import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-
-// const ScheduleDateScreen = ({ navigation, route }: any) => {
-//   const { car } = route.params || {};
-//   const insets = useSafeAreaInsets();
-
-//   // --- States ---
-//   const [location, setLocation] = useState("Hub");
-//   const [selectedDate, setSelectedDate] = useState("");
-//   const [selectedTime, setSelectedTime] = useState("11 AM");
-//   const [availableDates, setAvailableDates] = useState<string[]>([]);
-//   const [availableTimes, setAvailableTimes] = useState(["9 AM", "11 AM", "1 PM", "4 PM"]);
-  
-//   // Modals States
-//   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
-//   const [isTimeModalVisible, setIsTimeModalVisible] = useState(false);
-//   const [customTime, setCustomTime] = useState("");
-
-//   // --- 1. आने वाले 7 दिनों की तारीखें जेनरेट करना ---
-//   useEffect(() => {
-//     const dates = [];
-//     for (let i = 1; i <= 7; i++) {
-//       const date = new Date();
-//       date.setDate(date.getDate() + i); // कल से शुरू होकर अगले 7 दिन
-      
-//       const day = date.getDate().toString().padStart(2, '0');
-//       const month = date.toLocaleString('default', { month: 'short' });
-//       const formattedDate = `${day} ${month}`;
-//       dates.push(formattedDate);
-//     }
-//     setAvailableDates(dates);
-//     setSelectedDate(dates[0]); // पहली तारीख को डिफ़ॉल्ट सेलेक्ट करें
-//   }, []);
-
-//   // नया टाइम ऐड करने का फंक्शन
-//   const handleAddCustomTime = () => {
-//     if (customTime.trim().length > 0) {
-//       setAvailableTimes([...availableTimes, customTime]);
-//       setSelectedTime(customTime);
-//       setCustomTime("");
-//       setIsTimeModalVisible(false);
-//     }
-//   };
-
-//   const handleDone = () => {
-//     setIsSuccessModalVisible(false);
-//     navigation.navigate('BottomNavigator'); 
-//   };
-
-//   return (
-//     <SafeAreaView style={styles.safeArea}>
-//       {/* Header */}
-//       <View style={styles.header}>
-//         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconBtn}>
-//           <Ionicons name="arrow-back" size={28} color={Colors.black} />
-//         </TouchableOpacity>
-//         <Text style={styles.headerTitle}>Book a Inspection Time</Text>
-//         <TouchableOpacity style={styles.iconBtn}>
-//           <Ionicons name="help-circle-outline" size={28} color={Colors.black} />
-//         </TouchableOpacity>
-//       </View>
-
-//       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
-//         <View style={styles.imageContainer}>
-//           <Image 
-//             source={car?.image ? (typeof car.image === 'string' ? { uri: car.image } : car.image) : require("../../assets/images/carimages/car1.jpg")} 
-//             style={styles.carImage} 
-//           />
-//         </View>
-
-//         <View style={styles.detailsSection}>
-//           <Text style={styles.carName}>{car?.title || car?.name || "Car Name"}</Text>
-//           <Text style={styles.carPrice}>{car?.price || "₹ 0.00"}</Text>
-//           <View style={styles.locationRow}>
-//             <Ionicons name="location-outline" size={14} color="gray" />
-//             <Text style={styles.locationText}> New Delhi</Text>
-//           </View>
-
-//           <Text style={styles.sectionTitle}>Choose Location</Text>
-//           <View style={styles.buttonRow}>
-//             <TouchableOpacity 
-//               style={[styles.locationBtn, location === "Hub" ? styles.btnActive : styles.btnInactive]}
-//               onPress={() => setLocation("Hub")}
-//             >
-//               <Text style={[styles.btnText, location === "Hub" ? styles.textWhite : styles.textBlack]}>At Our Hub</Text>
-//             </TouchableOpacity>
-            
-//             <TouchableOpacity 
-//               style={[styles.locationBtn, location === "Home" ? styles.btnYellow : styles.btnInactive]}
-//               onPress={() => setLocation("Home")}
-//             >
-//               <Text style={[styles.btnText, location === "Home" ? styles.textWhite : styles.textBlack]}>Your Home</Text>
-//             </TouchableOpacity>
-//           </View>
-
-//           {/* Dynamic Dates Section */}
-//           <Text style={styles.sectionTitle}>Select Date</Text>
-//           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.selectorRow}>
-//             {availableDates.map((date) => (
-//               <TouchableOpacity 
-//                 key={date} 
-//                 style={[styles.pill, selectedDate === date ? styles.btnActive : styles.pillInactive]}
-//                 onPress={() => setSelectedDate(date)}
-//               >
-//                 <Text style={[styles.pillText, selectedDate === date ? styles.textWhite : styles.textGray]}>{date}</Text>
-//               </TouchableOpacity>
-//             ))}
-//           </ScrollView>
-
-//           {/* Time Slots Section with Add Button */}
-//           <Text style={styles.sectionTitle}>Choose Time</Text>
-//           <View style={styles.gridRow}>
-//             {availableTimes.map((time) => (
-//               <TouchableOpacity 
-//                 key={time} 
-//                 style={[styles.pillLarge, selectedTime === time ? styles.btnActive : styles.pillInactive]}
-//                 onPress={() => setSelectedTime(time)}
-//               >
-//                 <Text style={[styles.pillText, selectedTime === time ? styles.textWhite : styles.textGray]}>{time}</Text>
-//               </TouchableOpacity>
-//             ))}
-            
-//             {/* --- "Plus" Add More Time Button --- */}
-//             <TouchableOpacity 
-//               style={styles.addMoreBtn} 
-//               onPress={() => setIsTimeModalVisible(true)}
-//             >
-//               <Ionicons name="add" size={30} color="#9CA3AF" />
-//             </TouchableOpacity>
-//           </View>
-//         </View>
-//       </ScrollView>
-
-//       {/* --- Footer Submit Button --- */}
-//       <View style={[styles.footer, { paddingBottom: insets.bottom + 20 }]}>
-//         <TouchableOpacity style={styles.confirmBtn} onPress={() => setIsSuccessModalVisible(true)}>
-//           <Text style={styles.confirmText}>SUBMIT</Text>
-//         </TouchableOpacity>
-//       </View>
-
-//       {/* --- Success Modal --- */}
-//       <Modal visible={isSuccessModalVisible} transparent animationType="fade">
-//         <View style={styles.modalOverlay}>
-//           <View style={styles.modalContent}>
-//             <Ionicons name="checkmark-circle" size={80} color={Colors.primary} />
-//             <Text style={styles.modalTitle}>Thank You!</Text>
-//             <Text style={styles.modalSubTitle}>We will share you the confirmation message soon.</Text>
-//             <TouchableOpacity style={styles.okayBtn} onPress={handleDone}><Text style={styles.okayBtnText}>Done</Text></TouchableOpacity>
-//           </View>
-//         </View>
-//       </Modal>
-
-//       {/* --- Add Custom Time Modal --- */}
-//       <Modal visible={isTimeModalVisible} transparent animationType="slide">
-//         <View style={styles.modalOverlay}>
-//           <View style={styles.modalContent}>
-//             <Text style={styles.modalTitle}>Add Custom Time</Text>
-//             <TextInput 
-//                 placeholder="e.g. 10:30 AM" 
-//                 style={styles.timeInput}
-//                 value={customTime}
-//                 onChangeText={setCustomTime}
-//                 autoFocus
-//             />
-//             <View style={styles.modalBtnRow}>
-//                <TouchableOpacity style={styles.cancelBtn} onPress={() => setIsTimeModalVisible(false)}><Text>Cancel</Text></TouchableOpacity>
-//                <TouchableOpacity style={styles.addTimeBtn} onPress={handleAddCustomTime}><Text style={{color:'white', fontWeight:'bold'}}>Add</Text></TouchableOpacity>
-//             </View>
-//           </View>
-//         </View>
-//       </Modal>
-
-//     </SafeAreaView>
-//   );
-// };
-
-// export default ScheduleDateScreen;
-
-// const styles = StyleSheet.create({
-//   safeArea: { flex: 1, backgroundColor: Colors.white },
-//   header: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 15, height: 60 },
-//   headerTitle: { fontFamily: Fonts.bold, fontSize: 18, color: Colors.black },
-//   iconBtn: { padding: 5 },
-//   imageContainer: { width: "100%", height: 220 },
-//   carImage: { width: "100%", height: "100%", resizeMode: "cover" },
-//   detailsSection: { paddingHorizontal: 20, marginTop: 20 },
-//   carName: { fontFamily: Fonts.bold, fontSize: 24, color: Colors.black },
-//   carPrice: { fontFamily: Fonts.bold, fontSize: 18, color: Colors.secondary, marginTop: 5 },
-//   locationRow: { flexDirection: "row", alignItems: "center", marginTop: 5 },
-//   locationText: { fontFamily: Fonts.medium, fontSize: 14, color: 'gray' },
-//   sectionTitle: { fontFamily: Fonts.bold, fontSize: 16, color: Colors.black, marginTop: 25, marginBottom: 15 },
-//   buttonRow: { flexDirection: "row", justifyContent: "space-between" },
-//   locationBtn: { flex: 1, height: 50, borderRadius: 10, justifyContent: "center", alignItems: "center" },
-//   btnActive: { backgroundColor: Colors.primary },
-//   btnYellow: { backgroundColor: Colors.secondary },
-//   btnInactive: { backgroundColor: "#F3F4F6" },
-//   btnText: { fontFamily: Fonts.bold, fontSize: 14 },
-//   textWhite: { color: Colors.white },
-//   textBlack: { color: Colors.black },
-//   textGray: { color: "#9CA3AF" },
-//   selectorRow: { flexDirection: "row" },
-//   pill: { paddingHorizontal: 25, height: 55, borderRadius: 12, justifyContent: "center", alignItems: "center", marginRight: 12 },
-//   pillInactive: { backgroundColor: "#F3F4F6" },
-//   pillText: { fontFamily: Fonts.bold, fontSize: 15 },
-//   gridRow: { flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-start" },
-//   pillLarge: { width: "23%", height: 60, borderRadius: 12, justifyContent: "center", alignItems: "center", marginBottom: 10, marginRight: '2%' },
-//   addMoreBtn: { width: "23%", height: 60, borderRadius: 12, justifyContent: "center", alignItems: "center", marginBottom: 10, borderWidth: 1, borderStyle: 'dashed', borderColor: '#9CA3AF' },
-//   footer: { position: 'absolute', bottom: 0, width: '100%', paddingHorizontal: 20, backgroundColor: 'white', paddingTop: 10 },
-//   confirmBtn: { backgroundColor: Colors.secondary, height: 60, borderRadius: 12, justifyContent: "center", alignItems: "center" },
-//   confirmText: { fontFamily: Fonts.bold, fontSize: 18, color: Colors.white, letterSpacing: 1 },
-
-//   // Modal Styles
-//   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'center', alignItems: 'center' },
-//   modalContent: { width: '85%', backgroundColor: 'white', borderRadius: 25, padding: 30, alignItems: 'center' },
-//   modalTitle: { fontFamily: Fonts.bold, fontSize: 22, color: Colors.black },
-//   modalSubTitle: { fontFamily: Fonts.medium, fontSize: 16, color: 'gray', textAlign: 'center', marginTop: 10, lineHeight: 22 },
-//   okayBtn: { marginTop: 30, backgroundColor: Colors.secondary, paddingVertical: 14, borderRadius: 15, width: '100%', alignItems: 'center' },
-//   okayBtnText: { color: 'white', fontFamily: Fonts.bold, fontSize: 16 },
-  
-//   // Custom Time Modal Extra Styles
-//   timeInput: { width: '100%', height: 50, backgroundColor: '#F3F4F6', borderRadius: 10, marginTop: 20, paddingHorizontal: 15, fontFamily: Fonts.medium },
-//   modalBtnRow: { flexDirection: 'row', marginTop: 20, width: '100%', justifyContent: 'space-between' },
-//   cancelBtn: { flex: 1, padding: 15, alignItems: 'center' },
-//   addTimeBtn: { flex: 1, backgroundColor: Colors.primary, padding: 15, borderRadius: 10, alignItems: 'center' },
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useState, useEffect } from "react";
 // import {
@@ -1515,15 +833,152 @@
 
 // api integration and chote part me yaha se 
 
+// import React from "react";
+// import { View, Text, Image, TouchableOpacity, ScrollView, Modal, TextInput, ActivityIndicator } from "react-native";
+// import Ionicons from "@react-native-vector-icons/ionicons";
+// import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+// import { styles } from './ScheduleDateStyles';
+// import TimePickerModal from './TimePickerModal';
+// import { useScheduleDateLogic } from './useScheduleDateLogic';
+// import { Colors } from "../../theme/colors";
+// import { formatDate } from "../../utils/dateHelpers"; // हमने जो पहले बनाया था
+
+// const ScheduleDateScreen = ({ navigation, route }: any) => {
+//   const { car } = route.params || {};
+//   const insets = useSafeAreaInsets();
+  
+//   const logic = useScheduleDateLogic(navigation, car);
+
+//   const addNewTime = (newTime: string) => {
+//     if (!logic.availableTimes.includes(newTime)) {
+//         logic.setAvailableTimes([...logic.availableTimes, newTime]);
+//     }
+//     logic.setSelectedTime(newTime);
+//     logic.setShowPicker(false);
+//   };
+
+//   return (
+//     <SafeAreaView style={styles.safeArea}>
+//       <View style={styles.header}>
+//         <TouchableOpacity onPress={() => navigation.goBack()}><Ionicons name="arrow-back" size={28} color="black" /></TouchableOpacity>
+//         <Text style={styles.headerTitle}>Book an Inspection</Text>
+//         <View style={{width: 28}} />
+//       </View>
+
+//       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 150 }}>
+//         <Image source={car?.images && car.images.length > 0 ? { uri: car.images[0] } : require("../../assets/images/carimages/car1.jpg")} style={styles.imageContainer} />
+
+//         <View style={styles.detailsSection}>
+//           <Text style={styles.carName}>{car?.model || "Car Details"}</Text>
+//           <Text style={styles.carPrice}>₹ {car?.expectedPrice?.toLocaleString()}</Text>
+
+//           <Text style={styles.sectionTitle}>Choose Location</Text>
+//           <View style={styles.buttonRow}>
+//             <TouchableOpacity style={[styles.locationBtn, logic.location === "Hub" ? styles.btnActive : styles.btnInactive]} onPress={() => logic.setLocation("Hub")}>
+//               <Text style={[styles.btnText, logic.location === "Hub" ? styles.textWhite : styles.textBlack]}>At Our Hub</Text>
+//             </TouchableOpacity>
+//             <TouchableOpacity style={[styles.locationBtn, logic.location === "Home" ? styles.btnYellow : styles.btnInactive]} onPress={() => logic.setLocation("Home")}>
+//               <Text style={[styles.btnText, logic.location === "Home" ? styles.textWhite : styles.textBlack]}>Your Home</Text>
+//             </TouchableOpacity>
+//           </View>
+
+//           {logic.location === "Home" && (
+//             <TextInput placeholder="Enter your full home address" style={styles.reasonInput} value={logic.address} onChangeText={logic.setAddress} multiline />
+//           )}
+
+//           <Text style={styles.sectionTitle}>Select Date</Text>
+//           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.selectorRow}>
+//             {logic.availableDates.map(date => (
+//               <TouchableOpacity key={date} style={[styles.pill, logic.selectedDate === date ? styles.btnActive : styles.pillInactive]} onPress={() => logic.setSelectedDate(date)}>
+//                 <Text style={[styles.pillText, logic.selectedDate === date ? styles.textWhite : styles.textGray]}>{formatDate(date)}</Text>
+//               </TouchableOpacity>
+//             ))}
+//           </ScrollView>
+
+//           <Text style={styles.sectionTitle}>Choose Time</Text>
+//           <View style={styles.gridRow}>
+//             {logic.availableTimes.map(time => (
+//               <TouchableOpacity key={time} style={[styles.pillLarge, logic.selectedTime === time ? styles.btnActive : styles.pillInactive]} onPress={() => logic.setSelectedTime(time)}>
+//                 <Text style={[styles.pillText, logic.selectedTime === time ? styles.textWhite : styles.textGray]}>{time}</Text>
+//               </TouchableOpacity>
+//             ))}
+//             <TouchableOpacity style={styles.addMoreBtn} onPress={() => logic.setShowPicker(true)}>
+//               <Ionicons name="add" size={30} color="#9CA3AF" />
+//             </TouchableOpacity>
+//           </View>
+
+//           <Text style={styles.sectionTitle}>Reason for Reschedule</Text>
+//           <TextInput placeholder="Why do you want to reschedule?" style={styles.reasonInput} value={logic.reason} onChangeText={logic.setReason} multiline />
+//         </View>
+//       </ScrollView>
+
+//       {/* --- SUBMIT Button --- */}
+//       <View style={[styles.footer, { paddingBottom: insets.bottom + 15 }]}>
+//         <TouchableOpacity style={styles.confirmBtn} onPress={logic.handleRescheduleSubmit} disabled={logic.loading}>
+//           {logic.loading ? <ActivityIndicator color="white" /> : <Text style={styles.confirmText}>SUBMIT</Text>}
+//         </TouchableOpacity>
+//       </View>
+
+//       <TimePickerModal visible={logic.showPicker} onClose={() => logic.setShowPicker(false)} onSave={addNewTime} />
+      
+//       {/* Success Modal */}
+//       <Modal visible={logic.showSuccess} transparent animationType="fade">
+//         <View style={styles.modalOverlay}>
+//           <View style={styles.modalContent}>
+//             <Ionicons name="checkmark-circle" size={80} color={Colors.primary} />
+//             <Text style={styles.modalTitle}>Thank You!</Text>
+//             <Text style={styles.modalSubTitle}>We will share you the confirmation message soon.</Text>
+//             <TouchableOpacity style={styles.okayBtn} onPress={() => {logic.setShowSuccess(false); navigation.navigate('BottomNavigator');}}><Text style={styles.okayBtnText}>Done</Text></TouchableOpacity>
+//           </View>
+//         </View>
+//       </Modal>
+//     </SafeAreaView>
+//   );
+// };
+
+// export default ScheduleDateScreen;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView, Modal, TextInput, ActivityIndicator } from "react-native";
+import { 
+  View, 
+  Text, 
+  Image, 
+  TouchableOpacity, 
+  ScrollView, 
+  Modal, 
+  TextInput, 
+  ActivityIndicator 
+} from "react-native";
 import Ionicons from "@react-native-vector-icons/ionicons";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { styles } from './ScheduleDateStyles';
 import TimePickerModal from './TimePickerModal';
 import { useScheduleDateLogic } from './useScheduleDateLogic';
 import { Colors } from "../../theme/colors";
-import { formatDate } from "../../utils/dateHelpers"; // हमने जो पहले बनाया था
+import { formatDate } from "../../utils/dateHelpers";
 
 const ScheduleDateScreen = ({ navigation, route }: any) => {
   const { car } = route.params || {};
@@ -1539,48 +994,104 @@ const ScheduleDateScreen = ({ navigation, route }: any) => {
     logic.setShowPicker(false);
   };
 
+  // --- फिक्स: कार का नाम सुरक्षित तरीके से निकालने के लिए (Object handling) ---
+  const getCarModelName = () => {
+    if (!car) return "Car Details";
+    // अगर model एक object है तो .name लें, वरना सीधा इस्तेमाल करें
+    const modelName = typeof car.model === 'object' ? car.model.name : car.model;
+    const brandName = car.brand?.name ? `${car.brand.name} ` : "";
+    return brandName + (modelName || car.name || "Car");
+  };
+
+  // --- फिक्स: सिटी का नाम सुरक्षित तरीके से निकालने के लिए ---
+  const getCityName = () => {
+    if (!car) return "N/A";
+    if (typeof car.city === 'object') return car.city.name;
+    return car.city || "N/A";
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
+      {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}><Ionicons name="arrow-back" size={28} color="black" /></TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={28} color="black" />
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>Book an Inspection</Text>
         <View style={{width: 28}} />
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 150 }}>
-        <Image source={car?.images && car.images.length > 0 ? { uri: car.images[0] } : require("../../assets/images/carimages/car1.jpg")} style={styles.imageContainer} />
+        {/* Car Image */}
+        <Image 
+          source={car?.images && car.images.length > 0 ? { uri: car.images[0] } : require("../../assets/images/carimages/car1.jpg")} 
+          style={styles.imageContainer} 
+        />
 
         <View style={styles.detailsSection}>
-          <Text style={styles.carName}>{car?.model || "Car Details"}</Text>
-          <Text style={styles.carPrice}>₹ {car?.expectedPrice?.toLocaleString()}</Text>
+          {/* --- फिक्स: कार का नाम यहाँ रेंडर हो रहा है --- */}
+          <Text style={styles.carName}>{getCarModelName()}</Text>
+          
+          <Text style={styles.carPrice}>₹ {car?.expectedPrice?.toLocaleString('en-IN')}</Text>
 
+          <View style={styles.locationRow}>
+            <Ionicons name="location-outline" size={14} color="gray" />
+            {/* --- फिक्स: सिटी का नाम यहाँ रेंडर हो रहा है --- */}
+            <Text style={styles.locationText}> {getCityName()}</Text>
+          </View>
+
+          {/* Choose Location */}
           <Text style={styles.sectionTitle}>Choose Location</Text>
           <View style={styles.buttonRow}>
-            <TouchableOpacity style={[styles.locationBtn, logic.location === "Hub" ? styles.btnActive : styles.btnInactive]} onPress={() => logic.setLocation("Hub")}>
+            <TouchableOpacity 
+                style={[styles.locationBtn, logic.location === "Hub" ? styles.btnActive : styles.btnInactive]} 
+                onPress={() => logic.setLocation("Hub")}
+            >
               <Text style={[styles.btnText, logic.location === "Hub" ? styles.textWhite : styles.textBlack]}>At Our Hub</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.locationBtn, logic.location === "Home" ? styles.btnYellow : styles.btnInactive]} onPress={() => logic.setLocation("Home")}>
+            <TouchableOpacity 
+                style={[styles.locationBtn, logic.location === "Home" ? styles.btnYellow : styles.btnInactive]} 
+                onPress={() => logic.setLocation("Home")}
+            >
               <Text style={[styles.btnText, logic.location === "Home" ? styles.textWhite : styles.textBlack]}>Your Home</Text>
             </TouchableOpacity>
           </View>
 
+          {/* Address Input (If Home selected) */}
           {logic.location === "Home" && (
-            <TextInput placeholder="Enter your full home address" style={styles.reasonInput} value={logic.address} onChangeText={logic.setAddress} multiline />
+            <TextInput 
+                placeholder="Enter your full home address" 
+                style={styles.reasonInput} 
+                value={logic.address} 
+                onChangeText={logic.setAddress} 
+                multiline 
+                placeholderTextColor="#9CA3AF"
+            />
           )}
 
+          {/* Date Selection */}
           <Text style={styles.sectionTitle}>Select Date</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.selectorRow}>
             {logic.availableDates.map(date => (
-              <TouchableOpacity key={date} style={[styles.pill, logic.selectedDate === date ? styles.btnActive : styles.pillInactive]} onPress={() => logic.setSelectedDate(date)}>
+              <TouchableOpacity 
+                key={date} 
+                style={[styles.pill, logic.selectedDate === date ? styles.btnActive : styles.pillInactive]} 
+                onPress={() => logic.setSelectedDate(date)}
+              >
                 <Text style={[styles.pillText, logic.selectedDate === date ? styles.textWhite : styles.textGray]}>{formatDate(date)}</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
 
+          {/* Time Selection */}
           <Text style={styles.sectionTitle}>Choose Time</Text>
           <View style={styles.gridRow}>
             {logic.availableTimes.map(time => (
-              <TouchableOpacity key={time} style={[styles.pillLarge, logic.selectedTime === time ? styles.btnActive : styles.pillInactive]} onPress={() => logic.setSelectedTime(time)}>
+              <TouchableOpacity 
+                key={time} 
+                style={[styles.pillLarge, logic.selectedTime === time ? styles.btnActive : styles.pillInactive]} 
+                onPress={() => logic.setSelectedTime(time)}
+              >
                 <Text style={[styles.pillText, logic.selectedTime === time ? styles.textWhite : styles.textGray]}>{time}</Text>
               </TouchableOpacity>
             ))}
@@ -1589,28 +1100,52 @@ const ScheduleDateScreen = ({ navigation, route }: any) => {
             </TouchableOpacity>
           </View>
 
+          {/* Reason Input */}
           <Text style={styles.sectionTitle}>Reason for Reschedule</Text>
-          <TextInput placeholder="Why do you want to reschedule?" style={styles.reasonInput} value={logic.reason} onChangeText={logic.setReason} multiline />
+          <TextInput 
+            placeholder="Why do you want to reschedule?" 
+            style={styles.reasonInput} 
+            value={logic.reason} 
+            onChangeText={logic.setReason} 
+            multiline 
+            placeholderTextColor="#9CA3AF"
+          />
         </View>
       </ScrollView>
 
-      {/* --- SUBMIT Button --- */}
+      {/* Footer Submit Button */}
       <View style={[styles.footer, { paddingBottom: insets.bottom + 15 }]}>
-        <TouchableOpacity style={styles.confirmBtn} onPress={logic.handleRescheduleSubmit} disabled={logic.loading}>
-          {logic.loading ? <ActivityIndicator color="white" /> : <Text style={styles.confirmText}>SUBMIT</Text>}
+        <TouchableOpacity 
+            style={styles.confirmBtn} 
+            onPress={logic.handleRescheduleSubmit} 
+            disabled={logic.loading}
+        >
+          {logic.loading ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <Text style={styles.confirmText}>SUBMIT</Text>
+          )}
         </TouchableOpacity>
       </View>
 
+      {/* Modals */}
       <TimePickerModal visible={logic.showPicker} onClose={() => logic.setShowPicker(false)} onSave={addNewTime} />
       
-      {/* Success Modal */}
       <Modal visible={logic.showSuccess} transparent animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <Ionicons name="checkmark-circle" size={80} color={Colors.primary} />
             <Text style={styles.modalTitle}>Thank You!</Text>
             <Text style={styles.modalSubTitle}>We will share you the confirmation message soon.</Text>
-            <TouchableOpacity style={styles.okayBtn} onPress={() => {logic.setShowSuccess(false); navigation.navigate('BottomNavigator');}}><Text style={styles.okayBtnText}>Done</Text></TouchableOpacity>
+            <TouchableOpacity 
+                style={styles.okayBtn} 
+                onPress={() => {
+                    logic.setShowSuccess(false); 
+                    navigation.navigate('BottomNavigator');
+                }}
+            >
+                <Text style={styles.okayBtnText}>Done</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>

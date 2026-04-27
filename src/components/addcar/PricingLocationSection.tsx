@@ -79,14 +79,14 @@ const PricingLocationSection = ({ price, setPrice, location, setLocation, mobile
   <View>
     <Text style={styles.label}>Set Price</Text>
     <TextInput 
-      style={styles.input} 
+      style={styles.inputWithIcon} 
       placeholder="Enter amount (₹)" 
       keyboardType="numeric" 
       value={price}
       onChangeText={(text) => setPrice(text)} // <-- यह बहुत ज़रूरी है
     />
 
-  <Text style={styles.label}>Full Address</Text>
+  {/* <Text style={styles.label}>Full Address</Text>
     <View style={styles.inputWithIcon}>
       <Ionicons name="map-outline" size={20} color="gray" />
       <TextInput
@@ -95,20 +95,20 @@ const PricingLocationSection = ({ price, setPrice, location, setLocation, mobile
         value={address} // logic.address से कनेक्टेड
         onChangeText={setAddress} // logic.setAddress को अपडेट करेगा
       />
-    </View>
+    </View> */}
 
-    <Text style={styles.label}>Location</Text>
+    <Text style={styles.label}>Full Address</Text>
     <View style={styles.inputWithIcon}>
-      <Ionicons name="location-outline" size={20} color="gray" />
+      <Ionicons name="map-outline" size={20} color="gray" />
       <TextInput 
         style={styles.flexInput} 
-        placeholder="Enter city or area" 
+        placeholder="House no, Street, Area" 
         value={location}
         onChangeText={(text) => setLocation(text)} // <-- यह भी
       />
     </View>
 
-    <Text style={styles.label}>Mobile Number</Text>
+    {/* <Text style={styles.label}>Mobile Number</Text>
     <View style={styles.inputWithIcon}>
       <Ionicons name="call-outline" size={20} color="gray" />
       <TextInput 
@@ -121,7 +121,7 @@ const PricingLocationSection = ({ price, setPrice, location, setLocation, mobile
         value={mobile} // प्रोप से आ रहा है
           onChangeText={(text) => setMobile(text)}
       />
-    </View>
+    </View> */}
   </View>
 );
 
@@ -129,7 +129,7 @@ export default PricingLocationSection;
 
 const styles = StyleSheet.create({
   label: { fontFamily: Fonts.bold, fontSize: 16, color: 'black', marginTop: 18, marginBottom: 8 },
-  input: { backgroundColor: "#F2F4F7", borderRadius: 12, paddingHorizontal: 15, height: 50, fontFamily: Fonts.regular, color: 'black' },
-  inputWithIcon: { backgroundColor: "#F2F4F7", borderRadius: 12, paddingHorizontal: 12, height: 50, flexDirection: 'row', alignItems: 'center' },
+  input: { backgroundColor: "#F2F4F7", borderRadius: 12, paddingHorizontal: 15, height: 52, fontFamily: Fonts.regular, color: 'black', borderWidth: 1, borderColor: '#E5E7EB' },
+  inputWithIcon: { backgroundColor: "#F2F4F7", borderRadius: 12, paddingHorizontal: 15, height: 52, flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#E5E7EB' },
   flexInput: { flex: 1, marginLeft: 10, fontFamily: Fonts.regular, color: 'black' },
 });

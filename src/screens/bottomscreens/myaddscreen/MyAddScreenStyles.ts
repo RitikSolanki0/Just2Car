@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     borderRadius: 12, 
     marginBottom: 15, 
     elevation: 4, 
-    height: 115, 
+    height: 125, 
     width: '100%',
     overflow: 'hidden', 
     shadowColor: '#000', 
@@ -42,12 +42,62 @@ export const styles = StyleSheet.create({
   carReg: { fontFamily: Fonts.medium, fontSize: 12, color: '#6B7280', marginTop: 2 },
   carPrice: { fontFamily: Fonts.bold, fontSize: 15, color: Colors.secondary, marginTop: 4 },
   
-  statusBadge: { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 6, marginTop: 8 },
-  statusText: { fontSize: 9, fontFamily: Fonts.bold, marginLeft: 4 },
+  // statusBadge: { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 6, marginTop: 5, marginBottom: 5 },
+  // statusText: { fontSize: 9, fontFamily: Fonts.bold, marginLeft: 4 },
   
   arrowIcon: { paddingRight: 10 },
   emptyContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 40 },
   emptyText: { fontFamily: Fonts.medium, fontSize: 16, color: 'gray', marginTop: 10, textAlign: 'center' },
   addBtn: { marginTop: 20, backgroundColor: Colors.primary, paddingHorizontal: 30, paddingVertical: 12, borderRadius: 25 },
-  addBtnText: { color: 'white', fontFamily: Fonts.bold }
+  addBtnText: { color: 'white', fontFamily: Fonts.bold },
+   tapHint: {
+    fontSize: 9,
+    color: '#EA580C',
+    fontFamily: Fonts.bold,
+    marginTop: 5
+  },
+  // statsRow: { flexDirection: 'row', alignItems: 'center', marginTop: 10 },
+// statItem: { flexDirection: 'row', alignItems: 'center', marginRight: 15 },
+// statText: { fontSize: 12, color: '#6B7280', fontFamily: Fonts.medium, marginLeft: 5 },
+
+  statusAndStatsContainer: {
+    flexDirection: 'row', // एक लाइन में लाने के लिए
+    alignItems: 'center',
+    justifyContent: 'space-between', // स्टेटस लेफ्ट में और स्टैट्स राइट में
+    marginTop: 8,
+    width: '100%',
+  },
+
+  statusBadge: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    paddingHorizontal: 8, 
+    paddingVertical: 4, 
+    borderRadius: 6,
+    maxWidth: '60%', // ताकि ये बहुत लंबा होकर स्टैट्स को न दबाए
+  },
+
+  statsRow: { 
+    flexDirection: 'row', 
+    alignItems: 'center',
+  },
+
+  statItem: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    marginLeft: 10, // दो आइटम्स के बीच गैप
+  },
+
+  statText: { 
+    fontSize: 11, 
+    color: '#6B7280', 
+    fontFamily: Fonts.medium, 
+    marginLeft: 3 
+  },
+
+  statusText: { 
+    fontSize: 9, 
+    fontFamily: Fonts.bold, 
+    marginLeft: 4 
+  },
 });

@@ -223,23 +223,131 @@
 
 
 
+// import React from 'react';
+// import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
+// import { Fonts } from '../../theme/fonts';
+// import BrandSkeleton from '../skeletons/BrandSkeleton'; // स्केलेटन इम्पोर्ट
+
+// interface BrandSectionProps {
+//   data: any[];
+//   loading: boolean;
+// }
+
+// const BrandSection = ({ data, loading }: BrandSectionProps) => {
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.sectionTitle}>Start with Car Brand</Text>
+      
+//       {loading ? (
+//         // लोड होते समय स्केलेटन दिखाएं
+//         <BrandSkeleton />
+//       ) : (
+//         <FlatList
+//           horizontal
+//           data={data}
+//           showsHorizontalScrollIndicator={false}
+//           keyExtractor={(item) => item._id}
+//           contentContainerStyle={styles.brandList}
+//           renderItem={({ item }) => (
+//             <TouchableOpacity style={styles.brandItem} activeOpacity={0.7}>
+//               {/* लोगो वाला गोला */}
+//               <View style={styles.brandCircle}>
+//                 <Image 
+//                   source={{ uri: item.image }} 
+//                   style={styles.brandLogo} 
+//                 />
+//               </View>
+              
+//               {/* ब्रांड का नाम */}
+//               <Text style={styles.brandName} numberOfLines={1}>
+//                 {item.name}
+//               </Text>
+//             </TouchableOpacity>
+//           )}
+//         />
+//       )}
+//     </View>
+//   );
+// };
+
+// export default BrandSection;
+
+// const styles = StyleSheet.create({
+//   container: { marginTop: 10 },
+//   sectionTitle: { 
+//     fontSize: 15, 
+//     fontFamily: Fonts.bold, 
+//     marginTop: 10, 
+//     color: 'black',
+//     paddingHorizontal: 5 
+//   },
+//   brandList: { 
+//     marginTop: 15,
+//     paddingBottom: 5,
+//   },
+//   brandItem: {
+//     alignItems: 'center',
+//     marginRight: 18,
+//   },
+//   brandCircle: { 
+//     width: 60, 
+//     height: 60, 
+//     borderRadius: 30, 
+//     borderWidth: 1, 
+//     borderColor: '#E5E7EB', 
+//     justifyContent: 'center', 
+//     alignItems: 'center',
+//     backgroundColor: '#fff',
+//     elevation: 2,
+//     shadowColor: '#000',
+//     shadowOffset: { width: 0, height: 1 },
+//     shadowOpacity: 0.1,
+//     shadowRadius: 2,
+//   },
+//   brandLogo: { 
+//     width: 40, 
+//     height: 40, 
+//     resizeMode: 'contain' 
+//   },
+//   brandName: {
+//     marginTop: 8,
+//     fontSize: 11,
+//     fontFamily: Fonts.medium,
+//     color: '#374151',
+//     textAlign: 'center',
+//   },
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React from 'react';
 import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Fonts } from '../../theme/fonts';
-import BrandSkeleton from '../skeletons/BrandSkeleton'; // स्केलेटन इम्पोर्ट
+import BrandSkeleton from '../skeletons/BrandSkeleton';
 
 interface BrandSectionProps {
   data: any[];
   loading: boolean;
+  onBrandPress: (name: string) => void; 
 }
 
-const BrandSection = ({ data, loading }: BrandSectionProps) => {
+const BrandSection = ({ data, loading, onBrandPress }: BrandSectionProps) => {
   return (
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>Start with Car Brand</Text>
       
       {loading ? (
-        // लोड होते समय स्केलेटन दिखाएं
         <BrandSkeleton />
       ) : (
         <FlatList
@@ -249,16 +357,18 @@ const BrandSection = ({ data, loading }: BrandSectionProps) => {
           keyExtractor={(item) => item._id}
           contentContainerStyle={styles.brandList}
           renderItem={({ item }) => (
-            <TouchableOpacity style={styles.brandItem} activeOpacity={0.7}>
-              {/* लोगो वाला गोला */}
+            <TouchableOpacity 
+              style={styles.brandItem} 
+              activeOpacity={0.7}
+              // --- 🚀 क्लिक करने पर नाम पास करें ---
+              onPress={() => onBrandPress(item.name)} 
+            >
               <View style={styles.brandCircle}>
                 <Image 
                   source={{ uri: item.image }} 
                   style={styles.brandLogo} 
                 />
               </View>
-              
-              {/* ब्रांड का नाम */}
               <Text style={styles.brandName} numberOfLines={1}>
                 {item.name}
               </Text>
@@ -274,46 +384,10 @@ export default BrandSection;
 
 const styles = StyleSheet.create({
   container: { marginTop: 10 },
-  sectionTitle: { 
-    fontSize: 15, 
-    fontFamily: Fonts.bold, 
-    marginTop: 10, 
-    color: 'black',
-    paddingHorizontal: 5 
-  },
-  brandList: { 
-    marginTop: 15,
-    paddingBottom: 5,
-  },
-  brandItem: {
-    alignItems: 'center',
-    marginRight: 18,
-  },
-  brandCircle: { 
-    width: 60, 
-    height: 60, 
-    borderRadius: 30, 
-    borderWidth: 1, 
-    borderColor: '#E5E7EB', 
-    justifyContent: 'center', 
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-  },
-  brandLogo: { 
-    width: 40, 
-    height: 40, 
-    resizeMode: 'contain' 
-  },
-  brandName: {
-    marginTop: 8,
-    fontSize: 11,
-    fontFamily: Fonts.medium,
-    color: '#374151',
-    textAlign: 'center',
-  },
+  sectionTitle: { fontSize: 15, fontFamily: Fonts.bold, marginTop: 10, color: 'black', paddingHorizontal: 5 },
+  brandList: { marginTop: 15, paddingBottom: 5 },
+  brandItem: { alignItems: 'center', marginRight: 18 },
+  brandCircle: { width: 60, height: 60, borderRadius: 30, borderWidth: 1, borderColor: '#E5E7EB', justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', elevation: 2, shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2 },
+  brandLogo: { width: 40, height: 40, resizeMode: 'contain' },
+  brandName: { marginTop: 8, fontSize: 11, fontFamily: Fonts.medium, color: '#374151', textAlign: 'center' },
 });

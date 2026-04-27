@@ -1,14 +1,3 @@
-// src/data/dummyData.ts
-
-// export const BRANDS = [
-//   { id: '1', logo: require('../assets/images/carlogo/vw.png') },
-//   { id: '2', logo: require('../assets/images/carlogo/skodalogo.png') },
-//   { id: '3', logo: require('../assets/images/carlogo/NissanLogo.png') },
-//   { id: '4', logo: require('../assets/images/carlogo/MercedesLogo.png') },
-//   { id: '5', logo: require('../assets/images/carlogo/vw.png') },
-//   { id: '6', logo: require('../assets/images/carlogo/skodalogo.png') },
-// ];
-
 export const BRANDS = [
   { id: '1', name: 'Volkswagen', logo: require('../assets/images/carlogo/vw.png') },
   { id: '2', name: 'Skoda', logo: require('../assets/images/carlogo/skodalogo.png') },
@@ -103,8 +92,8 @@ export const NOTIFICATION_TIPS = [
 
 export const FILTER_CATEGORIES = [
   "Make & Model", "Budget", "Fuel", "Model Year", 
-  "Features", "RTO", "Body Type", "Transmission", 
-  "Owners", "Seats", "Kms Driven", "Color", "Discount"
+  "Features", "Body Type", "Transmission", 
+  "Owners", "Kms Driven"
 ];
 
 export const MODEL_OPTIONS = {
@@ -139,8 +128,7 @@ export const CAR_MEDIA = [
   { 
     id: '2', 
     type: 'video', 
-    url: require('../assets/video/car_video.mp4'), // टेस्टिंग के लिए ऑनलाइन URL
-    // poster: require('../assets/images/carimages/banner.jpg') // वीडियो का थंबनेल
+    url: require('../assets/video/car_video.mp4'), 
   },
   { 
     id: '3', 

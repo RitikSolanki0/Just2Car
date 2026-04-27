@@ -47,4 +47,7 @@ export const Colors = {
   border: "#E5E7EB",
   textGray: "#404141",
   success: "#22C55E",
+  inputboxbordercolor: '#E5E7EB',
+  inputboxbackgroundcolor: "#F2F4F7",
+  
 };

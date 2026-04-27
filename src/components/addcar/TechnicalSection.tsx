@@ -46,5 +46,5 @@ const styles = StyleSheet.create({
   radioRow: { flexDirection: 'row', marginBottom: 10 },
   radioBtn: { flexDirection: 'row', alignItems: 'center', marginRight: 30 },
   radioLabel: { marginLeft: 8, fontFamily: Fonts.medium, fontSize: 14 },
-  input: { backgroundColor: "#F2F4F7", borderRadius: 12, paddingHorizontal: 15, height: 50, fontFamily: Fonts.regular },
+  input: { backgroundColor: "#F2F4F7", borderRadius: 12, paddingHorizontal: 15, height: 50, fontFamily: Fonts.regular, borderWidth: 1, borderColor: '#E5E7EB' },
 });

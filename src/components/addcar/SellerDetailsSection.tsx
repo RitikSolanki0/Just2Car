@@ -9,41 +9,47 @@ const SellerDetailsSection = ({ name, setName, email, setEmail, mobile, setMobil
 
     {/* Full Name */}
     <Text style={styles.label}>Full Name</Text>
-    <View style={styles.inputWithIcon}>
+    {/* <View style={[styles.inputWithIcon, styles.disabledBg]}> */}
+     <View style={styles.inputWithIcon}>
       <Ionicons name="person-outline" size={20} color="gray" />
-      <TextInput 
-        style={styles.flexInput} 
-        placeholder="Enter your name" 
-        value={name} 
-        onChangeText={setName} 
+      <TextInput
+        style={styles.flexInput}
+        placeholder="Enter your name"
+        value={name}
+        // editable={false}
+        onChangeText={setName}
       />
     </View>
 
     {/* Email Address */}
     <Text style={styles.label}>Email Address</Text>
+    {/* <View style={[styles.inputWithIcon, styles.disabledBg]}> */}
     <View style={styles.inputWithIcon}>
       <Ionicons name="mail-outline" size={20} color="gray" />
-      <TextInput 
-        style={styles.flexInput} 
-        placeholder="Enter email address" 
+      <TextInput
+        style={styles.flexInput}
+        placeholder="Enter email address"
         keyboardType="email-address"
         autoCapitalize="none"
-        value={email} 
-        onChangeText={setEmail} 
+        value={email}
+        // editable={false}
+        onChangeText={setEmail}
       />
     </View>
 
     {/* Mobile Number */}
     <Text style={styles.label}>Mobile Number</Text>
-    <View style={styles.inputWithIcon}>
+    {/* <View style={[styles.inputWithIcon, styles.disabledBg]}> */}
+     <View style={styles.inputWithIcon}>
       <Ionicons name="call-outline" size={20} color="gray" />
-      <TextInput 
-        style={styles.flexInput} 
-        placeholder="10 digit number" 
-        keyboardType="phone-pad" 
+      <TextInput
+        style={styles.flexInput}
+        placeholder="10 digit number"
+        keyboardType="phone-pad"
         maxLength={10}
-        value={mobile} 
-        onChangeText={setMobile} 
+        value={mobile}
+        // editable={false}
+        onChangeText={setMobile}
       />
     </View>
   </View>
@@ -57,4 +63,8 @@ const styles = StyleSheet.create({
   label: { fontFamily: Fonts.bold, fontSize: 15, color: '#374151', marginTop: 15, marginBottom: 8 },
   inputWithIcon: { backgroundColor: "#F2F4F7", borderRadius: 12, paddingHorizontal: 15, height: 52, flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#E5E7EB' },
   flexInput: { flex: 1, marginLeft: 10, fontFamily: Fonts.regular, color: 'black', fontSize: 14 },
+  disabledBg: {
+    backgroundColor: '#F3F4F6', // थोड़ा और म्यूटेड ग्रे
+    borderColor: '#D1D5DB',
+  },
 });

@@ -8,7 +8,7 @@ const DealerBanner = () => (
   <View style={styles.dealerStrip}>
     <View style={styles.row}>
       <Ionicons name="person-circle" size={24} color={Colors.secondary} />
-      <Text style={styles.dealerText}>Become a Car Dealer</Text>
+      <Text style={styles.dealerText}>Become a Franchise Partner</Text>
     </View>
     <TouchableOpacity style={styles.applyBtn}>
       <Text style={styles.applyText}>Apply Now</Text>
