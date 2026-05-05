@@ -651,7 +651,138 @@
 
 
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+// import { useState, useEffect, useCallback, useRef } from 'react';
+// import { PermissionsAndroid, Platform, Linking, Alert } from 'react-native';
+// import axios from 'axios';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import Geolocation from 'react-native-geolocation-service'; 
+// import { useDispatch } from 'react-redux'; 
+// import { ENDPOINTS } from '../../services/apiConfig';
+// import { setWishlist } from '../../redux/wishlistSlice'; 
+
+// export const useHomeLogic = () => {
+//   const [brands, setBrands] = useState<any[]>([]);
+//   const [banners, setBanners] = useState<any[]>([]);
+//   const [cars, setCars] = useState<any[]>([]);
+  
+//   // --- 🚀 अलग-अलग लोडिंग स्टेट्स ताकि ऊपर वाला हिस्सा जल्दी दिखे ---
+//   const [loadingStatic, setLoadingStatic] = useState(true); // For Brands & Banners
+//   const [loadingCars, setLoadingCars] = useState(true);     // For Car List
+  
+//   const [currentCity, setCurrentCity] = useState("Detecting...");
+//   const dispatch = useDispatch();
+
+//   // --- 1. STATIC DATA FETCH (सबसे तेज़ - ब्रैंड्स और बैनर) ---
+//   const fetchStaticData = useCallback(async () => {
+//     try {
+//       console.log("📡 Fetching Static Data (Instantly)...");
+//       const [brandRes, bannerRes] = await Promise.all([
+//         axios.get(ENDPOINTS.GET_BRANDS),
+//         axios.get(ENDPOINTS.GET_BANNERS)
+//       ]);
+//       if (brandRes.data.success) setBrands(brandRes.data.data);
+//       if (bannerRes.data.success) setBanners(bannerRes.data.data);
+//     } catch (error) {
+//       console.log("❌ Static Fetch Error:", error);
+//     } finally {
+//       setLoadingStatic(false); // जैसे ही ये आए, ऊपर का हिस्सा रेंडर हो जाए
+//     }
+//   }, []);
+
+//   // --- 2. DYNAMIC CARS FETCH (लोकेशन पर आधारित) ---
+//   const fetchCarsData = useCallback(async (lat: number | null, lng: number | null) => {
+//     setLoadingCars(true);
+//     try {
+//       const token = await AsyncStorage.getItem('userToken');
+//       const config = { 
+//         headers: { Authorization: `Bearer ${token}` },
+//         params: { lat, lng } 
+//       };
+
+//       const carRes = await axios.get(ENDPOINTS.GET_CARS, config);
+      
+//       if (carRes.data.success) {
+//         const allCars = carRes.data.data;
+//         setCars(allCars);
+//         dispatch(setWishlist(allCars.filter((car: any) => car.isWishlisted === true)));
+
+//         if (lat && lng && allCars.length > 0) {
+//             setCurrentCity(allCars[0].city?.name || "All India");
+//         } else {
+//             setCurrentCity("All India");
+//         }
+//       }
+//     } catch (error) {
+//       setCurrentCity("All India");
+//     } finally {
+//       setLoadingCars(false);
+//     }
+//   }, [dispatch]);
+
+//   // --- 3. GPS & Permission logic ---
+//   const handleLocationUpdate = async () => {
+//     const hasPermission = await requestLocationPermission();
+//     if (!hasPermission) {
+//       setCurrentCity("All India");
+//       fetchCarsData(null, null);
+//       return;
+//     }
+
+//     Geolocation.getCurrentPosition(
+//       (position) => fetchCarsData(position.coords.latitude, position.coords.longitude),
+//       (error) => {
+//         setCurrentCity("All India");
+//         fetchCarsData(null, null);
+//       },
+//       { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+//     );
+//   };
+
+//   const requestLocationPermission = async () => {
+//     if (Platform.OS === 'android') {
+//         const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+//         if (granted === PermissionsAndroid.RESULTS.GRANTED) return true;
+//         return false;
+//     }
+//     return true;
+//   };
+
+//   // --- 🚀 मुख्य बदलाव: दोनों को अलग-अलग फायर करें ---
+//   useEffect(() => {
+//     // ब्रैंड्स और बैनर को बिना किसी इंतज़ार के तुरंत बुलाओ
+//     fetchStaticData(); 
+    
+//     // लोकेशन और कारों को अपने हिसाब से चलने दो (Permission/GPS में समय लग सकता है)
+//     handleLocationUpdate(); 
+//   }, []);
+
+//   return { 
+//     brands, 
+//     banners, 
+//     cars, 
+//     loadingStatic, // ऊपर के लिए
+//     loadingCars,   // नीचे के लिए
+//     currentCity, 
+//     refreshHome: handleLocationUpdate 
+//   };
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { useState, useEffect, useCallback } from 'react';
 import { PermissionsAndroid, Platform, Linking, Alert } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -665,66 +796,67 @@ export const useHomeLogic = () => {
   const [banners, setBanners] = useState<any[]>([]);
   const [cars, setCars] = useState<any[]>([]);
   
-  // --- 🚀 अलग-अलग लोडिंग स्टेट्स ताकि ऊपर वाला हिस्सा जल्दी दिखे ---
-  const [loadingStatic, setLoadingStatic] = useState(true); // For Brands & Banners
-  const [loadingCars, setLoadingCars] = useState(true);     // For Car List
+  const [loadingStatic, setLoadingStatic] = useState(true); 
+  const [loadingCars, setLoadingCars] = useState(true);     
   
   const [currentCity, setCurrentCity] = useState("Detecting...");
   const dispatch = useDispatch();
 
-  // --- 1. STATIC DATA FETCH (सबसे तेज़ - ब्रैंड्स और बैनर) ---
-  const fetchStaticData = useCallback(async () => {
-    try {
-      console.log("📡 Fetching Static Data (Instantly)...");
-      const [brandRes, bannerRes] = await Promise.all([
-        axios.get(ENDPOINTS.GET_BRANDS),
-        axios.get(ENDPOINTS.GET_BANNERS)
-      ]);
-      if (brandRes.data.success) setBrands(brandRes.data.data);
-      if (bannerRes.data.success) setBanners(bannerRes.data.data);
-    } catch (error) {
-      console.log("❌ Static Fetch Error:", error);
-    } finally {
-      setLoadingStatic(false); // जैसे ही ये आए, ऊपर का हिस्सा रेंडर हो जाए
-    }
-  }, []);
-
-  // --- 2. DYNAMIC CARS FETCH (लोकेशन पर आधारित) ---
-  const fetchCarsData = useCallback(async (lat: number | null, lng: number | null) => {
-    setLoadingCars(true);
-    try {
-      const token = await AsyncStorage.getItem('userToken');
-      const config = { 
-        headers: { Authorization: `Bearer ${token}` },
-        params: { lat, lng } 
-      };
-
-      const carRes = await axios.get(ENDPOINTS.GET_CARS, config);
-      
-      if (carRes.data.success) {
-        const allCars = carRes.data.data;
-        setCars(allCars);
-        dispatch(setWishlist(allCars.filter((car: any) => car.isWishlisted === true)));
-
-        if (lat && lng && allCars.length > 0) {
-            setCurrentCity(allCars[0].city?.name || "All India");
-        } else {
-            setCurrentCity("All India");
-        }
+  // --- 1. परमिशन मांगना (यह पॉपअप दिखाता है) ---
+  const requestLocationPermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+        );
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+      } catch (err) {
+        return false;
       }
-    } catch (error) {
-      setCurrentCity("All India");
-    } finally {
-      setLoadingCars(false);
     }
-  }, [dispatch]);
+    return true;
+  };
 
-  // --- 3. GPS & Permission logic ---
-  const handleLocationUpdate = async () => {
-    const hasPermission = await requestLocationPermission();
+  // --- 2. सिर्फ चेक करना (No Popup) ---
+  const checkPermissionSilent = async () => {
+    if (Platform.OS === 'android') {
+      return await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+    }
+    return true;
+  };
+
+  // --- 3. मुख्य नेविगेटर: तय करेगा कि पॉपअप दिखाना है या नहीं ---
+  const handleLocationUpdate = async (isManual = false) => {
+    if (isManual) setCurrentCity("Detecting...");
+
+    let hasPermission = false;
+
+    if (isManual) {
+      // यूजर ने खुद क्लिक किया है -> पॉपअप दिखाओ
+      hasPermission = await requestLocationPermission();
+      // अगर 'Never ask again' है तो सेटिंग्स खोलने का सुझाव दें
+      const status = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+      if (!status && isManual) {
+          // यहाँ आप Linking.openSettings() वाला अलर्ट लगा सकते हैं
+      }
+    } else {
+      // ऑटोमैटिक लोड/रिफ्रेश हो रहा है
+      const firstTime = await AsyncStorage.getItem('isLocationFirstTime');
+      
+      if (firstTime === null) {
+        // --- 🚀 यह हिस्सा पहली बार ऐप ओपन होने पर चलेगा ---
+        console.log("🎯 First time app open: Showing permission popup");
+        hasPermission = await requestLocationPermission();
+        await AsyncStorage.setItem('isLocationFirstTime', 'done'); // फ्लैग सेट करें
+      } else {
+        // रिफ्रेश या बाद की मौकों पर सिर्फ चेक करो (No Popup)
+        hasPermission = await checkPermissionSilent();
+      }
+    }
+
     if (!hasPermission) {
       setCurrentCity("All India");
-      fetchCarsData(null, null);
+      fetchCarsData(null, null); 
       return;
     }
 
@@ -738,31 +870,42 @@ export const useHomeLogic = () => {
     );
   };
 
-  const requestLocationPermission = async () => {
-    if (Platform.OS === 'android') {
-        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) return true;
-        return false;
-    }
-    return true;
-  };
+  // ... बाकी fetchStaticData और fetchCarsData कोड वही रहेगा ...
 
-  // --- 🚀 मुख्य बदलाव: दोनों को अलग-अलग फायर करें ---
+  const fetchStaticData = useCallback(async () => {
+    try {
+      const [brandRes, bannerRes] = await Promise.all([
+        axios.get(ENDPOINTS.GET_BRANDS),
+        axios.get(ENDPOINTS.GET_BANNERS)
+      ]);
+      if (brandRes.data.success) setBrands(brandRes.data.data);
+      if (bannerRes.data.success) setBanners(bannerRes.data.data);
+    } catch (error) { console.log(error); } finally { setLoadingStatic(false); }
+  }, []);
+
+  const fetchCarsData = useCallback(async (lat: number | null, lng: number | null) => {
+    setLoadingCars(true);
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      const config = { headers: { Authorization: `Bearer ${token}` }, params: { lat, lng } };
+      const carRes = await axios.get(ENDPOINTS.GET_CARS, config);
+      if (carRes.data.success) {
+        const allCars = carRes.data.data;
+        setCars(allCars);
+        dispatch(setWishlist(allCars.filter((car: any) => car.isWishlisted === true)));
+        setCurrentCity(lat && lng && allCars.length > 0 ? allCars[0].city?.name : "All India");
+      }
+    } catch (error) { setCurrentCity("All India"); } finally { setLoadingCars(false); }
+  }, [dispatch]);
+
   useEffect(() => {
-    // ब्रैंड्स और बैनर को बिना किसी इंतज़ार के तुरंत बुलाओ
     fetchStaticData(); 
-    
-    // लोकेशन और कारों को अपने हिसाब से चलने दो (Permission/GPS में समय लग सकता है)
-    handleLocationUpdate(); 
+    handleLocationUpdate(false); // स्टार्टअप पर कॉल
   }, []);
 
   return { 
-    brands, 
-    banners, 
-    cars, 
-    loadingStatic, // ऊपर के लिए
-    loadingCars,   // नीचे के लिए
-    currentCity, 
-    refreshHome: handleLocationUpdate 
+    brands, banners, cars, loadingStatic, loadingCars, currentCity, 
+    refreshHome: () => handleLocationUpdate(false), 
+    onLocationPress: () => handleLocationUpdate(true) 
   };
 };

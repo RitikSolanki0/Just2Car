@@ -91,7 +91,7 @@ export const NOTIFICATION_TIPS = [
 ];
 
 export const FILTER_CATEGORIES = [
-  "Make & Model", "Budget", "Fuel", "Model Year", 
+  "Brands", "Budget", "Fuel", "Model Year", 
   "Features", "Body Type", "Transmission", 
   "Owners", "Kms Driven"
 ];
