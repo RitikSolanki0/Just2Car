@@ -70,58 +70,122 @@
 
 // src/components/addcar/PricingLocationSection.tsx
 
+// import React from 'react';
+// import { View, Text, TextInput, StyleSheet } from 'react-native';
+// import Ionicons from "@react-native-vector-icons/ionicons";
+// import { Fonts } from '../../theme/fonts';
+
+// const PricingLocationSection = ({ price, setPrice, location, setLocation, mobile, setMobile , address, setAddress , errors }: any) => (
+//   <View>
+//     <Text style={styles.label}>Set Price</Text>
+//     <TextInput 
+//       style={styles.inputWithIcon} 
+//       placeholder="Enter amount (₹)" 
+//       keyboardType="numeric" 
+//       value={price}
+//       onChangeText={(text) => setPrice(text)} // <-- यह बहुत ज़रूरी है
+//     />
+
+//   {/* <Text style={styles.label}>Full Address</Text>
+//     <View style={styles.inputWithIcon}>
+//       <Ionicons name="map-outline" size={20} color="gray" />
+//       <TextInput
+//         style={styles.flexInput}
+//         placeholder="House no, Street, Area"
+//         value={address} // logic.address से कनेक्टेड
+//         onChangeText={setAddress} // logic.setAddress को अपडेट करेगा
+//       />
+//     </View> */}
+
+//     <Text style={styles.label}>Full Address</Text>
+//     <View style={styles.inputWithIcon}>
+//       <Ionicons name="map-outline" size={20} color="gray" />
+//       <TextInput 
+//         style={styles.flexInput} 
+//         placeholder="House no, Street, Area" 
+//         value={location}
+//         onChangeText={(text) => setLocation(text)} 
+//       />
+//     </View>
+
+//     {/* <Text style={styles.label}>Mobile Number</Text>
+//     <View style={styles.inputWithIcon}>
+//       <Ionicons name="call-outline" size={20} color="gray" />
+//       <TextInput 
+//         style={styles.flexInput} 
+//         placeholder="Enter 10 digit number" 
+//         keyboardType="phone-pad" 
+//         maxLength={10}
+//         // value={mobile}
+//         // onChangeText={(text) => setMobile(text)} // <-- यह भी
+//         value={mobile} // प्रोप से आ रहा है
+//           onChangeText={(text) => setMobile(text)}
+//       />
+//     </View> */}
+//   </View>
+// );
+
+// export default PricingLocationSection;
+
+// const styles = StyleSheet.create({
+//   label: { fontFamily: Fonts.bold, fontSize: 16, color: 'black', marginTop: 18, marginBottom: 8 },
+//   input: { backgroundColor: "#F2F4F7", borderRadius: 12, paddingHorizontal: 15, height: 52, fontFamily: Fonts.regular, color: 'black', borderWidth: 1, borderColor: '#E5E7EB' },
+//   inputWithIcon: { backgroundColor: "#F2F4F7", borderRadius: 12, paddingHorizontal: 15, height: 52, flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#E5E7EB' },
+//   flexInput: { flex: 1, marginLeft: 10, fontFamily: Fonts.regular, color: 'black' },
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import Ionicons from "@react-native-vector-icons/ionicons";
 import { Fonts } from '../../theme/fonts';
 
-const PricingLocationSection = ({ price, setPrice, location, setLocation, mobile, setMobile , address, setAddress }: any) => (
+// --- 🚀 फिक्स: यहाँ 'errors' प्रोप रिसीव करें ---
+const PricingLocationSection = ({ price, setPrice, address, setAddress, errors }: any) => (
   <View>
     <Text style={styles.label}>Set Price</Text>
-    <TextInput 
-      style={styles.inputWithIcon} 
-      placeholder="Enter amount (₹)" 
-      keyboardType="numeric" 
-      value={price}
-      onChangeText={(text) => setPrice(text)} // <-- यह बहुत ज़रूरी है
-    />
+    {/* --- 🚀 फिक्स: Price पर लाल बॉर्डर --- */}
+    <View style={[styles.inputWithIcon, errors.expectedPrice && { borderColor: 'red', borderWidth: 1.5 }]}>
+      <TextInput 
+        style={styles.flexInput} 
+        placeholder="Enter amount (₹)" 
+        keyboardType="numeric" 
+        value={price}
+        onChangeText={setPrice}
+        maxLength={8}
+      />
+    </View>
 
-  {/* <Text style={styles.label}>Full Address</Text>
-    <View style={styles.inputWithIcon}>
+    <Text style={styles.label}>Full Address</Text>
+    {/* --- 🚀 फिक्स: Address पर लाल बॉर्डर --- */}
+    <View style={[styles.inputWithIcon, errors.address && { borderColor: 'red', borderWidth: 1.5 }]}>
       <Ionicons name="map-outline" size={20} color="gray" />
       <TextInput
         style={styles.flexInput}
         placeholder="House no, Street, Area"
-        value={address} // logic.address से कनेक्टेड
-        onChangeText={setAddress} // logic.setAddress को अपडेट करेगा
-      />
-    </View> */}
-
-    <Text style={styles.label}>Full Address</Text>
-    <View style={styles.inputWithIcon}>
-      <Ionicons name="map-outline" size={20} color="gray" />
-      <TextInput 
-        style={styles.flexInput} 
-        placeholder="House no, Street, Area" 
-        value={location}
-        onChangeText={(text) => setLocation(text)} // <-- यह भी
+        value={address}
+        onChangeText={setAddress}
       />
     </View>
-
-    {/* <Text style={styles.label}>Mobile Number</Text>
-    <View style={styles.inputWithIcon}>
-      <Ionicons name="call-outline" size={20} color="gray" />
-      <TextInput 
-        style={styles.flexInput} 
-        placeholder="Enter 10 digit number" 
-        keyboardType="phone-pad" 
-        maxLength={10}
-        // value={mobile}
-        // onChangeText={(text) => setMobile(text)} // <-- यह भी
-        value={mobile} // प्रोप से आ रहा है
-          onChangeText={(text) => setMobile(text)}
-      />
-    </View> */}
   </View>
 );
 
@@ -129,7 +193,15 @@ export default PricingLocationSection;
 
 const styles = StyleSheet.create({
   label: { fontFamily: Fonts.bold, fontSize: 16, color: 'black', marginTop: 18, marginBottom: 8 },
-  input: { backgroundColor: "#F2F4F7", borderRadius: 12, paddingHorizontal: 15, height: 52, fontFamily: Fonts.regular, color: 'black', borderWidth: 1, borderColor: '#E5E7EB' },
-  inputWithIcon: { backgroundColor: "#F2F4F7", borderRadius: 12, paddingHorizontal: 15, height: 52, flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#E5E7EB' },
+  inputWithIcon: { 
+    backgroundColor: "#F2F4F7", 
+    borderRadius: 12, 
+    paddingHorizontal: 15, 
+    height: 52, 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    borderWidth: 1, 
+    borderColor: '#E5E7EB' 
+  },
   flexInput: { flex: 1, marginLeft: 10, fontFamily: Fonts.regular, color: 'black' },
 });

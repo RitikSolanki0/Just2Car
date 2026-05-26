@@ -10,10 +10,10 @@ const PrivacyPolicyScreen = ({ navigation }: any) => (
       <Text style={{ fontWeight: 'bold', fontSize: 18, marginLeft: 15 }}>Privacy Policy</Text>
     </View>
     <ScrollView style={{ padding: 20 }}>
-      {/* <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 10 }}>Information Collection</Text>
+      <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 10 }}>Information Collection</Text>
       <Text style={{ fontSize: 14, color: 'gray', marginTop: 10, lineHeight: 20 }}>
         We collect data to provide better services. This includes your contact details and car preferences...
-      </Text> */}
+      </Text>
     </ScrollView>
   </SafeAreaView>
 );

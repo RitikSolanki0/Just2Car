@@ -1205,7 +1205,7 @@ const CarDetailScreen = ({ route, navigation }: any) => {
       </ScrollView>
 
       {/* 6. इंक्वायरी बटन */}
-      <View style={[styles.footer, { paddingBottom: insets.bottom + 15 }]}>
+      {/* <View style={[styles.footer, { paddingBottom: insets.bottom + 15 }]}>
         <TouchableOpacity
           style={[styles.inquiryBtn, logic.inquiryLoading && { opacity: 0.7 }]}
           onPress={logic.handleSendInquiry}
@@ -1218,6 +1218,43 @@ const CarDetailScreen = ({ route, navigation }: any) => {
             <Text style={styles.inquiryText}>Enquiry Now</Text>
           )}
         </TouchableOpacity>
+      </View> */}
+
+      <View style={[styles.footer, { paddingBottom: insets.bottom + 15 }]}>
+        {!logic.isInquired ? (
+          // Case 1: Inquiry nahi hui hai -> Single "Inquiry Now" Button
+          <TouchableOpacity
+            style={[styles.inquiryBtn, logic.inquiryLoading && { opacity: 0.7 }]}
+            onPress={logic.handleSendInquiry}
+            disabled={logic.inquiryLoading}
+            activeOpacity={0.8}
+          >
+            {logic.inquiryLoading ? (
+              <ActivityIndicator color="white" />
+            ) : (
+              <Text style={styles.inquiryText}>Enquiry Now</Text>
+            )}
+          </TouchableOpacity>
+        ) : (
+          // Case 2: Inquiry ho chuki hai -> 2 Buttons (Inquired & WhatsApp)
+          <View style={styles.buttonRow}>
+            {/* INQUIRED BUTTON (Disabled/Grey) */}
+            <View style={styles.inquiredStatusBtn}>
+               <Ionicons name="checkmark-done" size={20} color={Colors.white} />
+               <Text style={styles.inquiredStatusText}>Inquired</Text>
+            </View>
+
+            {/* WHATSAPP BUTTON (Green/Secondary) */}
+            <TouchableOpacity 
+               style={styles.whatsappBtn} 
+               onPress={logic.handleWhatsAppConnect}
+               activeOpacity={0.8}
+            >
+              <Ionicons name="logo-whatsapp" size={20} color="white" />
+              <Text style={styles.whatsappText}>Connect</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
 
       {/* 7. सफलता मोडल */}

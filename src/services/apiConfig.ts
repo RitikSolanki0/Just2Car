@@ -13,6 +13,7 @@ export const ENDPOINTS = {
 
   GET_BRANDS: `${BASE_URL}/brands`,
   GET_MODELS: (brandId: string) => `${BASE_URL}/models/brand/${brandId}`,
+  GET_VARIANTS: (modelId: string) => `${BASE_URL}/model/${modelId}`,
  
   GET_BANNERS: `${BASE_URL}/banners`,
 
@@ -35,6 +36,10 @@ export const ENDPOINTS = {
   GET_CAR_DETAILS: (id: string) => `${BASE_URL}/cars/${id}`,
 
   SEND_INQUIRY: `${BASE_URL}/inquiry/send`,
+
+  MY_INQUIRIES: `${BASE_URL}/my-inquiries`,
+
+   FRANCHISE_INQUIRY: `${BASE_URL}/franchise-inquiry`,
   
 };
 

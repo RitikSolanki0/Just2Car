@@ -1050,134 +1050,353 @@
 
 
 
-import React from "react";
-import { View, Text, ScrollView, Image, TouchableOpacity, ActivityIndicator } from "react-native";
+// import React from "react";
+// import { View, Text, ScrollView, Image, TouchableOpacity, ActivityIndicator } from "react-native";
+// import { SafeAreaView } from "react-native-safe-area-context";
+// import Ionicons from "@react-native-vector-icons/ionicons";
+// import { styles } from "./MyAdDetailStyles";
+// import { useMyAdDetailLogic } from "./useMyAdDetailLogic";
+// import { Colors } from "../../theme/colors";
+// import { formatDate, formatTime } from "../../utils/dateHelpers";
+// import { Fonts } from "../../theme/fonts";
+
+// const MyAdDetailScreen = ({ route, navigation }: any) => {
+//   const { ad } = route.params;
+//   const { statusInfo, inspector, loadingInspector, handleCall } = useMyAdDetailLogic(ad);
+
+//   return (
+//     <SafeAreaView style={styles.container}>
+//       <View style={styles.header}>
+//         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconBtn}>
+//           <Ionicons name="arrow-back" size={26} color="black" />
+//         </TouchableOpacity>
+//         <Text style={styles.headerTitle}>Car Details</Text>
+//         <View style={{width: 30}} />
+//       </View>
+
+//       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+//         <Image 
+//             source={ad.images && ad.images.length > 0 ? { uri: ad.images[0] } : require('../../assets/images/carimages/car1.jpg')} 
+//             style={styles.mainImg} 
+//         />
+
+//         <View style={styles.content}>
+//           <View style={styles.mainInfo}>
+//             <Text style={styles.title}>{ad.brand?.name} {ad.model?.name || ad.model}</Text>
+//             <Text style={styles.price}>₹ {ad.expectedPrice?.toLocaleString('en-IN')}</Text>
+//           </View>
+
+//           {/* --- 🚀 नया: Analytics Bar (Views & Inquiries) --- */}
+//           <View style={styles.analyticsBar}>
+//             <View style={styles.analyticsItem}>
+//                 <View style={styles.analyticsIconBg}>
+//                     <Ionicons name="eye-outline" size={20} color={Colors.primary} />
+//                 </View>
+//                 <View>
+//                     <Text style={styles.analyticsLabel}>Total Views</Text>
+//                     <Text style={styles.analyticsValue}>{ad.views || 0}</Text>
+//                 </View>
+//             </View>
+
+//             <View style={styles.analyticsItem}>
+//                 <View style={styles.analyticsIconBg}>
+//                     <Ionicons name="chatbubble-ellipses-outline" size={18} color={Colors.primary} />
+//                 </View>
+//                 <View>
+//                     <Text style={styles.analyticsLabel}>Inquiries</Text>
+//                     <Text style={styles.analyticsValue}>{ad.inquiryCount || 0}</Text>
+//                 </View>
+//             </View>
+//           </View>
+
+//           {/* Inspection Status Card */}
+//           <View style={[styles.statusCard, { backgroundColor: statusInfo.bg, borderColor: statusInfo.color }]}>
+//              <View style={styles.row}>
+//                 <Ionicons name={statusInfo.icon as any} size={24} color={statusInfo.color} />
+//                 <Text style={[styles.statusHeading, { color: statusInfo.color }]}>{statusInfo.title}</Text>
+//              </View>
+//              <Text style={styles.statusDescription}>{statusInfo.desc}</Text>
+//              {ad.status === 'rejected' && statusInfo.date && (
+//                 <Text style={{marginTop: 10, color: '#DC2626', fontFamily: Fonts.bold, fontSize: 11}}>
+//                     REJECTED ON: {formatDate(statusInfo.date)}
+//                 </Text>
+//              )}
+//              {statusInfo.canConfirm && (
+//                <TouchableOpacity style={styles.inlineConfirmBtn} onPress={() => navigation.navigate('ConfirmScheduleDateScreen', { car: ad })}>
+//                  <Text style={styles.inlineBtnText}>Confirm Slot Now</Text>
+//                  <Ionicons name="arrow-forward" size={18} color="white" />
+//                </TouchableOpacity>
+//              )}
+//           </View>
+
+//           {/* ... बाकी पुराने सेक्शन्स (Inspector, Seller Info, etc.) वही रहेंगे ... */}
+//           {ad.inspectionStatus === 'assigned' && !loadingInspector && inspector && (
+//                 <View style={styles.inspectorCard}>
+//                    {/* Inspector Card Code */}
+//                    <View style={styles.inspectorHeader}>
+//                       <Image source={inspector.profileImage ? { uri: inspector.profileImage } : require('../../assets/images/imageslogo.png')} style={styles.inspectorImg} />
+//                       <View style={styles.inspectorInfo}>
+//                          <Text style={styles.inspectorTag}>ASSIGNED INSPECTOR</Text>
+//                          <Text style={styles.inspectorName}>{inspector.fullName}</Text>
+//                          <Text style={{fontSize: 12, color: 'gray'}}>{inspector.phone}</Text>
+//                       </View>
+//                       <TouchableOpacity style={styles.callBtn} onPress={() => handleCall(inspector.phone)} >
+//                          <Ionicons name="call" size={20} color="#8B5CF6" />
+//                       </TouchableOpacity>
+//                    </View>
+//                    <View style={styles.scheduleInfoRow}>
+//                       <View style={styles.scheduleItem}>
+//                          <Ionicons name="calendar-outline" size={18} color="gray" />
+//                          <Text style={styles.scheduleText}>{formatDate(ad.scheduledDate)}</Text>
+//                       </View>
+//                       <View style={styles.scheduleItem}>
+//                          <Ionicons name="time-outline" size={18} color="gray" />
+//                          <Text style={styles.scheduleText}>{formatTime(ad.scheduledTime)}</Text>
+//                       </View>
+//                    </View>
+//                 </View>
+//           )}
+
+//           <Text style={styles.sectionTitle}>Seller Information</Text>
+//           <View style={styles.infoBox}>
+//              <Text style={styles.infoLabel}>Name</Text>
+//              <Text style={styles.infoValue}>{ad.sellerName}</Text>
+//              <View style={{height: 10}} />
+//              <Text style={styles.infoLabel}>Contact</Text>
+//              <Text style={styles.infoValue}>{ad.sellerMobile} | {ad.sellerEmail}</Text>
+//           </View>
+
+//           {/* ... Technical Grid, Description, Features ... */}
+//           <Text style={styles.sectionTitle}>Technical Overview</Text>
+//           <View style={styles.grid}>
+//              <DetailItem label="Variant" value={ad.variant} />
+//              <DetailItem label="Year" value={ad.year} />
+//              <DetailItem label="Fuel" value={ad.fuelType} />
+//              <DetailItem label="KM Driven" value={ad.kmDriven} />
+//              <DetailItem label="Transmission" value={ad.transmission} />
+//              <DetailItem label="Owners" value={ad.noOfOwners} />
+//           </View>
+//         </View>
+//       </ScrollView>
+//     </SafeAreaView>
+//   );
+// };
+
+// const DetailItem = ({ label, value }: any) => (
+//   <View style={styles.gridItem}>
+//     <Text style={styles.itemLabel}>{label}</Text>
+//     <Text style={styles.itemValue}>{value}</Text>
+//   </View>
+// );
+
+// export default MyAdDetailScreen;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState, useEffect } from "react";
+import { 
+  View, Text, ScrollView, Image, TouchableOpacity, 
+  ActivityIndicator, Modal, Dimensions, Linking, BackHandler 
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@react-native-vector-icons/ionicons";
 import { styles } from "./MyAdDetailStyles";
 import { useMyAdDetailLogic } from "./useMyAdDetailLogic";
 import { Colors } from "../../theme/colors";
-import { formatDate, formatTime } from "../../utils/dateHelpers";
-import { Fonts } from "../../theme/fonts";
+import { formatDate } from "../../utils/dateHelpers";
+
+const { width } = Dimensions.get('window');
 
 const MyAdDetailScreen = ({ route, navigation }: any) => {
   const { ad } = route.params;
   const { statusInfo, inspector, loadingInspector, handleCall } = useMyAdDetailLogic(ad);
 
+  // --- 🚀 States for Image Viewer ---
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [initialIndex, setInitialIndex] = useState(0);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  // Modal band karne ke liye function
+  const closeModal = () => setIsModalVisible(false);
+
+  // Android Hardware Back Button handling for Modal
+  useEffect(() => {
+    const backAction = () => {
+      if (isModalVisible) {
+        closeModal();
+        return true;
+      }
+      return false;
+    };
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+    return () => backHandler.remove();
+  }, [isModalVisible]);
+
   return (
     <SafeAreaView style={styles.container}>
+      {/* --- Header Fix: navigation.goBack() explicitly added --- */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconBtn}>
-          <Ionicons name="arrow-back" size={26} color="black" />
+          <Ionicons name="arrow-back" size={28} color="black" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Car Details</Text>
-        <View style={{width: 30}} />
+        <Text style={styles.headerTitle}>Ad Details</Text>
+        <View style={{ width: 30 }} />
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-        <Image 
-            source={ad.images && ad.images.length > 0 ? { uri: ad.images[0] } : require('../../assets/images/carimages/car1.jpg')} 
-            style={styles.mainImg} 
-        />
+        
+        {/* --- Main Image Slider --- */}
+       <ScrollView
+  horizontal
+  pagingEnabled
+  showsHorizontalScrollIndicator={false}
+  style={styles.imageSlider}
+  onScroll={(event) => {
+    const index = Math.round(
+      event.nativeEvent.contentOffset.x / width
+    );
+    setActiveImageIndex(index);
+  }}
+  scrollEventThrottle={16}
+>
+          {ad.images && ad.images.length > 0 ? (
+            ad.images.map((img: string, index: number) => (
+              <TouchableOpacity 
+                key={index} 
+                activeOpacity={0.9} 
+                onPress={() => {
+                  setInitialIndex(index);
+                  setIsModalVisible(true);
+                }}
+              >
+                <Image source={{ uri: img }} style={styles.mainImg} />
+              </TouchableOpacity>
+            ))
+          ) : (
+            <Image source={require('../../assets/images/carimages/car1.jpg')} style={styles.mainImg} />
+          )}
+        </ScrollView>
+        {ad.images?.length > 1 && (
+  <View style={styles.dotContainer}>
+    {ad.images.map((_: any, index: number) => (
+      <View
+        key={index}
+        style={[
+          styles.dot,
+          activeImageIndex === index &&
+            styles.activeDot,
+        ]}
+      />
+    ))}
+  </View>
+)}
 
         <View style={styles.content}>
           <View style={styles.mainInfo}>
             <Text style={styles.title}>{ad.brand?.name} {ad.model?.name || ad.model}</Text>
-            <Text style={styles.price}>₹ {ad.expectedPrice?.toLocaleString('en-IN')}</Text>
+            <View style={styles.rowBetween}>
+                <Text style={styles.price}>₹ {ad.expectedPrice?.toLocaleString('en-IN')}</Text>
+                <View style={styles.daysBadge}>
+                    <Text style={styles.daysText}>{ad.daysLeft} Days Left</Text>
+                </View>
+            </View>
+            <Text style={styles.locSubText}>Location: {ad.city?.name || ad.registrationCity}</Text>
           </View>
 
-          {/* --- 🚀 नया: Analytics Bar (Views & Inquiries) --- */}
+          {/* Analytics Bar */}
           <View style={styles.analyticsBar}>
             <View style={styles.analyticsItem}>
-                <View style={styles.analyticsIconBg}>
-                    <Ionicons name="eye-outline" size={20} color={Colors.primary} />
-                </View>
-                <View>
-                    <Text style={styles.analyticsLabel}>Total Views</Text>
-                    <Text style={styles.analyticsValue}>{ad.views || 0}</Text>
-                </View>
+              <View style={styles.analyticsIconBg}><Ionicons name="eye-outline" size={20} color={Colors.primary} /></View>
+              <View>
+                <Text style={styles.analyticsLabel}>Total Views</Text>
+                <Text style={styles.analyticsValue}>{ad.views || 0}</Text>
+              </View>
             </View>
-
             <View style={styles.analyticsItem}>
-                <View style={styles.analyticsIconBg}>
-                    <Ionicons name="chatbubble-ellipses-outline" size={18} color={Colors.primary} />
-                </View>
-                <View>
-                    <Text style={styles.analyticsLabel}>Inquiries</Text>
-                    <Text style={styles.analyticsValue}>{ad.inquiryCount || 0}</Text>
-                </View>
+              <View style={styles.analyticsIconBg}><Ionicons name="chatbubble-ellipses-outline" size={18} color={Colors.primary} /></View>
+              <View>
+                <Text style={styles.analyticsLabel}>Inquiries</Text>
+                <Text style={styles.analyticsValue}>{ad.inquiryCount || 0}</Text>
+              </View>
             </View>
           </View>
 
-          {/* Inspection Status Card */}
-          <View style={[styles.statusCard, { backgroundColor: statusInfo.bg, borderColor: statusInfo.color }]}>
-             <View style={styles.row}>
-                <Ionicons name={statusInfo.icon as any} size={24} color={statusInfo.color} />
-                <Text style={[styles.statusHeading, { color: statusInfo.color }]}>{statusInfo.title}</Text>
-             </View>
-             <Text style={styles.statusDescription}>{statusInfo.desc}</Text>
-             {ad.status === 'rejected' && statusInfo.date && (
-                <Text style={{marginTop: 10, color: '#DC2626', fontFamily: Fonts.bold, fontSize: 11}}>
-                    REJECTED ON: {formatDate(statusInfo.date)}
-                </Text>
-             )}
-             {statusInfo.canConfirm && (
-               <TouchableOpacity style={styles.inlineConfirmBtn} onPress={() => navigation.navigate('ConfirmScheduleDateScreen', { car: ad })}>
-                 <Text style={styles.inlineBtnText}>Confirm Slot Now</Text>
-                 <Ionicons name="arrow-forward" size={18} color="white" />
-               </TouchableOpacity>
-             )}
-          </View>
-
-          {/* ... बाकी पुराने सेक्शन्स (Inspector, Seller Info, etc.) वही रहेंगे ... */}
-          {ad.inspectionStatus === 'assigned' && !loadingInspector && inspector && (
-                <View style={styles.inspectorCard}>
-                   {/* Inspector Card Code */}
-                   <View style={styles.inspectorHeader}>
-                      <Image source={inspector.profileImage ? { uri: inspector.profileImage } : require('../../assets/images/imageslogo.png')} style={styles.inspectorImg} />
-                      <View style={styles.inspectorInfo}>
-                         <Text style={styles.inspectorTag}>ASSIGNED INSPECTOR</Text>
-                         <Text style={styles.inspectorName}>{inspector.fullName}</Text>
-                         <Text style={{fontSize: 12, color: 'gray'}}>{inspector.phone}</Text>
-                      </View>
-                      <TouchableOpacity style={styles.callBtn} onPress={() => handleCall(inspector.phone)} >
-                         <Ionicons name="call" size={20} color="#8B5CF6" />
-                      </TouchableOpacity>
-                   </View>
-                   <View style={styles.scheduleInfoRow}>
-                      <View style={styles.scheduleItem}>
-                         <Ionicons name="calendar-outline" size={18} color="gray" />
-                         <Text style={styles.scheduleText}>{formatDate(ad.scheduledDate)}</Text>
-                      </View>
-                      <View style={styles.scheduleItem}>
-                         <Ionicons name="time-outline" size={18} color="gray" />
-                         <Text style={styles.scheduleText}>{formatTime(ad.scheduledTime)}</Text>
-                      </View>
-                   </View>
-                </View>
+          {/* Video Button */}
+          {ad.inspectionVideo && (
+            <TouchableOpacity style={styles.videoBtn} onPress={() => Linking.openURL(ad.inspectionVideo)}>
+              <Ionicons name="play-circle" size={24} color="white" />
+              <Text style={styles.videoBtnText}>Play Inspection Video</Text>
+            </TouchableOpacity>
           )}
 
-          <Text style={styles.sectionTitle}>Seller Information</Text>
-          <View style={styles.infoBox}>
-             <Text style={styles.infoLabel}>Name</Text>
-             <Text style={styles.infoValue}>{ad.sellerName}</Text>
-             <View style={{height: 10}} />
-             <Text style={styles.infoLabel}>Contact</Text>
-             <Text style={styles.infoValue}>{ad.sellerMobile} | {ad.sellerEmail}</Text>
+          {/* Status Card */}
+          <View style={[styles.statusCard, { backgroundColor: statusInfo.bg, borderColor: statusInfo.color }]}>
+            <View style={styles.row}><Ionicons name={statusInfo.icon as any} size={24} color={statusInfo.color} /><Text style={[styles.statusHeading, { color: statusInfo.color }]}>{statusInfo.title}</Text></View>
+            <Text style={styles.statusDescription}>{statusInfo.desc}</Text>
+            {statusInfo.canConfirm && (
+              <TouchableOpacity style={styles.inlineConfirmBtn} onPress={() => navigation.navigate('ConfirmScheduleDateScreen', { car: ad })}>
+                <Text style={styles.inlineBtnText}>Confirm Slot Now</Text>
+              </TouchableOpacity>
+            )}
           </View>
 
-          {/* ... Technical Grid, Description, Features ... */}
           <Text style={styles.sectionTitle}>Technical Overview</Text>
           <View style={styles.grid}>
-             <DetailItem label="Variant" value={ad.variant} />
-             <DetailItem label="Year" value={ad.year} />
-             <DetailItem label="Fuel" value={ad.fuelType} />
-             <DetailItem label="KM Driven" value={ad.kmDriven} />
-             <DetailItem label="Transmission" value={ad.transmission} />
-             <DetailItem label="Owners" value={ad.noOfOwners} />
+            <DetailItem label="Reg. Number" value={ad.registrationNumber} />
+            <DetailItem label="Variant" value={ad.variant} />
+            <DetailItem label="Year" value={ad.year} />
+            <DetailItem label="Fuel" value={ad.fuelType} />
+            <DetailItem label="KM Driven" value={`${ad.kmDriven} km`} />
+            <DetailItem label="Transmission" value={ad.transmission} />
           </View>
+
+          <Text style={styles.sectionTitle}>Description</Text>
+          <View style={styles.descBox}><Text style={styles.descriptionText}>{ad.description || "No description provided."}</Text></View>
         </View>
       </ScrollView>
+
+      {/* --- 🚀 Professional Image Zoom Modal with Swiping --- */}
+      <Modal visible={isModalVisible} transparent={true} animationType="slide" onRequestClose={closeModal}>
+        <View style={styles.modalBg}>
+           {/* Close Button */}
+           <TouchableOpacity style={styles.closeModal} onPress={closeModal}>
+              <Ionicons name="close-outline" size={35} color="white" />
+           </TouchableOpacity>
+
+           <ScrollView 
+             horizontal 
+             pagingEnabled 
+             showsHorizontalScrollIndicator={false}
+             contentOffset={{ x: initialIndex * width, y: 0 }} 
+           >
+              {ad.images?.map((img: string, idx: number) => (
+                <View key={idx} style={styles.modalImageWrapper}>
+                  <Image source={{ uri: img }} style={styles.fullImage} resizeMode="contain" />
+                  {/* Counter Text */}
+                  <Text style={styles.modalCounter}>{idx + 1} / {ad.images.length}</Text>
+                </View>
+              ))}
+           </ScrollView>
+        </View>
+      </Modal>
+
     </SafeAreaView>
   );
 };

@@ -1794,24 +1794,352 @@
 
 // KeyboardAvoidingView yaha se 
 
-import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  Alert,
-  ActivityIndicator,
-  KeyboardAvoidingView, // कीबोर्ड हैंडल करने के लिए
-  Platform, // OS चेक करने के लिए
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Colors } from "../../../theme/colors";
-import { Fonts } from "../../../theme/fonts";
+// import React from "react";
+// import {
+//   View,
+//   Text,
+//   StyleSheet,
+//   TextInput,
+//   TouchableOpacity,
+//   ScrollView,
+//   Alert,
+//   ActivityIndicator,
+//   KeyboardAvoidingView, // कीबोर्ड हैंडल करने के लिए
+//   Platform, // OS चेक करने के लिए
+// } from "react-native";
+// import { SafeAreaView } from "react-native-safe-area-context";
+// import { Colors } from "../../../theme/colors";
+// import { Fonts } from "../../../theme/fonts";
 
-// Components Imports
+// // Components Imports
+// import AddCarHeader from "../../../components/addcar/AddCarHeader";
+// import ConditionYearSection from "../../../components/addcar/ConditionYearSection";
+// import BrandModelSection from "../../../components/addcar/BrandModelSection";
+// import TechnicalSection from "../../../components/addcar/TechnicalSection";
+// import PricingLocationSection from "../../../components/addcar/PricingLocationSection";
+// import FeaturesSection from "../../../components/addcar/FeaturesSection";
+// import MediaUploadSection from "../../../components/addcar/MediaUploadSection";
+// import CustomDropdown from "../../../components/addcar/CustomDropdown";
+// import { useAddCarLogic } from "./useAddCarLogic";
+// import SellerDetailsSection from "../../../components/addcar/SellerDetailsSection";
+// import CarDetailsSection from "../../../components/addcar/CarDetailsSection";
+
+// const AddCarScreen = ({ navigation }: any) => {
+//   const logic = useAddCarLogic(navigation);
+
+//   return (
+//     <SafeAreaView style={styles.safeArea}>
+//       <AddCarHeader onBack={() => navigation.goBack()} />
+
+//       {/* --- कीबोर्ड से कंटेंट को बचाने के लिए Wrapper --- */}
+//       <KeyboardAvoidingView
+//         behavior={Platform.OS === "ios" ? "padding" : "height"}
+//         style={{ flex: 1 }}
+//         keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+//       >
+//         <ScrollView
+//           showsVerticalScrollIndicator={false}
+//           contentContainerStyle={styles.scrollContent}
+//           keyboardShouldPersistTaps="handled" // टाइप करते समय बाहर क्लिक करने पर कीबोर्ड हैंडलिंग
+//         >
+//           {/* 1. Seller Details Section */}
+//           {/* <SellerDetailsSection
+//             name={logic.sellerName}
+//             setName={logic.setSellerName}
+//             email={logic.sellerEmail}
+//             setEmail={logic.setSellerEmail}
+//             mobile={logic.sellerMobile}
+//             setMobile={logic.setSellerMobile}
+//           /> */}
+
+//           <CarDetailsSection
+//             regNumber={logic.regNumber}
+//             setRegNumber={logic.setRegNumber}
+//           />
+
+//           {/* 3. Location Dropdowns */}
+//           <View style={styles.row}>
+//             <CustomDropdown
+//               label="State"
+//               placeholder="Select"
+//               data={logic.states}
+//               selectedValue={logic.selectedState.name}
+//               onSelect={logic.onStateChange}
+//             />
+//             <View style={{ width: 10 }} />
+//             <CustomDropdown
+//               label="City"
+//               placeholder="Select"
+//               data={logic.cities}
+//               selectedValue={logic.selectedCity.name}
+//               onSelect={logic.onCitySelect}
+//             />
+//           </View>
+
+//           {/* 4. Brand & Model */}
+//           <BrandModelSection
+//             brand={logic.selectedBrand.name}
+//             setBrand={logic.onBrandChange}
+//             model={logic.selectedModel.name}
+//             setModel={logic.onModelSelect}
+//             variant={logic.variant}
+//             setVariant={logic.setVariant}
+//             brandsList={logic.brands}
+//             modelsList={logic.models}
+//             variantsList={["VXI", "ZXI", "Base"]}
+//           />
+
+//           {/* 5. Hand Condition & Year */}
+//           <ConditionYearSection
+//             condition={logic.condition}
+//             setCondition={logic.setCondition}
+//             year={logic.year}
+//             setYear={logic.setYear}
+//           />
+
+//           {/* 6. Technical Section */}
+//           <TechnicalSection
+//             fuel={logic.fuelType}
+//             setFuel={logic.setFuelType}
+//             fuelsList={["Petrol", "Diesel", "CNG", "Electric"]}
+//             transmission={logic.transmission}
+//             setTransmission={logic.setTransmission}
+//             kms={logic.kmDriven}
+//             setKms={logic.setKmDriven}
+//           />
+
+//           {/* 7. Pricing & Address */}
+//           <PricingLocationSection
+//             price={logic.expectedPrice}
+//             setPrice={logic.setExpectedPrice}
+//             location={logic.location}
+//             setLocation={logic.setLocation}
+//             mobile={logic.sellerMobile}
+//             address={logic.address}
+//             setAddress={logic.setAddress}
+//           />
+
+//           {/* 8. Features & Media */}
+//           <FeaturesSection features={logic.features} setFeatures={logic.setFeatures} />
+//           <MediaUploadSection
+//             mediaFiles={logic.mediaFiles}
+//             setMediaFiles={logic.setMediaFiles}
+//           />
+
+//           {/* 9. Description (Fix: textAlignVertical added) */}
+//           <Text style={styles.label}>Description</Text>
+//           <TextInput
+//             multiline
+//             style={styles.textArea}
+//             placeholder="Enter Description ...."
+//             placeholderTextColor="#9CA3AF"
+//             value={logic.description}
+//             onChangeText={logic.setDescription}
+//             textAlignVertical="top" // Android पर टेक्स्ट को ऊपर से शुरू करने के लिए
+//           />
+
+//           {/* 10. Submit Button */}
+//           <TouchableOpacity
+//             style={[styles.submitBtn, logic.loading && { opacity: 0.7 }]}
+//             onPress={logic.handleSellCarSubmission}
+//             disabled={logic.loading}
+//           >
+//             {logic.loading ? (
+//               <ActivityIndicator color="white" />
+//             ) : (
+//               <Text style={styles.submitText}>Sell Your Car</Text>
+//             )}
+//           </TouchableOpacity>
+
+//           {/* कीबोर्ड के लिए एक्स्ट्रा स्पेस */}
+//           <View style={{ height: 120 }} />
+//         </ScrollView>
+//       </KeyboardAvoidingView>
+//     </SafeAreaView>
+//   );
+// };
+
+// export default AddCarScreen;
+
+// const styles = StyleSheet.create({
+//   safeArea: { flex: 1, backgroundColor: Colors.white },
+//   scrollContent: { paddingHorizontal: 20 },
+//   label: { fontFamily: Fonts.bold, fontSize: 16, color: "black", marginTop: 18, marginBottom: 8 },
+//   inputFull: { backgroundColor: "#F2F4F7", borderRadius: 12, paddingHorizontal: 15, height: 50, fontFamily: Fonts.regular, color: "black", marginBottom: 10 },
+//   textArea: {
+//     backgroundColor: "#F2F4F7",
+//     borderRadius: 12,
+//     padding: 15,
+//     height: 120, // थोड़ी हाइट बढ़ा दी
+//     fontFamily: Fonts.regular,
+//     color: "black",
+//     borderWidth: 1,
+//     borderColor: "#E5E7EB",
+//   },
+//   submitBtn: {
+//     backgroundColor: Colors.primary,
+//     paddingVertical: 18,
+//     borderRadius: 12,
+//     alignItems: "center",
+//     marginTop: 25,
+//   },
+//   submitText: { color: Colors.white, fontFamily: Fonts.bold, fontSize: 16 },
+//   row: {
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     alignItems: "flex-start",
+//   },
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React from "react";
+// import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, ActivityIndicator, KeyboardAvoidingView, Platform } from "react-native";
+// import { SafeAreaView } from "react-native-safe-area-context";
+// import { Colors } from "../../../theme/colors";
+// import { Fonts } from "../../../theme/fonts";
+// import AddCarHeader from "../../../components/addcar/AddCarHeader";
+// import ConditionYearSection from "../../../components/addcar/ConditionYearSection";
+// import BrandModelSection from "../../../components/addcar/BrandModelSection";
+// import TechnicalSection from "../../../components/addcar/TechnicalSection";
+// import PricingLocationSection from "../../../components/addcar/PricingLocationSection";
+// import FeaturesSection from "../../../components/addcar/FeaturesSection";
+// import MediaUploadSection from "../../../components/addcar/MediaUploadSection";
+// import CustomDropdown from "../../../components/addcar/CustomDropdown";
+// import { useAddCarLogic } from "./useAddCarLogic";
+// import SellerDetailsSection from "../../../components/addcar/SellerDetailsSection";
+// import CarDetailsSection from "../../../components/addcar/CarDetailsSection";
+
+// const AddCarScreen = ({ navigation }: any) => {
+//   const logic = useAddCarLogic(navigation);
+
+//   return (
+//     <SafeAreaView style={styles.safeArea}>
+//       <AddCarHeader onBack={() => navigation.goBack()} />
+//       <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1 }}>
+//         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
+
+//           {/* <SellerDetailsSection name={logic.sellerName} email={logic.sellerEmail} mobile={logic.sellerMobile} /> */}
+
+//           <CarDetailsSection regNumber={logic.regNumber} setRegNumber={logic.setRegNumber} error={logic.errors.regNumber} />
+
+//           <View style={styles.row}>
+//             <CustomDropdown label="State" placeholder="Select" data={logic.states} selectedValue={logic.selectedState.name} onSelect={logic.onStateChange} error={logic.errors.state} />
+//             <View style={{ width: 10 }} />
+//             <CustomDropdown label="City" placeholder="Select" data={logic.cities} selectedValue={logic.selectedCity.name} onSelect={logic.onCitySelect} error={logic.errors.city} />
+//           </View>
+
+//           <BrandModelSection
+//             brand={logic.selectedBrand.name} setBrand={logic.onBrandChange}
+//             model={logic.selectedModel.name} setModel={logic.onModelSelect}
+//             variant={logic.variant} setVariant={logic.setVariant}
+//             brandsList={logic.brands} modelsList={logic.models}
+//             errors={logic.errors} // एरर्स पास करें
+//           />
+
+//           <ConditionYearSection condition={logic.condition} setCondition={logic.setCondition} year={logic.year} setYear={logic.setYear} error={logic.errors.year} />
+
+//           <TechnicalSection
+//             fuel={logic.fuelType} setFuel={logic.setFuelType} fuelsList={["Petrol", "Diesel", "CNG", "Electric"]}
+//             transmission={logic.transmission} setTransmission={logic.setTransmission}
+//             kms={logic.kmDriven} setKms={logic.setKmDriven}
+//             errors={logic.errors}
+//           />
+
+//           <PricingLocationSection
+//             price={logic.expectedPrice} setPrice={logic.setExpectedPrice}
+//             location={logic.location} setLocation={logic.setLocation}
+//             mobile={logic.sellerMobile} address={logic.address} setAddress={logic.setAddress}
+//             errors={logic.errors}
+//           />
+
+//           <FeaturesSection features={logic.features} setFeatures={logic.setFeatures} error={logic.errors.features} />
+
+//           <View style={logic.errors.mediaFiles && { borderWidth: 1, borderColor: 'red', borderRadius: 15, padding: 5 }}>
+//             <MediaUploadSection mediaFiles={logic.mediaFiles} setMediaFiles={logic.setMediaFiles} />
+//           </View>
+
+//           {/* <Text style={styles.label}>Description</Text>
+//           <TextInput multiline style={styles.textArea} value={logic.description} onChangeText={logic.setDescription} textAlignVertical="top" /> */}
+
+//           <Text style={styles.label}>Description</Text>
+//           <TextInput
+//             multiline
+//             style={[styles.textArea, logic.errors.description && { borderColor: 'red', borderWidth: 1.5 }]}
+//             placeholder="Enter Description ...."
+//             placeholderTextColor="#9CA3AF"
+//             value={logic.description}
+//             onChangeText={(val) => logic.setDescription(val)}
+//             textAlignVertical="top"
+//           />
+
+//           <TouchableOpacity style={[styles.submitBtn, logic.loading && { opacity: 0.7 }]} onPress={logic.handleSellCarSubmission} disabled={logic.loading}>
+//             {logic.loading ? <ActivityIndicator color="white" /> : <Text style={styles.submitText}>Sell Your Car</Text>}
+//           </TouchableOpacity>
+
+//           <View style={{ height: 120 }} />
+//         </ScrollView>
+//       </KeyboardAvoidingView>
+//     </SafeAreaView>
+//   );
+// };
+
+// export default AddCarScreen;
+
+// const styles = StyleSheet.create({
+//   safeArea: { flex: 1, backgroundColor: Colors.white },
+//   scrollContent: { paddingHorizontal: 20 },
+//   label: { fontFamily: Fonts.bold, fontSize: 16, color: "black", marginTop: 18, marginBottom: 8 },
+//   inputFull: { backgroundColor: "#F2F4F7", borderRadius: 12, paddingHorizontal: 15, height: 50, fontFamily: Fonts.regular, color: "black", marginBottom: 10, borderWidth: 1, borderColor: '#E5E7EB' },
+//   errorBorder: { borderColor: 'red', borderWidth: 1 }, // 🚀 लाल बॉर्डर स्टाइल
+//   textArea: { backgroundColor: "#F2F4F7", borderRadius: 12, padding: 15, height: 120, fontFamily: Fonts.regular, color: "black", borderWidth: 1, borderColor: "#E5E7EB" },
+//   submitBtn: { backgroundColor: Colors.primary, paddingVertical: 18, borderRadius: 12, alignItems: "center", marginTop: 25 },
+//   submitText: { color: Colors.white, fontFamily: Fonts.bold, fontSize: 16 },
+//   row: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" },
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { memo } from "react";
+import { View, Text, TextInput, TouchableOpacity, ScrollView, ActivityIndicator, KeyboardAvoidingView, Platform } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { styles } from "./AddCarScreenStyles";
 import AddCarHeader from "../../../components/addcar/AddCarHeader";
 import ConditionYearSection from "../../../components/addcar/ConditionYearSection";
 import BrandModelSection from "../../../components/addcar/BrandModelSection";
@@ -1820,9 +2148,15 @@ import PricingLocationSection from "../../../components/addcar/PricingLocationSe
 import FeaturesSection from "../../../components/addcar/FeaturesSection";
 import MediaUploadSection from "../../../components/addcar/MediaUploadSection";
 import CustomDropdown from "../../../components/addcar/CustomDropdown";
-import { useAddCarLogic } from "./useAddCarLogic";
 import SellerDetailsSection from "../../../components/addcar/SellerDetailsSection";
 import CarDetailsSection from "../../../components/addcar/CarDetailsSection";
+import { useAddCarLogic } from "./useAddCarLogic";
+
+// Memoized Components to prevent unnecessary re-renders
+const MemoBrandModel = memo(BrandModelSection);
+const MemoTechnical = memo(TechnicalSection);
+const MemoPricing = memo(PricingLocationSection);
+const MemoFeatures = memo(FeaturesSection);
 
 const AddCarScreen = ({ navigation }: any) => {
   const logic = useAddCarLogic(navigation);
@@ -1830,128 +2164,68 @@ const AddCarScreen = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <AddCarHeader onBack={() => navigation.goBack()} />
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1 }}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
 
-      {/* --- कीबोर्ड से कंटेंट को बचाने के लिए Wrapper --- */}
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
-      >
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContent}
-          keyboardShouldPersistTaps="handled" // टाइप करते समय बाहर क्लिक करने पर कीबोर्ड हैंडलिंग
-        >
-          {/* 1. Seller Details Section */}
-          {/* <SellerDetailsSection
-            name={logic.sellerName}
-            setName={logic.setSellerName}
-            email={logic.sellerEmail}
-            setEmail={logic.setSellerEmail}
-            mobile={logic.sellerMobile}
-            setMobile={logic.setSellerMobile}
-          /> */}
-          
-          <CarDetailsSection
-            regNumber={logic.regNumber}
-            setRegNumber={logic.setRegNumber}
-          />
+          {/* <SellerDetailsSection name={logic.sellerName} email={logic.sellerEmail} mobile={logic.sellerMobile} /> */}
 
-          {/* 3. Location Dropdowns */}
+          <CarDetailsSection regNumber={logic.regNumber} setRegNumber={logic.setRegNumber} error={logic.errors.regNumber} />
+
           <View style={styles.row}>
-            <CustomDropdown
-              label="State"
-              placeholder="Select"
-              data={logic.states}
-              selectedValue={logic.selectedState.name}
-              onSelect={logic.onStateChange}
-            />
+            <CustomDropdown label="State" placeholder="Select" data={logic.states} selectedValue={logic.selectedState.name} onSelect={logic.onStateChange} error={logic.errors.state} />
             <View style={{ width: 10 }} />
-            <CustomDropdown
-              label="City"
-              placeholder="Select"
-              data={logic.cities}
-              selectedValue={logic.selectedCity.name}
-              onSelect={logic.onCitySelect}
-            />
+            <CustomDropdown label="City" placeholder="Select" data={logic.cities} selectedValue={logic.selectedCity.name} onSelect={logic.onCitySelect} error={logic.errors.city} />
           </View>
 
-          {/* 4. Brand & Model */}
-          <BrandModelSection
-            brand={logic.selectedBrand.name}
-            setBrand={logic.onBrandChange}
-            model={logic.selectedModel.name}
-            setModel={logic.onModelSelect}
-            variant={logic.variant}
-            setVariant={logic.setVariant}
-            brandsList={logic.brands}
-            modelsList={logic.models}
-            variantsList={["VXI", "ZXI", "Base"]}
+          <MemoBrandModel
+            brand={logic.selectedBrand.name} setBrand={logic.onBrandChange}
+            model={logic.selectedModel.name} setModel={logic.onModelSelect}
+            variant={logic.variant} setVariant={logic.setVariant}
+            brandsList={logic.brands} modelsList={logic.models} variantsList={logic.variants}
+            errors={logic.errors}
           />
 
-          {/* 5. Hand Condition & Year */}
-          <ConditionYearSection
-            condition={logic.condition}
-            setCondition={logic.setCondition}
-            year={logic.year}
-            setYear={logic.setYear}
+          <ConditionYearSection condition={logic.condition} setCondition={logic.setCondition} year={logic.year} setYear={logic.setYear} error={logic.errors.year} />
+
+          <MemoTechnical
+            fuel={logic.fuelType} setFuel={logic.setFuelType} fuelsList={['Petrol', 'Diesel', 'CNG', 'Electric', 'LPG', 'Hybrid','CNG&Petrol', 'Petrol&Electric', 'Diesel&Electric', 'Bio-Diesel', 'Ethanol', 'Flex Fuel']}
+            transmission={logic.transmission} setTransmission={logic.setTransmission}
+            kms={logic.kmDriven} setKms={logic.setKmDriven}
+            errors={logic.errors}
           />
 
-          {/* 6. Technical Section */}
-          <TechnicalSection
-            fuel={logic.fuelType}
-            setFuel={logic.setFuelType}
-            fuelsList={["Petrol", "Diesel", "CNG", "Electric"]}
-            transmission={logic.transmission}
-            setTransmission={logic.setTransmission}
-            kms={logic.kmDriven}
-            setKms={logic.setKmDriven}
+          <MemoPricing
+            price={logic.expectedPrice} setPrice={logic.setExpectedPrice}
+            location={logic.location} setLocation={logic.setLocation}
+            mobile={logic.sellerMobile} address={logic.address} setAddress={logic.setAddress}
+            errors={logic.errors}
           />
 
-          {/* 7. Pricing & Address */}
-          <PricingLocationSection
-            price={logic.expectedPrice}
-            setPrice={logic.setExpectedPrice}
-            location={logic.location}
-            setLocation={logic.setLocation}
-            mobile={logic.sellerMobile}
-            address={logic.address}
-            setAddress={logic.setAddress}
-          />
+          <MemoFeatures features={logic.features} setFeatures={logic.setFeatures} error={logic.errors.features} />
 
-          {/* 8. Features & Media */}
-          <FeaturesSection features={logic.features} setFeatures={logic.setFeatures} />
-          <MediaUploadSection
-            mediaFiles={logic.mediaFiles}
-            setMediaFiles={logic.setMediaFiles}
-          />
+          <View style={logic.errors.mediaFiles ? styles.mediaErrorBox : null}>
+            <MediaUploadSection mediaFiles={logic.mediaFiles} setMediaFiles={logic.setMediaFiles} />
+          </View>
 
-          {/* 9. Description (Fix: textAlignVertical added) */}
           <Text style={styles.label}>Description</Text>
           <TextInput
             multiline
-            style={styles.textArea}
+            style={[styles.textArea, logic.errors.description && { borderColor: 'red', borderWidth: 1.5 }]}
             placeholder="Enter Description ...."
             placeholderTextColor="#9CA3AF"
             value={logic.description}
             onChangeText={logic.setDescription}
-            textAlignVertical="top" // Android पर टेक्स्ट को ऊपर से शुरू करने के लिए
+            textAlignVertical="top"
           />
 
-          {/* 10. Submit Button */}
-          <TouchableOpacity
-            style={[styles.submitBtn, logic.loading && { opacity: 0.7 }]}
-            onPress={logic.handleSellCarSubmission}
+          <TouchableOpacity 
+            style={[styles.submitBtn, logic.loading && { opacity: 0.7 }]} 
+            onPress={logic.handleSellCarSubmission} 
             disabled={logic.loading}
           >
-            {logic.loading ? (
-              <ActivityIndicator color="white" />
-            ) : (
-              <Text style={styles.submitText}>Sell Your Car</Text>
-            )}
+            {logic.loading ? <ActivityIndicator color="white" /> : <Text style={styles.submitText}>Sell Your Car</Text>}
           </TouchableOpacity>
 
-          {/* कीबोर्ड के लिए एक्स्ट्रा स्पेस */}
           <View style={{ height: 120 }} />
         </ScrollView>
       </KeyboardAvoidingView>
@@ -1959,34 +2233,4 @@ const AddCarScreen = ({ navigation }: any) => {
   );
 };
 
-export default AddCarScreen;
-
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: Colors.white },
-  scrollContent: { paddingHorizontal: 20 },
-  label: { fontFamily: Fonts.bold, fontSize: 16, color: "black", marginTop: 18, marginBottom: 8 },
-  inputFull: { backgroundColor: "#F2F4F7", borderRadius: 12, paddingHorizontal: 15, height: 50, fontFamily: Fonts.regular, color: "black", marginBottom: 10 },
-  textArea: {
-    backgroundColor: "#F2F4F7",
-    borderRadius: 12,
-    padding: 15,
-    height: 120, // थोड़ी हाइट बढ़ा दी
-    fontFamily: Fonts.regular,
-    color: "black",
-    borderWidth: 1,
-    borderColor: "#E5E7EB",
-  },
-  submitBtn: {
-    backgroundColor: Colors.primary,
-    paddingVertical: 18,
-    borderRadius: 12,
-    alignItems: "center",
-    marginTop: 25,
-  },
-  submitText: { color: Colors.white, fontFamily: Fonts.bold, fontSize: 16 },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-  },
-});
+export default memo(AddCarScreen);

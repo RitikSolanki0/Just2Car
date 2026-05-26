@@ -520,6 +520,7 @@ const ProfileScreen = ({ navigation }: any) => {
   const { profileData, loading, onMenuPress } = useProfileLogic(navigation);
 
   const menuItems = [
+    { id: 'enquiry', label: 'My Interests' , icon: 'chatbubbles-outline' },
     { id: 'fav', label: 'Favorites', icon: 'heart-outline' },
     // { id: 'package', label: 'My Package', icon: 'ribbon-outline' },      
     { id: 'about', label: 'About Us', icon: 'information-circle-outline' },

@@ -82,6 +82,7 @@ export const useProfileLogic = (navigation: any) => {
   const onMenuPress = (id: string) => {
     if (id === 'fav') navigation.navigate('WishlistScreen');
     else if (id === 'share') handleShareApp();
+    else if (id === 'enquiry') navigation.navigate('MyEnquiryScreen');
     else if (id === 'package') navigation.navigate('PackageScreen');
     else if (id === 'about') navigation.navigate('AboutUsScreen');
     else if (id === 'terms') navigation.navigate('TermsAndConditionsScreen');

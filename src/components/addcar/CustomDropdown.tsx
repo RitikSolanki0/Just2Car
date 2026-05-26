@@ -15,7 +15,7 @@ import { Colors } from '../../theme/colors';
 
 const { height } = Dimensions.get('window');
 
-const CustomDropdown = ({ label, placeholder, data, selectedValue, onSelect }: any) => {
+const CustomDropdown = ({ label, placeholder, data, selectedValue, onSelect, error }: any) => {
   const [visible, setVisible] = useState(false);
 
   const handleSelect = (item: string) => {
@@ -27,7 +27,8 @@ const CustomDropdown = ({ label, placeholder, data, selectedValue, onSelect }: a
     <View style={{ flex: 1 }}>
       <Text style={styles.label}>{label}</Text>
       <TouchableOpacity 
-        style={styles.dropdown} 
+        // style={styles.dropdown} 
+        style={[styles.dropdown, error && { borderColor: 'red', borderWidth: 1 }]} 
         onPress={() => setVisible(true)}
         activeOpacity={0.7}
       >

@@ -541,11 +541,11 @@ const TopServices = () => {
 
   const services = [
     { id: 1, title: 'Just2Car', icon: 'car-sport', color: '#243B53' },
-    { id: 2, title: 'Buy & Sell', icon: 'swap-horizontal', color: '#f87a20' },
-    { id: 3, title: 'Insurance', icon: 'shield-checkmark', color: '#41ac68' },
-    { id: 4, title: 'Parts', icon: 'settings', color: '#f8af31' },
-    { id: 5, title: 'RTO', icon: 'document-text', color: '#4648de' }, 
-    { id: 6, title: 'Car Loan', icon: 'wallet', color: '#703caf' }, 
+    // { id: 2, title: 'Buy & Sell', icon: 'swap-horizontal', color: '#f87a20' },
+    { id: 2, title: 'Insurance', icon: 'shield-checkmark', color: '#41ac68' },
+    { id: 3, title: 'Parts', icon: 'settings', color: '#f8af31' },
+    { id: 4, title: 'RTO', icon: 'document-text', color: '#4648de' }, 
+    { id: 5, title: 'Car Loan', icon: 'wallet', color: '#703caf' }, 
   ] as const;
 
   return (

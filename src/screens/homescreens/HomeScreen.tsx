@@ -630,10 +630,133 @@
 
 
 
+// import React, { useCallback } from 'react';
+// import { FlatList, Text, StyleSheet, View, ActivityIndicator } from 'react-native';
+// import { SafeAreaView } from 'react-native-safe-area-context';
+// import { useNavigation } from '@react-navigation/native';
+// import { Colors } from '../../theme/colors';
+// import { Fonts } from '../../theme/fonts';
+
+// // Components
+// import HomeHeader from '../../components/home/HomeHeader';
+// import BrandSection from '../../components/home/BrandSection';
+// import BannerSection from '../../components/home/BannerSection';
+// import DealerBanner from '../../components/home/DealerBanner';
+// import FilterSection from '../../components/home/FilterSection';
+// import CarCard from '../../components/carcard/CarCard';
+
+// // Logic Hook
+// import { useHomeLogic } from './useHomeLogic';
+
+// const HomeScreen = () => {
+//   const navigation = useNavigation<any>();
+  
+//   // --- 🚀 लॉजिक हुक से सारा डेटा और दोनों फंक्शन्स लें ---
+//   const { 
+//     brands, 
+//     banners, 
+//     cars, 
+//     loadingStatic, 
+//     loadingCars, 
+//     currentCity, 
+//     onLocationPress, 
+//     refreshHome,
+//     onManualCitySearch     
+//   } = useHomeLogic();
+
+//   // ब्रांड पर क्लिक करने का लॉजिक
+//   const handleBrandPress = (brandName: string) => {
+//     navigation.navigate('SearchScreen', { initialSearch: brandName });
+//   };
+
+//   const ListHeader = () => (
+//     <View>
+//       {/* 1. हेडर (इसमें ऑन-क्लिक पॉपअप वाला फंक्शन पास किया है) */}
+//       <HomeHeader cityName={currentCity} onLocationPress={onLocationPress} onManualCitySearch={onManualCitySearch} />
+      
+//       {/* 2. ब्रैंड्स */}
+//       <BrandSection 
+//         data={brands} 
+//         loading={loadingStatic}  
+//         onBrandPress={handleBrandPress} 
+//       />
+      
+//       {/* 3. बैनर */}
+//       <BannerSection 
+//         data={banners} 
+//         loading={loadingStatic} 
+//       />
+      
+//       {/* 4. डीलर और फ़िल्टर बटन्स */}
+//       <DealerBanner />
+//       <FilterSection />
+
+//       {/* 5. टाइटल */}
+//       <Text style={styles.freshTitle}>Fresh Recommendation</Text>
+      
+//       {/* लोड होते समय छोटा इंडिकेटर */}
+//       {loadingCars && cars.length === 0 && (
+//         <ActivityIndicator color={Colors.primary} style={{ marginVertical: 20 }} />
+//       )}
+//     </View>
+//   );
+
+//   return (
+//     <SafeAreaView style={styles.container}>
+//       <FlatList
+//         data={cars}
+//         keyExtractor={(item) => item._id} 
+//         numColumns={2}
+//         ListHeaderComponent={ListHeader}
+//         columnWrapperStyle={{ justifyContent: 'space-between' }}
+//         contentContainerStyle={{ paddingBottom: 120 }}
+//         showsVerticalScrollIndicator={false}
+//         renderItem={({ item }) => (
+//           <CarCard item={item} width="48%" />
+//         )}
+//         // --- 🚀 रिफ्रेश करने पर अब पॉपअप नहीं आएगा ---
+//         onRefresh={refreshHome} 
+//         refreshing={loadingCars}
+//       />
+//     </SafeAreaView>
+//   );
+// };
+
+// export default HomeScreen;
+
+// const styles = StyleSheet.create({
+//   container: { flex: 1, backgroundColor: Colors.white, paddingHorizontal: 15 },
+//   freshTitle: { fontSize: 16, fontFamily: Fonts.bold, marginTop: 25, marginBottom: 10, color: 'black' },
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { useCallback } from 'react';
 import { FlatList, Text, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import Ionicons from "@react-native-vector-icons/ionicons"; // आइकन के लिए
 import { Colors } from '../../theme/colors';
 import { Fonts } from '../../theme/fonts';
 
@@ -651,7 +774,6 @@ import { useHomeLogic } from './useHomeLogic';
 const HomeScreen = () => {
   const navigation = useNavigation<any>();
   
-  // --- 🚀 लॉजिक हुक से सारा डेटा और दोनों फंक्शन्स लें ---
   const { 
     brands, 
     banners, 
@@ -659,41 +781,49 @@ const HomeScreen = () => {
     loadingStatic, 
     loadingCars, 
     currentCity, 
-    onLocationPress, // यह पॉपअप दिखाएगा
-    refreshHome     // यह चुपचाप रिफ्रेश करेगा
+    onLocationPress,
+    resetToAllIndia, 
+    refreshHome,
+    onManualCitySearch,
+    resetToGPS // 🚀 नया: इसे यहाँ जोड़ना ज़रूरी है
   } = useHomeLogic();
 
-  // ब्रांड पर क्लिक करने का लॉजिक
   const handleBrandPress = (brandName: string) => {
     navigation.navigate('SearchScreen', { initialSearch: brandName });
   };
 
+  // --- 🚀 फिक्स: जब कोई कार न मिले (Empty State) ---
+  const renderEmptyContainer = () => {
+    if (loadingCars) return null; // लोड होते समय कुछ न दिखाएँ
+
+    return (
+      <View style={styles.emptyContainer}>
+        <Ionicons name="car-outline" size={80} color="#E5E7EB" />
+        <Text style={styles.emptyText}>
+          No car available in <Text style={{color: Colors.secondary}}>{currentCity}</Text>
+        </Text>
+        <Text style={styles.emptySub}>Please try searching for another city or detect your location.</Text>
+      </View>
+    );
+  };
+
   const ListHeader = () => (
     <View>
-      {/* 1. हेडर (इसमें ऑन-क्लिक पॉपअप वाला फंक्शन पास किया है) */}
-      <HomeHeader cityName={currentCity} onLocationPress={onLocationPress} />
-      
-      {/* 2. ब्रैंड्स */}
-      <BrandSection 
-        data={brands} 
-        loading={loadingStatic}  
-        onBrandPress={handleBrandPress} 
+      {/* 🚀 फिक्स: onLocationPress की जगह resetToGPS पास करें ताकि लॉक खुल सके */}
+      <HomeHeader 
+        cityName={currentCity} 
+        onLocationPress={resetToGPS} 
+        onManualCitySearch={onManualCitySearch} 
+        onResetToAllIndia={resetToAllIndia}
       />
       
-      {/* 3. बैनर */}
-      <BannerSection 
-        data={banners} 
-        loading={loadingStatic} 
-      />
-      
-      {/* 4. डीलर और फ़िल्टर बटन्स */}
+      <BrandSection data={brands} loading={loadingStatic} onBrandPress={handleBrandPress} />
+      <BannerSection data={banners} loading={loadingStatic} />
       <DealerBanner />
       <FilterSection />
 
-      {/* 5. टाइटल */}
       <Text style={styles.freshTitle}>Fresh Recommendation</Text>
       
-      {/* लोड होते समय छोटा इंडिकेटर */}
       {loadingCars && cars.length === 0 && (
         <ActivityIndicator color={Colors.primary} style={{ marginVertical: 20 }} />
       )}
@@ -707,13 +837,15 @@ const HomeScreen = () => {
         keyExtractor={(item) => item._id} 
         numColumns={2}
         ListHeaderComponent={ListHeader}
-        columnWrapperStyle={{ justifyContent: 'space-between' }}
-        contentContainerStyle={{ paddingBottom: 120 }}
+        // --- 🚀 ये दो लाइनें ज़रूरी हैं ---
+        ListEmptyComponent={renderEmptyContainer} 
+        contentContainerStyle={{ paddingBottom: 120, flexGrow: 1 }} // flexGrow से खाली स्क्रीन सेंटर में दिखेगी
+        
+        columnWrapperStyle={cars.length > 0 ? { justifyContent: 'space-between' } : null}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <CarCard item={item} width="48%" />
         )}
-        // --- 🚀 रिफ्रेश करने पर अब पॉपअप नहीं आएगा ---
         onRefresh={refreshHome} 
         refreshing={loadingCars}
       />
@@ -726,4 +858,27 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.white, paddingHorizontal: 15 },
   freshTitle: { fontSize: 16, fontFamily: Fonts.bold, marginTop: 25, marginBottom: 10, color: 'black' },
+  
+  // --- 🚀 खाली स्क्रीन के लिए स्टाइल्स ---
+  emptyContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 50,
+  },
+  emptyText: {
+    fontFamily: Fonts.bold,
+    fontSize: 16,
+    color: 'black',
+    marginTop: 10,
+    textAlign: 'center'
+  },
+  emptySub: {
+    fontFamily: Fonts.regular,
+    fontSize: 13,
+    color: 'gray',
+    marginTop: 5,
+    textAlign: 'center',
+    paddingHorizontal: 20
+  }
 });

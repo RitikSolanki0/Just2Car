@@ -39,7 +39,7 @@
 //             return (
 //               <View style={styles.adCard}>
 //                 <Image source={{ uri: item.image }} style={styles.carImg} />
-                
+
 //                 <View style={styles.details}>
 //                   <Text style={styles.carTitle}>{item.title}</Text>
 //                   <Text style={styles.carPrice}>{item.price}</Text>
@@ -175,7 +175,7 @@
 //                     source={item.image ? { uri: item.image } : require('../../../assets/images/carimages/car1.jpg')} 
 //                     style={styles.carImg} 
 //                 />
-                
+
 //                 <View style={styles.details}>
 //                   <Text style={styles.carTitle} numberOfLines={1}>{item.title}</Text>
 //                   <Text style={styles.carPrice}>{item.price}</Text>
@@ -311,7 +311,7 @@
 //             source={item.image ? { uri: item.image } : require('../../../assets/images/carimages/car1.jpg')} 
 //             style={styles.carImg} 
 //         />
-        
+
 //         <View style={styles.details}>
 //           <Text style={styles.carTitle} numberOfLines={1}>{item.title}</Text>
 //           <Text style={styles.carPrice}>{item.price}</Text>
@@ -379,7 +379,7 @@
 //   },
 //   backBtn: { padding: 5 },
 //   headerTitle: { fontFamily: Fonts.bold, fontSize: 22, color: 'black', marginLeft: 10 },
-  
+
 //   listContainer: { 
 //     padding: 15, // पैडिंग को थोड़ा कम किया ताकि ग्रिड में जगह मिले
 //     paddingBottom: 120 
@@ -420,7 +420,7 @@
 //   },
 //   carTitle: { fontFamily: Fonts.bold, fontSize: 16, color: Colors.black },
 //   carPrice: { fontFamily: Fonts.semiBold, fontSize: 14, color: Colors.black, marginTop: 2 },
-  
+
 //   statusBadge: { 
 //     flexDirection: 'row', 
 //     alignItems: 'center', 
@@ -432,7 +432,7 @@
 //   },
 //   statusText: { fontSize: 9, fontFamily: Fonts.bold, marginLeft: 4 },
 //   tapHint: { fontSize: 8.5, color: '#EA580C', fontFamily: Fonts.bold, marginTop: 4 },
-  
+
 //   arrowIcon: { paddingRight: 10 },
 
 //   emptyContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 40 },
@@ -471,7 +471,7 @@
 //   const renderItem = ({ item }: any) => {
 //     // API से 'inspectionStatus' की कोडिंग उठाएं
 //     const statusStyle = getStatusInfo(item.inspectionStatus);
-    
+
 //     return (
 //       <TouchableOpacity 
 //         style={[styles.adCard, isTablet && styles.tabletCard]} 
@@ -484,7 +484,7 @@
 //                 : require('../../../assets/images/carimages/car1.jpg')} 
 //             style={styles.carImg} 
 //         />
-        
+
 //         <View style={styles.details}>
 //           <Text style={styles.carTitle} numberOfLines={1}>{item.model.name}</Text>
 //           <Text style={styles.carReg}>{item.registrationNumber}</Text>
@@ -580,7 +580,7 @@
 //   const renderItem = ({ item }: any) => {
 //     // --- 🚀 फिक्स: यहाँ 'item.inspectionStatus' के बजाय पूरा 'item' भेजें ---
 //     const statusStyle = getStatusInfo(item); 
-    
+
 //     return (
 //       <TouchableOpacity 
 //         style={[styles.adCard, isTablet && styles.tabletCard]} 
@@ -593,7 +593,7 @@
 //                 : require('../../../assets/images/carimages/car1.jpg')} 
 //             style={styles.carImg} 
 //         />
-        
+
 //         <View style={styles.details}>
 //           {/* नाम और नंबर */}
 //           <Text style={styles.carTitle} numberOfLines={1}>
@@ -684,6 +684,143 @@
 
 
 
+// import React from "react";
+// import { View, Text, FlatList, Image, TouchableOpacity, ActivityIndicator, RefreshControl } from "react-native";
+// import { SafeAreaView } from "react-native-safe-area-context";
+// import Ionicons from "@react-native-vector-icons/ionicons";
+// import { styles, isTablet } from "./MyAddScreenStyles";
+// import { useMyAdsLogic } from "./useMyAdsLogic";
+
+// const MyAddScreen = ({ navigation }: any) => {
+//   const { ads, loading, refreshing, onRefresh, getStatusInfo } = useMyAdsLogic(navigation);
+
+//   const renderItem = ({ item }: any) => {
+//     const statusStyle = getStatusInfo(item); 
+
+//     return (
+//       <TouchableOpacity 
+//         style={[styles.adCard, isTablet && styles.tabletCard]} 
+//         activeOpacity={0.9}
+//         onPress={() => navigation.navigate('MyAdDetailScreen', { ad: item })}
+//       >
+//         <Image 
+//             source={item.images && item.images.length > 0 
+//                 ? { uri: item.images[0] } 
+//                 : require('../../../assets/images/carimages/car1.jpg')} 
+//             style={styles.carImg} 
+//         />
+
+//         <View style={styles.details}>
+//             <Text style={styles.carTitle} numberOfLines={1}>
+//     {item.make} {item.model?.name || item.model}
+//   </Text>
+//   <Text style={styles.carReg}>{item.registrationNumber}</Text>
+//   <Text style={styles.carPrice}>₹ {item.expectedPrice?.toLocaleString('en-IN')}</Text>
+
+//   {/* --- 🚀 स्टेटस और स्टैट्स को एक ही लाइन में रखने वाला कंटेनर --- */}
+//   <View style={styles.statusAndStatsContainer}>
+
+//     {/* स्टेटस बैज */}
+//     <View style={[styles.statusBadge, { backgroundColor: statusStyle.bg }]}>
+//       <Ionicons name={statusStyle.icon as any} size={11} color={statusStyle.color} />
+//       <Text style={[styles.statusText, { color: statusStyle.color }]} numberOfLines={1}>
+//         {statusStyle.label}
+//       </Text>
+//     </View>
+
+//     {/* व्यूज़ और इनक्वायरी */}
+//     <View style={styles.statsRow}>
+//       <View style={styles.statItem}>
+//           <Ionicons name="eye-outline" size={14} color="#6B7280" />
+//           <Text style={styles.statText}>{item.views || 0}</Text>
+//       </View>
+//       <View style={styles.statItem}>
+//           <Ionicons name="chatbubble-ellipses-outline" size={13} color="#6B7280" />
+//           <Text style={styles.statText}>{item.inquiryCount || 0}</Text>
+//       </View>
+//     </View>
+
+//   </View>
+
+//           {item.inspectionStatus === 'scheduled' && item.status !== 'rejected' && (
+//             <Text style={styles.tapHint}>Tap to confirm time slot</Text>
+//           )}
+//         </View>
+
+//         <View style={styles.arrowIcon}>
+//           <Ionicons name="chevron-forward" size={18} color="#CCC" />
+//         </View>
+//       </TouchableOpacity>
+//     );
+//   };
+
+//   if (loading) {
+//     return (
+//       <View style={{ flex: 1, justifyContent: 'center' }}>
+//         <ActivityIndicator size="large" color="#243B53" />
+//       </View>
+//     );
+//   }
+
+//   return (
+//     <SafeAreaView style={styles.safeArea}>
+//       <View style={styles.header}>
+//         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
+//           <Ionicons name="chevron-back" size={28} color="black" />
+//         </TouchableOpacity>
+//         <Text style={styles.headerTitle}>My Ads</Text>
+//       </View>
+
+//       {ads.length > 0 ? (
+//         <FlatList
+//           key={isTablet ? 'tablet' : 'mobile'}
+//           data={ads}
+//           keyExtractor={(item) => item._id}
+//           numColumns={isTablet ? 2 : 1}
+//           contentContainerStyle={styles.listContainer}
+//           columnWrapperStyle={isTablet ? { justifyContent: 'space-between' } : null}
+//           showsVerticalScrollIndicator={false}
+//           renderItem={renderItem}
+//           refreshControl={
+//             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+//           }
+//         />
+//       ) : (
+//         <View style={styles.emptyContainer}>
+//           <Ionicons name="car-sport-outline" size={100} color="#F3F4F6" />
+//           <Text style={styles.emptyText}>You haven't posted any ads yet.</Text>
+//           <TouchableOpacity style={styles.addBtn} onPress={() => navigation.navigate('Add')}>
+//              <Text style={styles.addBtnText}>Post an Ad</Text>
+//           </TouchableOpacity>
+//         </View>
+//       )}
+//     </SafeAreaView>
+//   );
+// };
+
+// export default MyAddScreen;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React from "react";
 import { View, Text, FlatList, Image, TouchableOpacity, ActivityIndicator, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -695,61 +832,74 @@ const MyAddScreen = ({ navigation }: any) => {
   const { ads, loading, refreshing, onRefresh, getStatusInfo } = useMyAdsLogic(navigation);
 
   const renderItem = ({ item }: any) => {
-    const statusStyle = getStatusInfo(item); 
-    
+    const statusStyle = getStatusInfo(item);
+
     return (
-      <TouchableOpacity 
-        style={[styles.adCard, isTablet && styles.tabletCard]} 
+      <TouchableOpacity
+        style={[styles.adCard, isTablet && styles.tabletCard]}
         activeOpacity={0.9}
         onPress={() => navigation.navigate('MyAdDetailScreen', { ad: item })}
       >
-        <Image 
-            source={item.images && item.images.length > 0 
-                ? { uri: item.images[0] } 
-                : require('../../../assets/images/carimages/car1.jpg')} 
-            style={styles.carImg} 
+        <Image
+          source={item.images && item.images.length > 0
+            ? { uri: item.images[0] }
+            : require('../../../assets/images/carimages/car1.jpg')}
+          style={styles.carImg}
         />
-        
+
         <View style={styles.details}>
-            <Text style={styles.carTitle} numberOfLines={1}>
-    {item.make} {item.model?.name || item.model}
-  </Text>
-  <Text style={styles.carReg}>{item.registrationNumber}</Text>
-  <Text style={styles.carPrice}>₹ {item.expectedPrice?.toLocaleString('en-IN')}</Text>
+          <Text style={styles.carTitle} numberOfLines={1}>
+            {item.brand?.name} {item.model?.name || item.model}
+          </Text>
 
-  {/* --- 🚀 स्टेटस और स्टैट्स को एक ही लाइन में रखने वाला कंटेनर --- */}
-  <View style={styles.statusAndStatsContainer}>
-    
-    {/* स्टेटस बैज */}
-    <View style={[styles.statusBadge, { backgroundColor: statusStyle.bg }]}>
-      <Ionicons name={statusStyle.icon as any} size={11} color={statusStyle.color} />
-      <Text style={[styles.statusText, { color: statusStyle.color }]} numberOfLines={1}>
-        {statusStyle.label}
-      </Text>
-    </View>
+          {/* --- 🚀 Naya: Reg Number aur Days Left ek line mein --- */}
+          <View style={styles.regContainer}>
+            <View style={styles.regLeft}>
+              <Text style={styles.carReg}>
+                {item.registrationNumber}
+              </Text>
+            </View>
 
-    {/* व्यूज़ और इनक्वायरी */}
-    <View style={styles.statsRow}>
-      <View style={styles.statItem}>
-          <Ionicons name="eye-outline" size={14} color="#6B7280" />
-          <Text style={styles.statText}>{item.views || 0}</Text>
-      </View>
-      <View style={styles.statItem}>
-          <Ionicons name="chatbubble-ellipses-outline" size={13} color="#6B7280" />
-          <Text style={styles.statText}>{item.inquiryCount || 0}</Text>
-      </View>
-    </View>
+            {item.daysLeft !== undefined && (
+              <View style={styles.daysLeftBadge}>
+                <Text style={styles.daysLeftText}>
+                  {item.daysLeft} days left
+                </Text>
+              </View>
+            )}
+          </View>
 
-  </View>
+          <Text style={styles.carPrice}>₹ {item.expectedPrice?.toLocaleString('en-IN')}</Text>
+
+          {/* --- स्टेटस और स्टैट्स कंटेनर --- */}
+          <View style={styles.statusAndStatsContainer}>
+            <View style={[styles.statusBadge, { backgroundColor: statusStyle.bg }]}>
+              <Ionicons name={statusStyle.icon as any} size={11} color={statusStyle.color} />
+              <Text style={[styles.statusText, { color: statusStyle.color }]} numberOfLines={1}>
+                {statusStyle.label}
+              </Text>
+            </View>
+
+            <View style={styles.statsRow}>
+              <View style={styles.statItem}>
+                <Ionicons name="eye-outline" size={14} color="#6B7280" />
+                <Text style={styles.statText}>{item.views || 0}</Text>
+              </View>
+              <View style={styles.statItem}>
+                <Ionicons name="chatbubble-ellipses-outline" size={13} color="#6B7280" />
+                <Text style={styles.statText}>{item.inquiryCount || 0}</Text>
+              </View>
+            </View>
+          </View>
 
           {item.inspectionStatus === 'scheduled' && item.status !== 'rejected' && (
             <Text style={styles.tapHint}>Tap to confirm time slot</Text>
           )}
         </View>
 
-        <View style={styles.arrowIcon}>
+        {/* <View style={styles.arrowIcon}>
           <Ionicons name="chevron-forward" size={18} color="#CCC" />
-        </View>
+        </View> */}
       </TouchableOpacity>
     );
   };
@@ -781,16 +931,14 @@ const MyAddScreen = ({ navigation }: any) => {
           columnWrapperStyle={isTablet ? { justifyContent: 'space-between' } : null}
           showsVerticalScrollIndicator={false}
           renderItem={renderItem}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         />
       ) : (
         <View style={styles.emptyContainer}>
           <Ionicons name="car-sport-outline" size={100} color="#F3F4F6" />
           <Text style={styles.emptyText}>You haven't posted any ads yet.</Text>
-          <TouchableOpacity style={styles.addBtn} onPress={() => navigation.navigate('Add')}>
-             <Text style={styles.addBtnText}>Post an Ad</Text>
+          <TouchableOpacity style={styles.addBtn} onPress={() => navigation.navigate('AddCarScreen')}>
+            <Text style={styles.addBtnText}>Post an Ad</Text>
           </TouchableOpacity>
         </View>
       )}

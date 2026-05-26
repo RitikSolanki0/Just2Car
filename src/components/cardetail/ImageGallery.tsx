@@ -612,7 +612,7 @@ const ImageGallery = ({ media, car }: { media: any[], car: any }) => {
         ))}
       </View>
 
-      <Modal visible={fullScreen} transparent={false} animationType="fade">
+      <Modal visible={fullScreen} transparent={false} animationType="fade" onRequestClose={() => setFullScreen(false)} >
         <StatusBar hidden={fullScreen} />
         <View style={styles.modalContainer}>
           <View style={styles.modalHeader}>
